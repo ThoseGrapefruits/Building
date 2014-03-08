@@ -15,9 +15,28 @@ class Surface extends JPanel
 	 */
 	private static final long serialVersionUID = -7441446934043006335L;
 
-	private void doDrawing( Graphics g ) throws IOException
+	private void drawBuilding( Graphics2D g2d )
 	{
-		Graphics2D g2d = ( Graphics2D ) g;
+
+	}
+
+	private void drawElevators( Graphics2D g2d )
+	{
+
+	}
+
+	private void drawLights( Graphics2D g2d )
+	{
+
+	}
+
+	private void drawDoors( Graphics2D g2d )
+	{
+
+	}
+
+	private void drawPeople( Graphics2D g2d ) throws IOException
+	{
 		g2d.drawString( "Java 2D", 50, 50 );
 		File taiFile = new File( "tai.jpg" );
 		BufferedImage tai = ImageIO.read( taiFile );
@@ -30,7 +49,8 @@ class Surface extends JPanel
 		super.paintComponent( g );
 		try
 		{
-			doDrawing( g );
+			Graphics2D g2d = ( Graphics2D ) g;
+			drawPeople( g2d );
 		}
 		catch ( IOException e )
 		{

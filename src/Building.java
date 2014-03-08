@@ -1,7 +1,16 @@
 import java.awt.EventQueue;
+import java.util.ArrayList;
+
+import Interactable.Light;
+import Interactable.LightSwitch;
+import Interactable.Door;
+import Interactable.Elevator;
 
 public class Building
 {
+	ArrayList < Light > lights = new ArrayList < Light >();
+	ArrayList < LightSwitch > lightSwitches = new ArrayList < LightSwitch >();
+
 	/**
 	 * Launch the application.
 	 */

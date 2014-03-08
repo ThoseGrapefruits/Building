@@ -11,6 +11,9 @@ public class View extends JFrame
 	 */
 	private static final long serialVersionUID = -8836966816243980019L;
 
+	/**
+	 * Window on which everything is drawn.
+	 */
 	private JPanel contentPane;
 
 	/**
