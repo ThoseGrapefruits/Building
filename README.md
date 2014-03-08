@@ -97,7 +97,8 @@
 
 ##Brainstorming
 - How should I implement walls & other permanent impassable objects?
-- Coordinate system? Definitely need this in one way or another. I guess I could just stick to pixels, as I would otherwise just have a scaled-up equivalent of a per-pixel coordinate system.
+- Coordinate system? Definitely need this in one way or another. I guess I could just stick to pixels, as I would otherwise just have a scaled-up equivalent of a per-pixel coordinate system. I'm not sure how easy it will be to associate the pixel locations of objects to the objects themselves. _Actually nevermind, I can just instantiate all objects with coordinates._
+	- I'm not going to even bother with scaling. Really isn't necessary for this project and it makes everything way more complicated.
 
 
 

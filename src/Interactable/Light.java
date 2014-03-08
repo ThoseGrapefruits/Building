@@ -1,4 +1,4 @@
-package Interactable;
+package interactable;
 
 public class Light
 {
