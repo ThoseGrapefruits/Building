@@ -1,6 +1,6 @@
-package interactable;
+package interactive;
 
-public class Elevator implements Runnable
+public class Elevator extends Interactive
 {
 	/**
 	 * Pixel location for the bottom level elevator.

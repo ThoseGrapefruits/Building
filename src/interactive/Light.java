@@ -1,7 +1,19 @@
-package interactable;
+package interactive;
 
 public class Light
 {
+	Light( int x, int y )
+	{
+		this.x = x;
+		this.y = y;
+	}
+
+	/**
+	 * Coordinates of Light
+	 */
+	int x = 0;
+	int y = 0;
+
 	/**
 	 * Brightness level of the light. Default: 5
 	 */

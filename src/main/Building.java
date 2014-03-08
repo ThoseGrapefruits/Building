@@ -1,11 +1,13 @@
-import interactable.Door;
-import interactable.Elevator;
-import interactable.Light;
-import interactable.LightSwitch;
+package main;
+import interactive.Door;
+import interactive.Elevator;
+import interactive.Light;
+import interactive.LightSwitch;
 
 import java.awt.EventQueue;
 import java.util.ArrayList;
 
+import view.View;
 import boundaries.Floor;
 import boundaries.Wall;
 
@@ -21,7 +23,7 @@ public class Building
 	ArrayList < Wall > walls = new ArrayList < Wall >();
 	ArrayList < Floor > floors = new ArrayList < Floor >();
 
-	Building()
+	Building( int width )
 	{
 		EventQueue.invokeLater( new Runnable()
 		{
@@ -41,12 +43,12 @@ public class Building
 		} );
 	}
 
-	void addLight()
+	void addLight( int x, int y )
 	{
 
 	}
 
-	void addLightSwitch()
+	void addLightSwitch( int x, int y )
 	{
 
 	}
@@ -56,6 +58,6 @@ public class Building
 	 */
 	public static void main( String[] args )
 	{
-		Building building = new Building();
+		Building building = new Building( 700 );
 	}
 }

@@ -1,9 +1,10 @@
+package constants;
 public class Constants
 {
 	/**
 	 * Construction standards. All values are in pixels.
 	 */
-	public static final int FLOOR_HEIGHT = 40;
+	public static final int FLOOR_HEIGHT = 40, BUILDING_WIDTH = 700;
 
 	/**
 	 * Floors, for reference.
