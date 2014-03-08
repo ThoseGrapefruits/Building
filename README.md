@@ -1,5 +1,5 @@
-Building
---------
+#Building
+---------
 > A virtual 2D building simulation and modelling program with random "people" who interact with various things in the building, such as elevators, lights, doors, etc.
 
 <br><hr><br>
