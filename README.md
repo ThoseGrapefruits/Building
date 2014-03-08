@@ -4,18 +4,18 @@
 
 <br><hr><br>
 
-#Notes
+##Notes
 - I would have used OpenGL, but JOGL is weird and since the rendering will be 2D and very simple, I'm just using `java.awt.Graphics2D` to render.
 - Some objects (like doors and elevators) can be directly interacted with in order to use/activate them, but others will require special methods of activation (like light switches for lights).
 
 <br><hr><br>
 
-#Class & Function Outline
-##`Building`
+##Class & Function Outline
+###`Building`
 > Contains the main function and serves as the "controller" in MVC.
 
 <br>
-##`View`
+###`View`
 > JFrame window
 
 ####`contentPane`
@@ -25,23 +25,23 @@
 > Initializes a new `JPanel` window
 
 <br>
-##`Surface`
+###`Surface`
 > `JPanel` 2D rendering panel
 
 
 
 <br>
-##`Light`
+###`Light`
 
 
 
 <br>
-##`LightSwitch`
+###`LightSwitch`
 
 
 <br><hr><br>
-#MVC Outline
-##Model
+##MVC Outline
+###Model
 - `Building`
 - `Elevator`
 - `Door`
@@ -49,11 +49,11 @@
 	- `LightSwitch`
 - `Person`
 
-##View
+###View
 - `View`
 - `Surface`
 
-##Controller
+###Controller
 - `Building`
 
 
