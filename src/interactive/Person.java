@@ -17,6 +17,12 @@ public class Person extends Interactive
 
 	private String name = "Anonymous" + ( 1 + ( int ) Math.random() * 10 );
 
+	/**
+	 * Method for person-to-person interaction
+	 * 
+	 * @param otherPerson
+	 * @throws InterruptedException
+	 */
 	void interact( Person otherPerson ) throws InterruptedException
 	{
 		this.inUse = true;

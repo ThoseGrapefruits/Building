@@ -13,23 +13,30 @@ public class Test
 
 	boolean building()
 	{
+		Building myBuilding = new Building( 700 );
 
+		return true;
 	}
 
 	// Interactables
 
 	boolean person()
 	{
-
+		return true;
 	}
 
 	boolean elevator()
 	{
-
+		return true;
 	}
 
 	boolean door()
 	{
+		return true;
+	}
 
+	boolean lightSwitch()
+	{
+		return true;
 	}
 }
