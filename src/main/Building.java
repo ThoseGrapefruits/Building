@@ -1,4 +1,5 @@
 package main;
+
 import interactive.Door;
 import interactive.Elevator;
 import interactive.Light;
@@ -23,7 +24,7 @@ public class Building
 	ArrayList < Wall > walls = new ArrayList < Wall >();
 	ArrayList < Floor > floors = new ArrayList < Floor >();
 
-	Building( int width )
+	Building( int width, int floors )
 	{
 		EventQueue.invokeLater( new Runnable()
 		{
@@ -58,6 +59,6 @@ public class Building
 	 */
 	public static void main( String[] args )
 	{
-		Building building = new Building( 700 );
+		Building building = new Building( 700, 2 );
 	}
 }

@@ -1,4 +1,5 @@
 package view;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -39,9 +40,9 @@ class Surface extends JPanel
 	private void drawPeople( Graphics2D g2d ) throws IOException
 	{
 		g2d.drawString( "Java 2D", 50, 50 );
-		File taiFile = new File( "tai.jpg" );
+		File taiFile = new File( "resources/tai.jpg" );
 		BufferedImage tai = ImageIO.read( taiFile );
-		g2d.drawImage( tai, 0, 0, 143, 187, null );
+		g2d.drawImage( tai, 100, 100, 143, 187, null );
 	}
 
 	@Override
