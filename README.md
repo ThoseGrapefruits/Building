@@ -22,7 +22,7 @@
 ##Visual Preview
 > This is a generalization of what I plan on having it look like
 
-![Office Simulator 2014]("https://docs.google.com/drawings/d/1zptTJuAx5-7astRzow8TUkD2LLrvAqHOmoRVIKBLf50/pub?w=1240&amp;h=882")
+<img src="https://docs.google.com/drawings/d/1zptTJuAx5-7astRzow8TUkD2LLrvAqHOmoRVIKBLf50/pub?w=827&amp;h=588">
 
 <br><hr><br>
 
