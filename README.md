@@ -9,6 +9,16 @@
 
 <br><hr><br>
 
+##Brainstorming
+- How should I implement walls & other permanent impassable objects?
+- Coordinate system? Definitely need this in one way or another. I guess I could just stick to pixels, as I would otherwise just have a scaled-up equivalent of a per-pixel coordinate system. I'm not sure how easy it will be to associate the pixel locations of objects to the objects themselves. _Actually nevermind, I can just instantiate all objects with coordinates._
+	- I'm not going to even bother with scaling. Really isn't necessary for this project and it makes everything way more complicated.
+- Separate class for interaction that is extended by all the interactive objects. Specifications like `interactive` for every object and `inUse` for `Interactive` objects to specify interactivity and whether they are busy at the moment.
+- The core problems are creating interactive objects and AI with intelligence enough to interact with objects they need to and choose random paths to travel on.
+- I want to make it scalable and somewhat randomly generated (as in, it will select a building size and the number of elevators, locations of doors, etc) but that will be a somewhat advanced feature.
+
+<br><hr><br>
+
 ##Class & Function Outline
 ######start `package main`
 ###`Building`
@@ -146,15 +156,3 @@
 	1. `View` ✓
 	2. `Surface`
 4. Build controller to get everything going.
-
-<br><hr><br>
-
-##Brainstorming
-- How should I implement walls & other permanent impassable objects?
-- Coordinate system? Definitely need this in one way or another. I guess I could just stick to pixels, as I would otherwise just have a scaled-up equivalent of a per-pixel coordinate system. I'm not sure how easy it will be to associate the pixel locations of objects to the objects themselves. _Actually nevermind, I can just instantiate all objects with coordinates._
-	- I'm not going to even bother with scaling. Really isn't necessary for this project and it makes everything way more complicated.
-- Separate class for interaction that is extended by all the interactive objects. Specifications like `interactive` for every object and `inUse` for `Interactive` objects to specify interactivity and whether they are busy at the moment.
-
-
-
-
