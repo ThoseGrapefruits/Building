@@ -14,7 +14,7 @@ import boundaries.Wall;
 
 public class Building
 {
-	// Interaction
+	// Interactive Objects
 	ArrayList < Light > lights = new ArrayList < Light >();
 	ArrayList < LightSwitch > lightSwitches = new ArrayList < LightSwitch >();
 	ArrayList < Door > doors = new ArrayList < Door >();

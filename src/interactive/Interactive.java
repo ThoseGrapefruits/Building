@@ -7,6 +7,12 @@ package interactive;
  */
 public class Interactive implements Runnable
 {
+	/**
+	 * Pixel location of the interactive object.
+	 */
+	int x = 0;
+	int y = 0;
+
 	private boolean interactive = true;
 
 	boolean isInteractive()

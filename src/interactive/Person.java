@@ -9,13 +9,7 @@ public class Person extends Interactive
 
 	int time = 0;
 
-	/**
-	 * Initial coordinates of Person
-	 */
-	int x = 0;
-	int y = 0;
-
-	private String name = "Anonymous" + ( 1 + ( int ) Math.random() * 10 );
+	private String name = "Anonymous" + ( 1 + ( int ) Math.random() * 100 );
 
 	/**
 	 * Method for person-to-person interaction

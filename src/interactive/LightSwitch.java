@@ -19,13 +19,20 @@ public class LightSwitch extends Interactive
 
 	void flip()
 	{
-		if ( linkedLight.isOn() )
+		if ( this.linkedLight.isOn() )
 		{
-			linkedLight.turnOff();
+			this.linkedLight.turnOff();
 		}
 		else
 		{
-			linkedLight.turnOn();
+			this.linkedLight.turnOn();
 		}
+	}
+
+	public void interact()
+	{
+		this.inUse = true;
+		this.flip();
+		this.inUse = false;
 	}
 }
