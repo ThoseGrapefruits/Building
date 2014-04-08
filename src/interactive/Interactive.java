@@ -1,24 +1,20 @@
 package interactive;
 
+import base.Visible;
+
 /**
  * Superclass to be extended by all interactive objects like LightSwitch, Elevator, Door, etc.
  * 
  * @author Logan Moore
  */
-public class Interactive implements Runnable
+public class Interactive extends Visible implements Runnable
 {
 	/**
 	 * Pixel location of the interactive object.
 	 */
-	int x = 0;
-	int y = 0;
+	int x = 0, y = 0;
 
-	private boolean interactive = true;
-
-	boolean isInteractive()
-	{
-		return interactive;
-	}
+	protected boolean interactive = true;
 
 	public boolean inUse = false;
 
@@ -29,7 +25,6 @@ public class Interactive implements Runnable
 
 	public void interact()
 	{
-		System.out
-				.println( "Something has interacted with an interactive object with no interact() function." );
+		System.out.println( "Interactive object with no interact() function." );
 	}
 }

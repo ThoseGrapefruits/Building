@@ -4,6 +4,9 @@ import constants.Constants;
 
 public class Floor extends Boundary
 {
+	/**
+	 * Indicates which floor the given floor is.
+	 */
 	int number = 0;
 
 	Floor( int x, int y, int width, int number )

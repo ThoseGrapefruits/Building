@@ -1,17 +1,19 @@
 package boundaries;
 
-public class Boundary
+import base.Visible;
+
+public class Boundary extends Visible
 {
 	private boolean passable = false;
 
-	boolean isPassable()
+	public boolean isPassable()
 	{
 		return passable;
 	}
 
 	private boolean interactable = false;
 
-	boolean isInteractable()
+	public boolean isInteractable()
 	{
 		return interactable;
 	}

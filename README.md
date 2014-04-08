@@ -5,7 +5,8 @@
 
 ##Notes
 - I would have used OpenGL, but JOGL is weird and since the rendering will be 2D and very simple, I'm just using `java.awt.Graphics2D` to render.
-- Some objects (like doors and elevators) can be directly interacted with in order to use/activate them, but others will require special methods of activation (like light switches for lights).
+- Some objects (like doors) can be directly interacted with in order to use/activate them, but others will require special methods of activation (like light switches for lights or elevator buttons for elevators).
+- I put in the Visible class just in case I need to have nonvisible objects in the future (as I feel like I will) but I currently have no use for nonvisible objects.
 
 <br><hr><br>
 
