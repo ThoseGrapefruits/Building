@@ -1,5 +1,7 @@
 package boundaries;
 
+import java.awt.Graphics2D;
+
 import constants.Constants;
 
 public class Floor extends Boundary
@@ -11,17 +13,21 @@ public class Floor extends Boundary
 
 	Floor( int x, int y, int width, int number )
 	{
+		super( x, y, width, Constants.FLOOR_HEIGHT );
+		this.number = number;
+		this.width = width;
+	}
+
+	Floor( int x, int y, int number )
+	{
+		super( x, y, Constants.BUILDING_WIDTH, Constants.FLOOR_HEIGHT );
 		this.number = number;
 	}
 
-	/**
-	 * Coordinates of object
-	 */
-	int x = 0;
-	int y = 0;
+	@Override
+	public void paint( Graphics2D g2d )
+	{
+		// TODO Auto-generated method stub
 
-	/**
-	 * Width of floor (usually BUILDING_WIDTH)
-	 */
-	int width = Constants.BUILDING_WIDTH;
+	}
 }

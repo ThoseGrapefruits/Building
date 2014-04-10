@@ -1,3 +1,9 @@
+package main;
+
+import javax.swing.SwingUtilities;
+
+import view.View;
+
 public class Main
 {
 	/**
@@ -5,6 +11,14 @@ public class Main
 	 */
 	public static void main( String[] args )
 	{
-		Building building = new Building( 700, 2 );
+		SwingUtilities.invokeLater( new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				View sk = new View();
+				sk.setVisible( true );
+			}
+		} );
 	}
 }

@@ -1,11 +1,15 @@
 package interactive;
 
+import java.awt.Graphics2D;
+
+import base.BuildingObject;
+import base.Visible;
 import constants.Constants;
 
-public class Elevator extends Interactive
+public class Elevator extends BuildingObject implements Interactive, Visible, Runnable
 {
 	/**
-	 * List of floors above the given point where the elevator will also land.
+	 * List of floors above the given point where the elevator will also land (the floor index, not their location).
 	 */
 	int[] otherFloors;
 
@@ -22,7 +26,7 @@ public class Elevator extends Interactive
 	/**
 	 * Current height of elevator car
 	 */
-	int currentHeight = 0;
+	int carHeight = 0;
 
 	/**
 	 * Creates a new elevator object.
@@ -32,8 +36,7 @@ public class Elevator extends Interactive
 	 */
 	Elevator( int x, int y, int[] otherFloors )
 	{
-		this.x = x;
-		this.y = y;
+		super( x, y, Constants.ELEVATOR_WIDTH, Constants.ELEVATOR_HEIGHT );
 		this.otherFloors = otherFloors;
 	}
 
@@ -53,25 +56,32 @@ public class Elevator extends Interactive
 	@Override
 	public void run()
 	{
+		// TODO probably overhaul this.
 		while ( true )
 		{
 			try
 			{
 				Thread.sleep( 1000 );
-				while ( currentHeight * Constants.FLOOR_HEIGHT != destinationFloor
-						* Constants.FLOOR_HEIGHT )
+				while ( carHeight * Constants.FLOOR_DISTANCE != destinationFloor
+						* Constants.FLOOR_DISTANCE )
 				{
 					if ( currentFloor < destinationFloor )
 					{
-						currentHeight++;
+						while ( velocityY < Constants.ELEVATOR_MAX_VELOCITY )
+						{
+							velocityY++;
+						}
 					}
 					else if ( currentFloor > destinationFloor )
 					{
-						currentHeight++;
+						while ( velocityY < Constants.ELEVATOR_MAX_VELOCITY )
+						{
+							velocityY--;
+						}
 					}
 					Thread.sleep( 5 );
 				}
-				this.currentFloor = currentHeight / constants.Constants.FLOOR_HEIGHT;
+				this.currentFloor = carHeight / constants.Constants.FLOOR_DISTANCE;
 			}
 			catch ( InterruptedException e )
 			{
@@ -85,5 +95,18 @@ public class Elevator extends Interactive
 		this.inUse = true;
 		this.destinationFloor = floor;
 		this.inUse = false;
+	}
+
+	@Override
+	public void interact( BuildingObject interacter )
+	{
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void paint( Graphics2D g2d )
+	{
+		// TODO Auto-generated method stub
+
 	}
 }

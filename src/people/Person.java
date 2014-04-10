@@ -1,17 +1,69 @@
 package people;
 
-import interactive.Interactive;
-
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-public class Person extends Interactive
+import javax.imageio.ImageIO;
+
+import interactive.Interactive;
+import constants.Constants;
+import base.BuildingObject;
+import base.Visible;
+
+public class Person extends BuildingObject implements Interactive, Visible, Runnable
 {
+	protected Person( int x, int y, int width, int height )
+	{
+		super( x, y, Constants.PERSON_WIDTH, Constants.PERSON_HEIGHT );
+	}
+
+	/**
+	 * List of listeners
+	 */
+	List < Interactive > listeners = new ArrayList < Interactive >();
+
+	/**
+	 * Adds a new listener to the list of listeners.
+	 * 
+	 * @param toAdd is the listener being added.
+	 */
+	public void addListener( Interactive toAdd )
+	{
+		listeners.add( toAdd );
+	}
+
+	public void interactWith()
+	{
+		// Notify all possibly relevant objects.
+		for ( Interactive object : listeners )
+		{
+			object.interact( this );
+		}
+	}
+
+	BufferedImage face;
+
+	public BufferedImage getFace()
+	{
+		return face;
+	}
+
 	String toBeSaid = "";
 
 	int time = 0;
 
 	private String name = "Anonymous" + ( 1 + ( int ) Math.random() * 100 );
+
+	public String getName()
+	{
+		return this.name;
+	}
 
 	/**
 	 * Method for person-to-person interaction
@@ -40,6 +92,20 @@ public class Person extends Interactive
 	@Override
 	public void run()
 	{
+
+	}
+
+	@Override
+	public void interact( BuildingObject interacter )
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void paint( Graphics2D g2d )
+	{
+		// TODO Auto-generated method stub
 
 	}
 }

@@ -1,17 +1,18 @@
 package boundaries;
 
+import base.BuildingObject;
 import base.Visible;
 
-public class Boundary extends Visible
+public abstract class Boundary extends BuildingObject implements Visible
 {
-	private boolean passable = false;
-
-	public boolean isPassable()
+	Boundary( int x, int y, int width, int height )
 	{
-		return passable;
+		super( x, y, width, height );
 	}
 
-	private boolean interactable = false;
+	protected boolean passable = false;
+
+	protected boolean interactable = false;
 
 	public boolean isInteractable()
 	{

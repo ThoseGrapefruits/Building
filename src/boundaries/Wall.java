@@ -1,17 +1,21 @@
 package boundaries;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
+import constants.Constants;
+
 public class Wall extends Boundary
 {
 	Wall( int x, int y, int height )
 	{
-		this.x = x;
-		this.y = y;
-		this.height = height;
+		super( x, y, Constants.WALL_WIDTH, height );
 	}
 
-	/**
-	 * Height of the wall
-	 */
-	int height = 0;
+	@Override
+	public void paint( Graphics2D g2d )
+	{
+		// TODO Auto-generated method stub
 
+	}
 }

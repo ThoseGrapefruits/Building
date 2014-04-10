@@ -13,7 +13,7 @@ public class Test
 
 	boolean building()
 	{
-		Building myBuilding = new Building( 700, 2 );
+		Building myBuilding = new Building();
 
 		return true;
 	}

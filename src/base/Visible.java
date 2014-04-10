@@ -1,6 +1,6 @@
 package base;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 /**
  * Superclass to be extended by all visible objects.
@@ -8,14 +8,14 @@ import java.awt.Graphics;
  * @author Logan Moore
  * 
  */
-public abstract class Visible
+public abstract interface Visible
 {
-	protected boolean visible = true;
+	boolean visible = true;
 
 	/**
 	 * Draw the given object
 	 * 
 	 * @param g is the graphics outlet to use.
 	 */
-	public abstract void paint( Graphics g );
+	public abstract void paint( Graphics2D g2d );
 }

@@ -1,18 +1,17 @@
 package interactive;
 
-public class Light
-{
-	Light( int x, int y )
-	{
-		this.x = x;
-		this.y = y;
-	}
+import java.awt.Graphics2D;
 
-	/**
-	 * Coordinates of Light
-	 */
-	int x = 0;
-	int y = 0;
+import constants.Constants;
+import base.BuildingObject;
+import base.Visible;
+
+public class Light extends BuildingObject implements Visible
+{
+	public Light( int x, int y )
+	{
+		super( x, y, Constants.LIGHT_WIDTH, Constants.LIGHT_HEIGHT );
+	}
 
 	/**
 	 * Brightness level of the light. Default: 5
@@ -40,5 +39,12 @@ public class Light
 	void turnOff()
 	{
 		on = false;
+	}
+
+	@Override
+	public void paint( Graphics2D g2d )
+	{
+		// TODO Auto-generated method stub
+
 	}
 }
