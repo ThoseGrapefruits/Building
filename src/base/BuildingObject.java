@@ -1,5 +1,11 @@
 package base;
 
+/**
+ * Superclass on which all objects in the building are based on. Include
+ * universal attributes applicable to any object.
+ * 
+ * @author Logan Moore
+ */
 public abstract class BuildingObject
 {
 	protected BuildingObject( int x, int y, int width, int height )
@@ -11,10 +17,10 @@ public abstract class BuildingObject
 	}
 
 	/**
-	 * Speed and direction of the current object. A positive velocity is up for y and to the right for x.
+	 * Speed and direction of the current object in pixels per tick.
+	 * Directions/signs follow the pixel coordinate conventions.
 	 */
-	protected transient int velocityX = 0;
-	protected transient int velocityY = 0;
+	protected transient int velocityX = 0, velocityY = 0;
 
 	public int getVelocityX()
 	{
@@ -49,30 +55,52 @@ public abstract class BuildingObject
 	/**
 	 * Pixel coordinates of the object.
 	 */
-	protected transient int x, y;
+	public transient int x, y;
 
 	/**
 	 * Pixel dimensions of the object
 	 */
 	protected int width, height;
 
+	/**
+	 * Returns the width of the object in pixels
+	 * 
+	 * @return width of the object
+	 */
 	public int getWidth()
 	{
 		return this.width;
 	}
 
+	/**
+	 * Returns the height of the object in pixels
+	 * 
+	 * @return height of the object
+	 */
 	public int getHeight()
 	{
 		return this.height;
 	}
 
+	/**
+	 * Whether or not the given object is interactive. Overridden by the
+	 * interactive class.
+	 */
 	protected boolean interactive = false;
 
+	/**
+	 * Returns whether or not the given object is interactive.
+	 * 
+	 * @return interactivity of the object
+	 */
 	public boolean isInteractive()
 	{
 		return interactive;
 	}
 
+	/**
+	 * Whether or not the given object is being used by something else.
+	 */
 	protected boolean inUse = false;
 
 	public boolean isInUse()

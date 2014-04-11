@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -20,11 +21,16 @@ public class View extends JFrame
 	 */
 	private JPanel contentPane;
 
+	private Surface surface;
+
+	public BufferStrategy strategy;
+
 	/**
 	 * Create the frame.
 	 */
-	public View()
+	public View( Surface newSurface )
 	{
+		this.surface = newSurface;
 		setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		setBounds( 100, 100, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT );
 		setTitle( "Building Simulator 2014" );
@@ -33,7 +39,6 @@ public class View extends JFrame
 		contentPane.setLayout( new BorderLayout( 0, 0 ) );
 		setContentPane( contentPane );
 
-		Surface panel = new Surface();
-		contentPane.add( panel, BorderLayout.CENTER );
+		contentPane.add( surface, BorderLayout.CENTER );
 	}
 }

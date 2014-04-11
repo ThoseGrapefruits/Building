@@ -5,9 +5,14 @@ import interactive.Elevator;
 import interactive.Light;
 import interactive.LightSwitch;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import javax.swing.Timer;
 
 import people.Person;
 import constants.Constants;
@@ -15,8 +20,14 @@ import base.Visible;
 import boundaries.Floor;
 import boundaries.Wall;
 
-public class Building implements Visible, Runnable
+public class Building implements Visible, Runnable, ActionListener
 {
+	Building()
+	{
+		Timer timer = new Timer( 10, this );
+		timer.setInitialDelay( 0 );
+		timer.start();
+	}
 
 	// Interactive Objects
 	ArrayList < Light > lights = new ArrayList < Light >();
@@ -81,19 +92,33 @@ public class Building implements Visible, Runnable
 	@Override
 	public void run()
 	{
-		for ( Door door : doors )
-		{
-			( new Thread( door ) ).start();
-		}
-		// TODO finish thread creations.
+		// TODO thread creations for individual objects
 	}
 
 	@Override
 	public void paint( Graphics2D g2d )
 	{
-		g2d.drawRect( Constants.WINDOW_WIDTH / 12, Constants.WINDOW_HEIGHT / 12,
+		g2d.setColor( new Color( 100, 100, 100, 255 ) );
+		g2d.fillRect( Constants.WINDOW_WIDTH / 12, Constants.WINDOW_HEIGHT / 12,
 				Constants.WINDOW_WIDTH - Constants.WINDOW_WIDTH / 6, Constants.WINDOW_HEIGHT
 						- Constants.WINDOW_HEIGHT / 6 );
 
+	}
+
+	/**
+	 * Called each tick. Updates all positions based on the velocities of objects.
+	 */
+	@Override
+	public void actionPerformed( ActionEvent e )
+	{
+		for ( Person person : this.people )
+		{
+			person.x += person.getVelocityX();
+			person.y += person.getVelocityY();
+		}
+		for ( Elevator elevator : elevators )
+		{
+			elevator.y += elevator.getVelocityY();
+		}
 	}
 }

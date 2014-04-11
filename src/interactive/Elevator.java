@@ -11,7 +11,7 @@ public class Elevator extends BuildingObject implements Interactive, Visible, Ru
 	/**
 	 * List of floors above the given point where the elevator will also land (the floor index, not their location).
 	 */
-	int[] otherFloors;
+	int[] floors;
 
 	/**
 	 * Destination floor
@@ -32,25 +32,23 @@ public class Elevator extends BuildingObject implements Interactive, Visible, Ru
 	 * Creates a new elevator object.
 	 * 
 	 * @param location is the pixel location of the bottom elevator.
-	 * @param otherFloors are the other floors that the elevator opens on.
+	 * @param floors are the other floors that the elevator opens on.
 	 */
-	Elevator( int x, int y, int[] otherFloors )
+	Elevator( int x, int y, int[] floors )
 	{
 		super( x, y, Constants.ELEVATOR_WIDTH, Constants.ELEVATOR_HEIGHT );
-		this.otherFloors = otherFloors;
+		this.floors = floors;
 	}
 
-	public boolean goToFloor( int floor )
+	public void call( int floor )
 	{
-		for ( int i : otherFloors )
+		for ( int i : this.floors )
 		{
 			if ( i == floor )
 			{
 				this.destinationFloor = floor;
-				return true;
 			}
 		}
-		return false;
 	}
 
 	@Override
