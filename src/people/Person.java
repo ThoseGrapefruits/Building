@@ -1,9 +1,9 @@
 package people;
 
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,9 +18,17 @@ import base.Visible;
 
 public class Person extends BuildingObject implements Interactive, Visible, Runnable
 {
-	protected Person( int x, int y, int width, int height )
+	public Person( int x, int y )
 	{
 		super( x, y, Constants.PERSON_WIDTH, Constants.PERSON_HEIGHT );
+		try
+		{
+			this.face = ImageIO.read( new File( "resources/images/person/face/default.png" ) );
+		}
+		catch ( IOException e )
+		{
+			e.printStackTrace();
+		}
 	}
 
 	/**

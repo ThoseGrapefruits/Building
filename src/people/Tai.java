@@ -11,13 +11,13 @@ import base.Visible;
 
 public class Tai extends Person implements Interactive, Visible, Runnable
 {
-	protected Tai( int x, int y, int width, int height )
+	public Tai( int x, int y )
 	{
-		super( x, y, width, height );
+		super( x, y );
 
 		try
 		{
-			this.face = ImageIO.read( new File( "resources/images/people/tai.png" ) );
+			this.face = ImageIO.read( new File( "resources/images/person/face/tai.png" ) );
 		}
 		catch ( IOException e )
 		{

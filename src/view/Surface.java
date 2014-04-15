@@ -2,13 +2,15 @@ package view;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
 
 import javax.swing.JPanel;
 
 import main.Building;
 
-public class Surface extends JPanel
+public class Surface extends JPanel implements ActionListener
 {
 	public Surface( Building building )
 	{
@@ -28,5 +30,12 @@ public class Surface extends JPanel
 		super.paintComponent( g );
 		Graphics2D g2d = ( Graphics2D ) g;
 		this.building.paint( g2d );
+	}
+
+	@Override
+	public void actionPerformed( ActionEvent e )
+	{
+		this.building.actionPerformed( e );
+		this.repaint();
 	}
 }

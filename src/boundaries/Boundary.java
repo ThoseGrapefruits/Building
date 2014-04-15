@@ -11,11 +11,4 @@ public abstract class Boundary extends BuildingObject implements Visible
 	}
 
 	protected boolean passable = false;
-
-	protected boolean interactable = false;
-
-	public boolean isInteractable()
-	{
-		return interactable;
-	}
 }

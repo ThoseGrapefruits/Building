@@ -89,16 +89,21 @@ public class Building implements Visible, Runnable, ActionListener
 		doors.add( new Door( x, floor * Constants.FLOOR_DISTANCE ) );
 	}
 
+	void addPerson( int x, int y )
+	{
+		people.add( new Person( x, y ) );
+	}
+
 	@Override
 	public void run()
 	{
-		// TODO thread creations for individual objects
+		// TODO thread creations for individual objects (probs just elevators)
 	}
 
 	@Override
 	public void paint( Graphics2D g2d )
 	{
-		g2d.setColor( new Color( 100, 100, 100, 255 ) );
+		g2d.setColor( new Color( 100, 100, 100 ) );
 		g2d.fillRect( Constants.WINDOW_WIDTH / 12, Constants.WINDOW_HEIGHT / 12,
 				Constants.WINDOW_WIDTH - Constants.WINDOW_WIDTH / 6, Constants.WINDOW_HEIGHT
 						- Constants.WINDOW_HEIGHT / 6 );

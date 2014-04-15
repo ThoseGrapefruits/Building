@@ -1,7 +1,7 @@
 package base;
 
 /**
- * Superclass on which all objects in the building are based on. Include
+ * Superclass on which all objects in the building are based on. Includes
  * universal attributes applicable to any object.
  * 
  * @author Logan Moore
