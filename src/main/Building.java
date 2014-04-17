@@ -6,12 +6,16 @@ import interactive.Light;
 import interactive.LightSwitch;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.Timer;
 
 import people.Person;
@@ -30,52 +34,17 @@ public class Building implements Visible, Runnable, ActionListener
 	}
 
 	// Interactive Objects
-	ArrayList < Light > lights = new ArrayList < Light >();
-	ArrayList < LightSwitch > lightSwitches = new ArrayList < LightSwitch >();
-	ArrayList < Door > doors = new ArrayList < Door >();
-	ArrayList < Elevator > elevators = new ArrayList < Elevator >();
+	public ArrayList < Light > lights = new ArrayList < Light >();
+	public ArrayList < LightSwitch > lightSwitches = new ArrayList < LightSwitch >();
+	public ArrayList < Door > doors = new ArrayList < Door >();
+	public ArrayList < Elevator > elevators = new ArrayList < Elevator >();
 
 	// Boundaries
-	ArrayList < Wall > walls = new ArrayList < Wall >();
-	ArrayList < Floor > floors = new ArrayList < Floor >();
+	public ArrayList < Wall > walls = new ArrayList < Wall >();
+	public ArrayList < Floor > floors = new ArrayList < Floor >();
 
 	// People
-	ArrayList < Person > people = new ArrayList < Person >();
-
-	public ArrayList < Light > getLights()
-	{
-		return this.lights;
-	}
-
-	public ArrayList < LightSwitch > getLightSwitches()
-	{
-		return this.lightSwitches;
-	}
-
-	public ArrayList < Door > getDoors()
-	{
-		return this.doors;
-	}
-
-	public ArrayList < Elevator > getElevators()
-	{
-		return this.elevators;
-	}
-
-	public ArrayList < Wall > getWalls()
-	{
-		return this.walls;
-	}
-
-	public ArrayList < Floor > getFloors()
-	{
-		return this.floors;
-	}
-
-	public ArrayList < Person > getPeople()
-	{
-		return this.people;
-	}
+	public ArrayList < Person > people = new ArrayList < Person >();
 
 	void addLightAndSwitch( int xLight, int yLight, int xSwitch, int ySwitch )
 	{
@@ -104,10 +73,39 @@ public class Building implements Visible, Runnable, ActionListener
 	public void paint( Graphics2D g2d )
 	{
 		g2d.setColor( new Color( 100, 100, 100 ) );
+
 		g2d.fillRect( Constants.WINDOW_WIDTH / 12, Constants.WINDOW_HEIGHT / 12,
 				Constants.WINDOW_WIDTH - Constants.WINDOW_WIDTH / 6, Constants.WINDOW_HEIGHT
 						- Constants.WINDOW_HEIGHT / 6 );
 
+		for ( Person person : people )
+		{
+			person.paint( g2d );
+		}
+		for ( Elevator elevator : elevators )
+		{
+			elevator.paint( g2d );
+		}
+		for ( Door door : doors )
+		{
+			door.paint( g2d );
+		}
+		for ( LightSwitch lightSwitch : lightSwitches )
+		{
+			lightSwitch.paint( g2d );
+		}
+		for ( Light light : lights )
+		{
+			light.paint( g2d );
+		}
+		for ( Wall wall : walls )
+		{
+			wall.paint( g2d );
+		}
+		for ( Floor floor : floors )
+		{
+			floor.paint( g2d );
+		}
 	}
 
 	/**
@@ -116,6 +114,7 @@ public class Building implements Visible, Runnable, ActionListener
 	@Override
 	public void actionPerformed( ActionEvent e )
 	{
+		// Only need to update positions of the mobile objects.
 		for ( Person person : this.people )
 		{
 			person.x += person.getVelocityX();

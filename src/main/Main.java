@@ -5,6 +5,8 @@ package main;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import people.Me;
+import people.Tai;
 import view.View;
 import view.Surface;
 
@@ -23,6 +25,7 @@ public class Main
 	{
 		// Create a new building
 		final Building building = new Building();
+		building.people.add( new Me( 100, 100 ) );
 
 		// Create the visuals
 		SwingUtilities.invokeLater( new Runnable()

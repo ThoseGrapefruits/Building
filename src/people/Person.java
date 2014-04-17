@@ -21,6 +21,7 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 	public Person( int x, int y )
 	{
 		super( x, y, Constants.PERSON_WIDTH, Constants.PERSON_HEIGHT );
+
 		try
 		{
 			this.face = ImageIO.read( new File( "resources/images/person/face/default.png" ) );
@@ -55,7 +56,14 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 		}
 	}
 
+	/**
+	 * Image used for the face of the given person.
+	 */
 	BufferedImage face;
+	/**
+	 * Image used for the body of the given person.
+	 */
+	BufferedImage body; // TODO set this in the instantiation
 
 	public BufferedImage getFace()
 	{
@@ -76,10 +84,10 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 	/**
 	 * Method for person-to-person interaction
 	 * 
-	 * @param otherPerson
+	 * @param otherPerson in the person interacting with the current person.
 	 * @throws InterruptedException
 	 */
-	void interact( Person otherPerson ) throws InterruptedException
+	public void interact( Person otherPerson )
 	{
 		this.inUse = true;
 		otherPerson.inUse = true;
@@ -104,16 +112,16 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 	}
 
 	@Override
-	public void interact( BuildingObject interacter )
+	public void interact( BuildingObject object )
 	{
-		// TODO Auto-generated method stub
-
+		this.inUse = true;
+		this.say( "No touching." );
+		this.inUse = false;
 	}
 
 	@Override
 	public void paint( Graphics2D g2d )
 	{
-		// TODO Auto-generated method stub
-
+		g2d.drawImage( this.face.getScaledInstance( 40, 40, 0 ), this.x, this.y, null );
 	}
 }

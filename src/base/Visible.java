@@ -8,9 +8,11 @@ import java.awt.Graphics2D;
  * @author Logan Moore
  * 
  */
-public abstract interface Visible
+public interface Visible
 {
 	boolean visible = true;
+
+	int animationStep = 0;
 
 	/**
 	 * Draw the given object
