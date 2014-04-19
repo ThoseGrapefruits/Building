@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import constants.Constants;
 import interactive.Interactive;
 import base.Visible;
 
@@ -28,6 +29,7 @@ public class Tai extends Person implements Interactive, Visible, Runnable
 	@Override
 	public void paint( Graphics2D g2d )
 	{
-		g2d.drawImage( this.face, null, this.x, this.y );
+		g2d.drawImage( this.face, null, ( int ) this.x, ( int ) this.y
+				+ Constants.PERSON_BODY_HEIGHT );
 	}
 }

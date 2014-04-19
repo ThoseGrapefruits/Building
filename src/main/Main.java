@@ -1,12 +1,10 @@
 package main;
 
-// import java.awt.image.BufferStrategy;
-
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import constants.Constants;
 import people.Me;
-import people.Tai;
 import view.View;
 import view.Surface;
 
@@ -25,7 +23,8 @@ public class Main
 	{
 		// Create a new building
 		final Building building = new Building();
-		building.people.add( new Me( 100, 100 ) );
+		final Me me = new Me( 100, 100 );
+		building.people.add( me );
 
 		// Create the visuals
 		SwingUtilities.invokeLater( new Runnable()
@@ -37,7 +36,8 @@ public class Main
 				View view = new View( panel );
 				// view.createBufferStrategy( 2 );
 				view.setVisible( true );
-				Timer timer = new Timer( 10, panel );
+				// view.addKeyListener( panel );
+				Timer timer = new Timer( Constants.TICK, panel );
 				timer.setInitialDelay( 0 );
 				timer.start();
 			}

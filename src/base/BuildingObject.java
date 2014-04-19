@@ -1,5 +1,7 @@
 package base;
 
+import javafx.geometry.BoundingBox;
+
 /**
  * Superclass on which all objects in the building are based on. Includes
  * universal attributes applicable to any object.
@@ -14,23 +16,31 @@ public abstract class BuildingObject
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		boundingBox = new BoundingBox( x, y, width, height );
 	}
+
+	/**
+	 * BoundingBox to be used to detect both collision and if an interactive
+	 * object is within reach (can be interacted with).
+	 */
+	private transient BoundingBox boundingBox;
+
+	public BoundingBox getBoundingBox()
+	{
+		return this.boundingBox;
+	}
+
+	/**
+	 * Array of animation counts to be used by the individual object's paint
+	 * function to keep track of the current frame.
+	 */
+	protected int[] animationStep = new int[ 3 ];
 
 	/**
 	 * Speed and direction of the current object in pixels per tick.
 	 * Directions/signs follow the pixel coordinate conventions.
 	 */
-	protected transient int velocityX = 0, velocityY = 0;
-
-	public int getVelocityX()
-	{
-		return velocityX;
-	}
-
-	public int getVelocityY()
-	{
-		return velocityY;
-	}
+	public transient double velocityX = 0, velocityY = 0;
 
 	/**
 	 * Visibility of the given object (whether or not it is to be drawn).
@@ -55,7 +65,7 @@ public abstract class BuildingObject
 	/**
 	 * Pixel coordinates of the object.
 	 */
-	public transient int x, y;
+	public transient double x, y;
 
 	/**
 	 * Pixel dimensions of the object

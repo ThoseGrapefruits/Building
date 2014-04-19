@@ -21,14 +21,14 @@ public class Constants
 			DOOR_HEIGHT = 30, LIGHT_WIDTH = 5, LIGHT_HEIGHT = 5;
 
 	/**
-	 * Speed limits, in pixels per tick.
+	 * Speed limits (pixels / tick)
 	 */
-	public static final int ELEVATOR_MAX_VELOCITY = 10;
+	public static final double ELEVATOR_MAX_VELOCITY = 1.0, PERSON_MAX_VELOCITY = 1.0;
 
 	/**
-	 * Rendering (pixels)
+	 * Rendering, scaling, & window management (pixels)
 	 */
-	public static final int WINDOW_WIDTH = 800, WINDOW_HEIGHT = 600;
+	public static final int WINDOW_WIDTH = 800, WINDOW_HEIGHT = 600, IMAGE_SCALE = 4;
 
 	/**
 	 * Timing (milliseconds)
@@ -36,9 +36,15 @@ public class Constants
 	public static final int TICK = 10;
 
 	/**
-	 * People dimensions (pixels)
+	 * People (pixels)
 	 */
-	public static final int PERSON_WIDTH = 10, PERSON_HEIGHT = 25;
+	public static final int PERSON_WIDTH = 40, PERSON_HEIGHT = 100, PERSON_BODY_HEIGHT = 60,
+			PERSON_HEAD_HEIGHT = 40;
+
+	/**
+	 * Interaction & bounding boxes (pixels)
+	 */
+	public static final int INTERACTION_DISTANCE_X = 5, INTERACTION_DISTANCE_Y = 5;
 
 	/**
 	 * Floors

@@ -22,15 +22,21 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 	{
 		super( x, y, Constants.PERSON_WIDTH, Constants.PERSON_HEIGHT );
 
-		try
-		{
-			this.face = ImageIO.read( new File( "resources/images/person/face/default.png" ) );
-		}
-		catch ( IOException e )
-		{
-			e.printStackTrace();
-		}
+		// try
+		// {
+		// this.face = ImageIO.read( new File( "resources/images/person/face/default.png" ) );
+		// }
+		// catch ( IOException e )
+		// {
+		// e.printStackTrace();
+		// }
 	}
+
+	public BuildingObject interactiveObjectWithinReach;
+
+	public double velocityX = 0, velocityY = 0;
+
+	public boolean wantsToInteract = false;
 
 	/**
 	 * List of listeners
@@ -122,6 +128,7 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 	@Override
 	public void paint( Graphics2D g2d )
 	{
-		g2d.drawImage( this.face.getScaledInstance( 40, 40, 0 ), this.x, this.y, null );
+		g2d.drawImage( this.face.getScaledInstance( 40, 40, 0 ), ( int ) this.x, ( int ) this.y
+				+ Constants.PERSON_BODY_HEIGHT, null );
 	}
 }

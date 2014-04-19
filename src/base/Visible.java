@@ -10,10 +10,6 @@ import java.awt.Graphics2D;
  */
 public interface Visible
 {
-	boolean visible = true;
-
-	int animationStep = 0;
-
 	/**
 	 * Draw the given object
 	 * 

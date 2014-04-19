@@ -33,6 +33,7 @@ public class View extends JFrame
 		this.surface = newSurface;
 		setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		setBounds( 100, 100, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT );
+		setResizable( false );
 		setTitle( "Building Simulator 2014" );
 		contentPane = new JPanel();
 		contentPane.setBorder( new EmptyBorder( 5, 5, 5, 5 ) );

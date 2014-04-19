@@ -2,35 +2,80 @@ package main;
 
 import interactive.Door;
 import interactive.Elevator;
+import interactive.Interactive;
 import interactive.Light;
 import interactive.LightSwitch;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Image;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-import javax.swing.Timer;
-
+import javafx.geometry.BoundingBox;
 import people.Person;
 import constants.Constants;
+import base.BuildingObject;
 import base.Visible;
 import boundaries.Floor;
 import boundaries.Wall;
 
 public class Building implements Visible, Runnable, ActionListener
 {
-	Building()
+	boolean leftPressed = false;
+	boolean rightPressed = false;
+	boolean spacePressed = false;
+
+	public Building()
 	{
-		Timer timer = new Timer( 10, this );
-		timer.setInitialDelay( 0 );
-		timer.start();
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(
+				new KeyEventDispatcher()
+				{
+					@Override
+					public boolean dispatchKeyEvent( KeyEvent ke )
+					{
+						synchronized ( Building.class )
+						{
+							int keyCode = ke.getKeyCode();
+							switch ( ke.getID() )
+							{
+								case KeyEvent.KEY_PRESSED:
+									if ( keyCode == KeyEvent.VK_LEFT )
+									{
+										leftPressed = true;
+									}
+									else if ( keyCode == KeyEvent.VK_RIGHT )
+									{
+										rightPressed = true;
+									}
+									else if ( keyCode == KeyEvent.VK_SPACE )
+									{
+										spacePressed = true;
+									}
+									break;
+
+								case KeyEvent.KEY_RELEASED:
+									if ( ke.getKeyCode() == KeyEvent.VK_LEFT )
+									{
+										leftPressed = false;
+									}
+									else if ( ke.getKeyCode() == KeyEvent.VK_RIGHT )
+									{
+										rightPressed = false;
+									}
+									else if ( keyCode == KeyEvent.VK_SPACE )
+									{
+										spacePressed = false;
+									}
+									break;
+							}
+							return false;
+						}
+					}
+				} );
 	}
 
 	// Interactive Objects
@@ -78,21 +123,26 @@ public class Building implements Visible, Runnable, ActionListener
 				Constants.WINDOW_WIDTH - Constants.WINDOW_WIDTH / 6, Constants.WINDOW_HEIGHT
 						- Constants.WINDOW_HEIGHT / 6 );
 
-		for ( Person person : people )
+		// Depth 3
+		for ( LightSwitch lightSwitch : lightSwitches )
 		{
-			person.paint( g2d );
+			lightSwitch.paint( g2d );
 		}
 		for ( Elevator elevator : elevators )
 		{
 			elevator.paint( g2d );
 		}
+
+		// Depth 2
+		for ( Person person : people )
+		{
+			person.paint( g2d );
+		}
+
+		// Depth 1
 		for ( Door door : doors )
 		{
 			door.paint( g2d );
-		}
-		for ( LightSwitch lightSwitch : lightSwitches )
-		{
-			lightSwitch.paint( g2d );
 		}
 		for ( Light light : lights )
 		{
@@ -109,6 +159,33 @@ public class Building implements Visible, Runnable, ActionListener
 	}
 
 	/**
+	 * Finds the closest object to a person.
+	 * 
+	 * @param sourcePerson is the person trying to interact.
+	 * @return
+	 */
+	private BuildingObject getClosestInteractiveObject( Person sourcePerson )
+	{
+		BoundingBox personBoundingBox = sourcePerson.getBoundingBox();
+		for ( LightSwitch lightSwitch : lightSwitches )
+		{
+			if ( lightSwitch.getBoundingBox().intersects( personBoundingBox ) )
+			{
+				return lightSwitch;
+			}
+		}
+
+		for ( Door door : doors )
+		{
+			if ( door.getBoundingBox().intersects( personBoundingBox ) )
+			{
+				return door;
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Called each tick. Updates all positions based on the velocities of objects.
 	 */
 	@Override
@@ -117,12 +194,55 @@ public class Building implements Visible, Runnable, ActionListener
 		// Only need to update positions of the mobile objects.
 		for ( Person person : this.people )
 		{
-			person.x += person.getVelocityX();
-			person.y += person.getVelocityY();
+			if ( person.getClass().toString().compareTo( "class people.Me" ) == 0 )
+			{
+				if ( this.leftPressed && person.velocityX > -( Constants.PERSON_MAX_VELOCITY ) )
+				{
+					person.velocityX -= 0.1;
+				}
+				else if ( this.rightPressed && person.velocityX < Constants.PERSON_MAX_VELOCITY )
+				{
+					person.velocityX += 0.1;
+				}
+				else if ( person.velocityX > -0.01 && person.velocityX < 0.01 )
+				{
+					person.velocityX = 0;
+				}
+				else
+				{
+					if ( person.velocityX < 0 )
+					{
+						person.velocityX += 0.1;
+					}
+					else if ( person.velocityX > 0 )
+					{
+						person.velocityX -= 0.1;
+					}
+				}
+			}
+			if ( this.spacePressed )
+			{
+				person.wantsToInteract = true;
+			}
+			else
+			{
+				person.wantsToInteract = false;
+			}
+			if ( person.wantsToInteract )
+			{
+				person.velocityX = 0;
+				person.interactiveObjectWithinReach = this.getClosestInteractiveObject( person );
+				if ( person.interactiveObjectWithinReach != null )
+				{
+					( ( Interactive ) person.interactiveObjectWithinReach ).interact( person );
+				}
+			}
+			person.x += person.velocityX;
+			person.y += person.velocityY;
 		}
 		for ( Elevator elevator : elevators )
 		{
-			elevator.y += elevator.getVelocityY();
+			elevator.y += elevator.velocityY;
 		}
 	}
 }
