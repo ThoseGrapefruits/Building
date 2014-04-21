@@ -23,7 +23,7 @@ public class Main
 	{
 		// Create a new building
 		final Building building = new Building();
-		final Me me = new Me( 100, 100 );
+		final Me me = new Me( 100, 400 );
 		building.people.add( me );
 
 		// Create the visuals
@@ -34,9 +34,7 @@ public class Main
 			{
 				Surface panel = new Surface( building );
 				View view = new View( panel );
-				// view.createBufferStrategy( 2 );
 				view.setVisible( true );
-				// view.addKeyListener( panel );
 				Timer timer = new Timer( Constants.TICK, panel );
 				timer.setInitialDelay( 0 );
 				timer.start();

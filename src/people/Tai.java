@@ -18,7 +18,7 @@ public class Tai extends Person implements Interactive, Visible, Runnable
 
 		try
 		{
-			this.face = ImageIO.read( new File( "resources/images/person/face/tai.png" ) );
+			this.head = ImageIO.read( new File( "resources/images/person/face/tai.png" ) );
 		}
 		catch ( IOException e )
 		{
@@ -29,7 +29,7 @@ public class Tai extends Person implements Interactive, Visible, Runnable
 	@Override
 	public void paint( Graphics2D g2d )
 	{
-		g2d.drawImage( this.face, null, ( int ) this.x, ( int ) this.y
+		g2d.drawImage( this.head, null, ( int ) this.x, ( int ) this.y
 				+ Constants.PERSON_BODY_HEIGHT );
 	}
 }

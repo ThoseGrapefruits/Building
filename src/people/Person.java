@@ -65,22 +65,22 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 	/**
 	 * Image used for the face of the given person.
 	 */
-	BufferedImage face;
+	BufferedImage head;
 	/**
 	 * Image used for the body of the given person.
 	 */
 	BufferedImage body; // TODO set this in the instantiation
 
-	public BufferedImage getFace()
+	public BufferedImage getHead()
 	{
-		return face;
+		return head;
 	}
 
 	String toBeSaid = "";
 
 	int time = 0;
 
-	private String name = "Anonymous" + ( 1 + ( int ) Math.random() * 100 );
+	protected String name = "Anonymous" + ( 1 + ( int ) Math.random() * 100 );
 
 	public String getName()
 	{
@@ -128,7 +128,7 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 	@Override
 	public void paint( Graphics2D g2d )
 	{
-		g2d.drawImage( this.face.getScaledInstance( 40, 40, 0 ), ( int ) this.x, ( int ) this.y
+		g2d.drawImage( this.head.getScaledInstance( 40, 40, 0 ), ( int ) this.x, ( int ) this.y
 				+ Constants.PERSON_BODY_HEIGHT, null );
 	}
 }

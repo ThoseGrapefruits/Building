@@ -13,10 +13,21 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
 import javafx.geometry.BoundingBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import people.Person;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 import constants.Constants;
 import base.BuildingObject;
 import base.Visible;
@@ -31,6 +42,21 @@ public class Building implements Visible, Runnable, ActionListener
 
 	public Building()
 	{
+		try
+		{
+			this.audioStream = new AudioStream(
+					new FileInputStream(
+							"/Users/ThoseGrapefruits/Dropbox/School Work/Programming/Java/Building/resources/sounds/sa.wav" ) );
+		}
+		catch ( FileNotFoundException e )
+		{
+			e.printStackTrace();
+		}
+		catch ( IOException e )
+		{
+			e.printStackTrace();
+		}
+
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(
 				new KeyEventDispatcher()
 				{
@@ -46,10 +72,12 @@ public class Building implements Visible, Runnable, ActionListener
 									if ( keyCode == KeyEvent.VK_LEFT )
 									{
 										leftPressed = true;
+										AudioPlayer.player.start( audioStream );
 									}
 									else if ( keyCode == KeyEvent.VK_RIGHT )
 									{
 										rightPressed = true;
+										AudioPlayer.player.start( audioStream );
 									}
 									else if ( keyCode == KeyEvent.VK_SPACE )
 									{
@@ -61,10 +89,12 @@ public class Building implements Visible, Runnable, ActionListener
 									if ( ke.getKeyCode() == KeyEvent.VK_LEFT )
 									{
 										leftPressed = false;
+										AudioPlayer.player.stop( audioStream );
 									}
 									else if ( ke.getKeyCode() == KeyEvent.VK_RIGHT )
 									{
 										rightPressed = false;
+										AudioPlayer.player.stop( audioStream );
 									}
 									else if ( keyCode == KeyEvent.VK_SPACE )
 									{
@@ -159,7 +189,7 @@ public class Building implements Visible, Runnable, ActionListener
 	}
 
 	/**
-	 * Finds the closest object to a person.
+	 * Finds the closest object to a person within its BoundingBox.
 	 * 
 	 * @param sourcePerson is the person trying to interact.
 	 * @return
@@ -184,6 +214,8 @@ public class Building implements Visible, Runnable, ActionListener
 		}
 		return null;
 	}
+
+	AudioStream audioStream;
 
 	/**
 	 * Called each tick. Updates all positions based on the velocities of objects.
