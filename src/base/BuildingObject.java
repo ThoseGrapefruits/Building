@@ -2,10 +2,6 @@ package base;
 
 import java.awt.Rectangle;
 
-import main.Building;
-import boundaries.Floor;
-import boundaries.Wall;
-
 /**
  * Superclass on which all objects in the building are based on. Includes
  * universal attributes applicable to any object.

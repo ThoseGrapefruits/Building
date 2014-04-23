@@ -1,5 +1,6 @@
 package boundaries;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import constants.Constants;
@@ -27,7 +28,7 @@ public class Floor extends Boundary
 	@Override
 	public void paint( Graphics2D g2d )
 	{
-		// TODO Auto-generated method stub
-
+		g2d.setColor( new Color( 20, 20, 20 ) );
+		g2d.fillRect( ( int ) this.x, ( int ) this.y, this.width, this.height );
 	}
 }

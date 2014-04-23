@@ -3,6 +3,7 @@ package main;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import boundaries.Wall;
 import people.Me;
 import view.Surface;
 import view.View;
@@ -23,8 +24,10 @@ public class Main
 	{
 		// Create a new building
 		final Building building = new Building();
-		final Me me = new Me( 100, 400 );
-		building.people.add( me );
+		building.people.add( new Me( 100, 400 ) );
+		building.people.add( new Me( 400, 400 ) );
+		building.walls.add( new Wall( 500, 360, 140 ) );
+		building.walls.add( new Wall( 50, 360, 140 ) );
 
 		// Create the visuals
 		SwingUtilities.invokeLater( new Runnable()
