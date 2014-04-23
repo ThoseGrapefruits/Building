@@ -1,9 +1,13 @@
 package interactive;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
+import main.Building;
 import base.BuildingObject;
 import base.Visible;
+import boundaries.Floor;
+import boundaries.Wall;
 import constants.Constants;
 
 public class Elevator extends BuildingObject implements Interactive, Visible, Runnable
@@ -49,6 +53,11 @@ public class Elevator extends BuildingObject implements Interactive, Visible, Ru
 				this.destinationFloor = floor;
 			}
 		}
+	}
+
+	public void move( Building b )
+	{
+		this.y += this.velocityY;
 	}
 
 	@Override

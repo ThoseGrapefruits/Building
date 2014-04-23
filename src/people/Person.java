@@ -1,20 +1,21 @@
 package people;
 
+import interactive.Interactive;
+
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.imageio.ImageIO;
-
-import interactive.Interactive;
-import constants.Constants;
+import main.Building;
 import base.BuildingObject;
 import base.Visible;
+import boundaries.Floor;
+import boundaries.Wall;
+import constants.Constants;
 
 public class Person extends BuildingObject implements Interactive, Visible, Runnable
 {
@@ -123,6 +124,45 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 		this.inUse = true;
 		this.say( "No touching." );
 		this.inUse = false;
+	}
+
+	public void move( Building b )
+	{
+		boolean canMoveX = true;
+		boolean canMoveY = true;
+		Rectangle nextLocation = new Rectangle( ( int ) ( this.x + this.velocityX ),
+				( int ) ( this.y + this.velocityY ), this.width, this.height );
+		for ( Wall wall : b.walls )
+		{
+			if ( nextLocation.intersects( wall.getBounds() ) )
+			{
+				canMoveX = false;
+			}
+		}
+		if ( canMoveX )
+		{
+			this.x += this.velocityX;
+		}
+		else
+		{
+			this.velocityX = 0;
+		}
+
+		for ( Floor floor : b.floors )
+		{
+			if ( nextLocation.intersects( floor.getBounds() ) )
+			{
+				canMoveY = false;
+			}
+		}
+		if ( canMoveY )
+		{
+			this.y += this.velocityY;
+		}
+		else
+		{
+			this.velocityY = 0;
+		}
 	}
 
 	@Override

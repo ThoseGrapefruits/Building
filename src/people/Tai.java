@@ -1,14 +1,15 @@
 package people;
 
+import interactive.Interactive;
+
 import java.awt.Graphics2D;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import constants.Constants;
-import interactive.Interactive;
 import base.Visible;
+import constants.Constants;
 
 public class Tai extends Person implements Interactive, Visible, Runnable
 {

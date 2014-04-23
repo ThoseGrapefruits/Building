@@ -2,9 +2,9 @@ package interactive;
 
 import java.awt.Graphics2D;
 
-import constants.Constants;
 import base.BuildingObject;
 import base.Visible;
+import constants.Constants;
 
 public class Light extends BuildingObject implements Visible
 {

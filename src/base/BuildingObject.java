@@ -2,7 +2,9 @@ package base;
 
 import java.awt.Rectangle;
 
-import javafx.geometry.BoundingBox;
+import main.Building;
+import boundaries.Floor;
+import boundaries.Wall;
 
 /**
  * Superclass on which all objects in the building are based on. Includes

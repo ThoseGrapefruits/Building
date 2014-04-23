@@ -3,10 +3,10 @@ package main;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-import constants.Constants;
 import people.Me;
-import view.View;
 import view.Surface;
+import view.View;
+import constants.Constants;
 
 /**
  * Main controller for the program.

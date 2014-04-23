@@ -1,8 +1,9 @@
 package objects;
 
+import interactive.Interactive;
+
 import java.awt.Graphics2D;
 
-import interactive.Interactive;
 import base.BuildingObject;
 import base.Visible;
 

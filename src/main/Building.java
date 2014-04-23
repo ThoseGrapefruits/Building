@@ -20,15 +20,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javafx.geometry.BoundingBox;
 import people.Person;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
-import constants.Constants;
 import base.BuildingObject;
 import base.Visible;
 import boundaries.Floor;
 import boundaries.Wall;
+import constants.Constants;
 
 public class Building implements Visible, Runnable, ActionListener
 {
@@ -256,30 +255,24 @@ public class Building implements Visible, Runnable, ActionListener
 						person.velocityX -= 0.1;
 					}
 				}
-			}
-			if ( this.spacePressed )
-			{
-				person.wantsToInteract = true;
-			}
-			else
-			{
-				person.wantsToInteract = false;
-			}
-			if ( person.wantsToInteract )
-			{
-				person.velocityX = 0;
-				person.interactiveObjectWithinReach = this.getClosestInteractiveObject( person );
-				if ( person.interactiveObjectWithinReach != null )
+
+				if ( this.spacePressed )
 				{
-					( ( Interactive ) person.interactiveObjectWithinReach ).interact( person );
+					person.velocityX = 0;
+					person.interactiveObjectWithinReach = this.getClosestInteractiveObject( person );
+					if ( person.interactiveObjectWithinReach != null )
+					{
+						( ( Interactive ) person.interactiveObjectWithinReach ).interact( person );
+					}
 				}
 			}
-			person.x += person.velocityX;
-			person.y += person.velocityY;
+
+			person.move( this );
 		}
+
 		for ( Elevator elevator : elevators )
 		{
-			elevator.y += elevator.velocityY;
+			elevator.move( this );
 		}
 	}
 }
