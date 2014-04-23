@@ -1,5 +1,7 @@
 package base;
 
+import java.awt.Rectangle;
+
 import javafx.geometry.BoundingBox;
 
 /**
@@ -16,18 +18,11 @@ public abstract class BuildingObject
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		boundingBox = new BoundingBox( x, y, width, height );
 	}
 
-	/**
-	 * BoundingBox to be used to detect both collision and if an interactive
-	 * object is within reach (can be interacted with).
-	 */
-	private transient BoundingBox boundingBox;
-
-	public BoundingBox getBoundingBox()
+	public Rectangle getBounds()
 	{
-		return this.boundingBox;
+		return new Rectangle( ( int ) this.x, ( int ) this.y, this.width, this.height );
 	}
 
 	/**

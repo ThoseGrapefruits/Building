@@ -2,6 +2,7 @@ package main;
 
 import interactive.Door;
 import interactive.Elevator;
+import interactive.ElevatorButton;
 import interactive.Interactive;
 import interactive.Light;
 import interactive.LightSwitch;
@@ -10,6 +11,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -18,13 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-
 import javafx.geometry.BoundingBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import people.Person;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
@@ -113,6 +109,7 @@ public class Building implements Visible, Runnable, ActionListener
 	public ArrayList < LightSwitch > lightSwitches = new ArrayList < LightSwitch >();
 	public ArrayList < Door > doors = new ArrayList < Door >();
 	public ArrayList < Elevator > elevators = new ArrayList < Elevator >();
+	public ArrayList < ElevatorButton > elevatorButtons = new ArrayList < ElevatorButton >();
 
 	// Boundaries
 	public ArrayList < Wall > walls = new ArrayList < Wall >();
@@ -192,22 +189,30 @@ public class Building implements Visible, Runnable, ActionListener
 	 * Finds the closest object to a person within its BoundingBox.
 	 * 
 	 * @param sourcePerson is the person trying to interact.
-	 * @return
+	 * @return the interactive object closest to the person
 	 */
 	private BuildingObject getClosestInteractiveObject( Person sourcePerson )
 	{
-		BoundingBox personBoundingBox = sourcePerson.getBoundingBox();
+		Rectangle bounds = sourcePerson.getBounds();
 		for ( LightSwitch lightSwitch : lightSwitches )
 		{
-			if ( lightSwitch.getBoundingBox().intersects( personBoundingBox ) )
+			if ( lightSwitch.getBounds().intersects( bounds ) )
 			{
 				return lightSwitch;
 			}
 		}
 
+		for ( ElevatorButton elevatorButton : elevatorButtons )
+		{
+			if ( elevatorButton.getBounds().intersects( bounds ) )
+			{
+				return elevatorButton;
+			}
+		}
+
 		for ( Door door : doors )
 		{
-			if ( door.getBoundingBox().intersects( personBoundingBox ) )
+			if ( door.getBounds().intersects( bounds ) )
 			{
 				return door;
 			}
