@@ -1,10 +1,9 @@
 package objects;
 
-import interactive.Interactive;
-
 import java.awt.Graphics2D;
 
 import base.BuildingObject;
+import base.Interactive;
 import base.Visible;
 
 public class Decoration extends BuildingObject implements Interactive, Visible, Runnable

@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 
 import main.Building;
 import base.BuildingObject;
+import base.Interactive;
 import base.Visible;
 import constants.Constants;
 

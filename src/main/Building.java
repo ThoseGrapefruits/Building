@@ -3,7 +3,6 @@ package main;
 import interactive.Door;
 import interactive.Elevator;
 import interactive.ElevatorButton;
-import interactive.Interactive;
 import interactive.Light;
 import interactive.LightSwitch;
 
@@ -23,6 +22,7 @@ import people.Person;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 import base.BuildingObject;
+import base.Interactive;
 import base.Visible;
 import boundaries.Floor;
 import boundaries.Wall;

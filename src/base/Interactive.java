@@ -1,6 +1,5 @@
-package interactive;
+package base;
 
-import base.BuildingObject;
 
 /**
  * Superclass to be extended by all interactive objects like LightSwitch, Elevator, Door, etc.

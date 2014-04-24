@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import base.BuildingObject;
+import base.Interactive;
 import base.Visible;
 import constants.Constants;
 

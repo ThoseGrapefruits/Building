@@ -1,7 +1,5 @@
 package people;
 
-import interactive.Interactive;
-
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -12,6 +10,7 @@ import java.util.List;
 
 import main.Building;
 import base.BuildingObject;
+import base.Interactive;
 import base.Visible;
 import boundaries.Floor;
 import boundaries.Wall;

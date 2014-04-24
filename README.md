@@ -28,6 +28,28 @@
 <br><hr><br>
 
 ##Class & Function Outline
+######start `package base`
+###`BuildingObject`
+> Base functionality of all objects in the building.
+
+###`Interactive`
+> An interface to be implemented by all interactive objects.
+
+- Includes an `interact(BuildingObject)` function to be overridden by classes implementing it.
+- Overrides `BuildingObject`'s `interactive` property to `true`.
+
+###`InteractListener`
+> The interaction listener in case I made interaction listener-based.
+
+- Likely won't be used in practice and I will implement interaction in a simpler fashion.
+
+###`Visible`
+> Interface to be extended by all visible objects.
+
+- Includes `paint(Graphics2D)` function, which is called on all visible objects by the controller (the `Building`).
+
+######end `package base`
+
 ######start `package main`
 ###`Building`
 > Contains the main function and serves as the "controller" in MVC.
@@ -135,11 +157,12 @@
 ##MVC Outline
 ###Model
 - `Building`
-- `Elevator`
-- `Door`
-- `Light`
+- `BuildingObject`
+	- `Elevator`
+	- `Door`
+	- `Light`
 	- `LightSwitch`
-- `Person`
+	- `Person`
 
 ###View
 - `View`
@@ -147,6 +170,7 @@
 
 ###Controller
 - `Building`
+- `Main`
 
 <br><hr><br>
 

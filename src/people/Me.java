@@ -1,13 +1,12 @@
 package people;
 
-import interactive.Interactive;
-
 import java.awt.Graphics2D;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import base.Interactive;
 import base.Visible;
 import constants.Constants;
 
