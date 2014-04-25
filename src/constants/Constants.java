@@ -19,8 +19,9 @@ public class Constants
 	 */
 	public static final int ELEVATOR_BUTTON_WIDTH = 3, ELEVATOR_BUTTON_HEIGHT = 5,
 			LIGHT_SWITCH_WIDTH = 3, LIGHT_SWITCH_HEIGHT = 5, ELEVATOR_WIDTH = 40,
-			ELEVATOR_SHAFT_WIDTH = ELEVATOR_WIDTH + 10, ELEVATOR_HEIGHT = 30, DOOR_WIDTH = 20,
-			DOOR_HEIGHT = 30, LIGHT_WIDTH = 5, LIGHT_HEIGHT = 5;
+			ELEVATOR_SHAFT_WIDTH = ELEVATOR_WIDTH + 10, ELEVATOR_HEIGHT = 30,
+			DOOR_CLOSED_WIDTH = 12, DOOR_OPEN_WIDTH = 50, DOOR_HEIGHT = 110, LIGHT_WIDTH = 5,
+			LIGHT_HEIGHT = 5;
 
 	/**
 	 * Speed limits (pixels / tick)
@@ -58,5 +59,6 @@ public class Constants
 	 * Color scheme.
 	 */
 	public static final Color BUILDING_COLOR = new Color( 100, 100, 100 ), WALL_COLOR = new Color(
-			50, 40, 40 ), FLOOR_COLOR = new Color( 50, 20, 20 );
+			50, 40, 40 ), FLOOR_COLOR = new Color( 50, 20, 20 ),
+			DOOR_COLOR = new Color( 60, 30, 30 );
 }

@@ -191,7 +191,9 @@ public class Building implements Visible, Runnable, ActionListener
 	 */
 	private BuildingObject getClosestInteractiveObject( Person sourcePerson )
 	{
-		Rectangle bounds = sourcePerson.getBounds();
+		Rectangle origBounds = sourcePerson.getBounds();
+		Rectangle bounds = new Rectangle( origBounds.x - 5, origBounds.y - 5,
+				origBounds.width + 10, origBounds.height + 10 );
 		for ( LightSwitch lightSwitch : lightSwitches )
 		{
 			if ( lightSwitch.getBounds().intersects( bounds ) )

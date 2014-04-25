@@ -1,5 +1,7 @@
 package people;
 
+import interactive.Door;
+
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -134,6 +136,13 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 		for ( Wall wall : b.walls )
 		{
 			if ( nextLocation.intersects( wall.getBounds() ) )
+			{
+				canMoveX = false;
+			}
+		}
+		for ( Door door : b.doors )
+		{
+			if ( door.open == 0 && nextLocation.intersects( door.getBounds() ) )
 			{
 				canMoveX = false;
 			}
