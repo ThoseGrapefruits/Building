@@ -18,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import people.Me;
 import people.Person;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
@@ -38,9 +39,7 @@ public class Building implements Visible, Runnable, ActionListener
 	{
 		try
 		{
-			this.audioStream = new AudioStream(
-					new FileInputStream(
-							"/Users/ThoseGrapefruits/Dropbox/School Work/Programming/Java/Building/resources/sounds/sa.wav" ) );
+			this.audioStream = new AudioStream( new FileInputStream( "resources/sounds/sa.wav" ) );
 		}
 		catch ( FileNotFoundException e )
 		{
@@ -115,22 +114,26 @@ public class Building implements Visible, Runnable, ActionListener
 
 	// People
 	public ArrayList < Person > people = new ArrayList < Person >();
+	public Me me;
 
 	void addLightAndSwitch( int xLight, int yLight, int xSwitch, int ySwitch )
 	{
 		Light newLight = new Light( xLight, yLight );
-		lights.add( newLight );
-		lightSwitches.add( new LightSwitch( xSwitch, ySwitch, newLight ) );
+		this.lights.add( newLight );
+		this.lightSwitches.add( new LightSwitch( xSwitch, ySwitch, newLight ) );
 	}
 
 	void addDoor( int x, int floor )
 	{
-		doors.add( new Door( x, floor * Constants.FLOOR_DISTANCE ) );
+		this.doors.add( new Door( x, floor * Constants.FLOOR_DISTANCE ) );
 	}
 
 	void addPerson( int x, int y )
 	{
-		people.add( new Person( x, y ) );
+		Person person = new Person( x, y );
+		this.people.add( person );
+		new Thread( person ).start();
+
 	}
 
 	@Override
@@ -149,35 +152,36 @@ public class Building implements Visible, Runnable, ActionListener
 						- Constants.WINDOW_HEIGHT / 6 );
 
 		// Depth 3
-		for ( LightSwitch lightSwitch : lightSwitches )
+		for ( LightSwitch lightSwitch : this.lightSwitches )
 		{
 			lightSwitch.paint( g2d );
 		}
-		for ( Elevator elevator : elevators )
+		for ( Elevator elevator : this.elevators )
 		{
 			elevator.paint( g2d );
 		}
 
 		// Depth 2
-		for ( Person person : people )
+		this.me.paint( g2d );
+		for ( Person person : this.people )
 		{
 			person.paint( g2d );
 		}
 
 		// Depth 1
-		for ( Door door : doors )
+		for ( Door door : this.doors )
 		{
 			door.paint( g2d );
 		}
-		for ( Light light : lights )
+		for ( Light light : this.lights )
 		{
 			light.paint( g2d );
 		}
-		for ( Wall wall : walls )
+		for ( Wall wall : this.walls )
 		{
 			wall.paint( g2d );
 		}
-		for ( Floor floor : floors )
+		for ( Floor floor : this.floors )
 		{
 			floor.paint( g2d );
 		}
@@ -229,48 +233,52 @@ public class Building implements Visible, Runnable, ActionListener
 	public void actionPerformed( ActionEvent e )
 	{
 		// Only need to update positions of the mobile objects.
-		for ( Person person : this.people )
-		{
-			if ( person.getClass().toString().compareTo( "class people.Me" ) == 0 )
-			{
-				if ( this.leftPressed && person.velocityX > -( Constants.PERSON_MAX_VELOCITY ) )
-				{
-					person.velocityX -= 0.1;
-				}
-				else if ( this.rightPressed && person.velocityX < Constants.PERSON_MAX_VELOCITY )
-				{
-					person.velocityX += 0.1;
-				}
-				else if ( person.velocityX > -0.01 && person.velocityX < 0.01 )
-				{
-					person.velocityX = 0;
-				}
-				else
-				{
-					if ( person.velocityX < 0 )
-					{
-						person.velocityX += 0.1;
-					}
-					else if ( person.velocityX > 0 )
-					{
-						person.velocityX -= 0.1;
-					}
-				}
 
-				if ( this.spacePressed )
+		// User controlled person "Me"
+		if ( this.spacePressed )
+		{
+			this.me.velocityX = 0;
+			this.me.interactiveObjectWithinReach = this.getClosestInteractiveObject( this.me );
+			if ( this.me.interactiveObjectWithinReach != null )
+			{
+				( ( Interactive ) this.me.interactiveObjectWithinReach ).interact( this.me );
+			}
+		}
+		else
+		{
+			if ( this.leftPressed && this.me.velocityX > -( Constants.PERSON_MAX_VELOCITY ) )
+			{
+				this.me.velocityX -= 0.1;
+			}
+			else if ( this.rightPressed && this.me.velocityX < Constants.PERSON_MAX_VELOCITY )
+			{
+				this.me.velocityX += 0.1;
+			}
+			else if ( this.me.velocityX > -0.01 && this.me.velocityX < 0.01 )
+			{
+				this.me.velocityX = 0;
+			}
+			else
+			{
+				if ( this.me.velocityX < 0 )
 				{
-					person.velocityX = 0;
-					person.interactiveObjectWithinReach = this.getClosestInteractiveObject( person );
-					if ( person.interactiveObjectWithinReach != null )
-					{
-						( ( Interactive ) person.interactiveObjectWithinReach ).interact( person );
-					}
+					this.me.velocityX += 0.1;
+				}
+				else if ( this.me.velocityX > 0 )
+				{
+					this.me.velocityX -= 0.1;
 				}
 			}
+			me.move( this );
+		}
 
+		// AI people
+		for ( Person person : this.people )
+		{
 			person.move( this );
 		}
 
+		// Elevators
 		for ( Elevator elevator : elevators )
 		{
 			elevator.move( this );

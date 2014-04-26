@@ -5,10 +5,14 @@ import interactive.Door;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import main.Building;
 import base.BuildingObject;
@@ -24,14 +28,15 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 	{
 		super( x, y, Constants.PERSON_WIDTH, Constants.PERSON_HEIGHT );
 
-		// try
-		// {
-		// this.face = ImageIO.read( new File( "resources/images/person/face/default.png" ) );
-		// }
-		// catch ( IOException e )
-		// {
-		// e.printStackTrace();
-		// }
+		try
+		{
+			this.head = ImageIO.read( new File( "resources/images/person/default/_head.png" ) );
+			this.body = ImageIO.read( new File( "resources/images/person/default/_body.png" ) );
+		}
+		catch ( IOException e )
+		{
+			System.out.println( "Could not read character graphics." );
+		}
 	}
 
 	public BuildingObject interactiveObjectWithinReach;
@@ -71,7 +76,7 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 	/**
 	 * Image used for the body of the given person.
 	 */
-	BufferedImage body; // TODO set this in the instantiation
+	BufferedImage body;
 
 	public BufferedImage getHead()
 	{
@@ -116,7 +121,31 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 	@Override
 	public void run()
 	{
-
+		boolean direction = true;
+		while ( true )
+		{
+			if ( this.velocityX == 0 )
+			{
+				if ( direction )
+				{
+					direction = false;
+					this.velocityX = -1;
+				}
+				else
+				{
+					direction = true;
+					this.velocityX = 1;
+				}
+			}
+			try
+			{
+				Thread.sleep( 1000 );
+			}
+			catch ( InterruptedException e )
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
@@ -127,12 +156,12 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 		this.inUse = false;
 	}
 
-	public void move( Building b )
+	public boolean canMoveX( Building b )
 	{
 		boolean canMoveX = true;
-		boolean canMoveY = true;
 		Rectangle nextLocation = new Rectangle( ( int ) ( this.x + this.velocityX ),
 				( int ) ( this.y + this.velocityY ), this.width, this.height );
+
 		for ( Wall wall : b.walls )
 		{
 			if ( nextLocation.intersects( wall.getBounds() ) )
@@ -147,7 +176,27 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 				canMoveX = false;
 			}
 		}
-		if ( canMoveX )
+		return canMoveX;
+	}
+
+	public boolean canMoveY( Building b )
+	{
+		boolean canMoveY = true;
+		Rectangle nextLocation = new Rectangle( ( int ) ( this.x + this.velocityX ),
+				( int ) ( this.y + this.velocityY ), this.width, this.height );
+		for ( Floor floor : b.floors )
+		{
+			if ( nextLocation.intersects( floor.getBounds() ) )
+			{
+				canMoveY = false;
+			}
+		}
+		return canMoveY;
+	}
+
+	public void move( Building b )
+	{
+		if ( this.canMoveX( b ) )
 		{
 			this.x += this.velocityX;
 		}
@@ -156,14 +205,7 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 			this.velocityX = 0;
 		}
 
-		for ( Floor floor : b.floors )
-		{
-			if ( nextLocation.intersects( floor.getBounds() ) )
-			{
-				canMoveY = false;
-			}
-		}
-		if ( canMoveY )
+		if ( this.canMoveY( b ) )
 		{
 			this.y += this.velocityY;
 		}
@@ -176,7 +218,55 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 	@Override
 	public void paint( Graphics2D g2d )
 	{
-		g2d.drawImage( this.head.getScaledInstance( 40, 40, 0 ), ( int ) this.x, ( int ) this.y
-				+ Constants.PERSON_BODY_HEIGHT, null );
+		if ( this.velocityX == 0 )
+		{ // Standing still
+			// Head
+			this.animationStep[ 0 ] = 0;
+			g2d.drawImage(
+					this.head.getSubimage( 90, 0, 10, 10 ).getScaledInstance(
+							Constants.PERSON_WIDTH, Constants.PERSON_HEAD_HEIGHT, 0 ),
+					( int ) this.x, ( int ) this.y, null );
+
+			// Body
+			this.animationStep[ 1 ] = 0;
+			g2d.drawImage(
+					this.body.getSubimage( 60, 0, 10, 15 ).getScaledInstance(
+							Constants.PERSON_WIDTH, Constants.PERSON_BODY_HEIGHT, 0 ),
+					( int ) this.x, ( int ) this.y + Constants.PERSON_HEAD_HEIGHT, null );
+		}
+		else if ( this.velocityX > 0 )
+		{ // Moving to the right
+			// Head
+			g2d.drawImage( this.head.getSubimage( 10 * this.animationStep[ 0 ], 10, 10, 10 )
+					.getScaledInstance( Constants.PERSON_WIDTH, Constants.PERSON_HEAD_HEIGHT, 0 ),
+					( int ) this.x, ( int ) this.y, null );
+			this.animationStep[ 0 ] = ( this.animationStep[ 0 ] + 1 ) % 9;
+
+			// Body
+			g2d.drawImage(
+					this.body.getSubimage(
+							10 * ( this.animationStep[ 1 ] - ( this.animationStep[ 1 ] % 6 ) ) / 6,
+							15, 10, 15 ).getScaledInstance( Constants.PERSON_WIDTH,
+							Constants.PERSON_BODY_HEIGHT, 0 ), ( int ) this.x, ( int ) this.y
+							+ Constants.PERSON_HEAD_HEIGHT, null );
+			this.animationStep[ 1 ] = ( this.animationStep[ 1 ] + 1 ) % 36;
+		}
+		else
+		{ // Moving to the left
+			// Head
+			g2d.drawImage( this.head.getSubimage( 10 * this.animationStep[ 0 ], 0, 10, 10 )
+					.getScaledInstance( Constants.PERSON_WIDTH, Constants.PERSON_HEAD_HEIGHT, 0 ),
+					( int ) this.x, ( int ) this.y, null );
+			this.animationStep[ 0 ] = ( this.animationStep[ 0 ] + 1 ) % 9;
+
+			// Body
+			g2d.drawImage(
+					this.body.getSubimage(
+							10 * ( this.animationStep[ 1 ] - ( this.animationStep[ 1 ] % 6 ) ) / 6,
+							0, 10, 15 ).getScaledInstance( Constants.PERSON_WIDTH,
+							Constants.PERSON_BODY_HEIGHT, 0 ), ( int ) this.x, ( int ) this.y
+							+ Constants.PERSON_HEAD_HEIGHT, null );
+			this.animationStep[ 1 ] = ( this.animationStep[ 1 ] + 1 ) % 36;
+		}
 	}
 }
