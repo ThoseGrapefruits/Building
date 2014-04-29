@@ -9,20 +9,13 @@ import interactive.LightSwitch;
 import java.awt.Graphics2D;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import people.Me;
 import people.Person;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
-import base.BuildingObject;
 import base.Interactive;
 import base.Visible;
 import boundaries.Floor;
@@ -34,21 +27,24 @@ public class Building implements Visible, Runnable, ActionListener
 	boolean leftPressed = false;
 	boolean rightPressed = false;
 	boolean spacePressed = false;
+	boolean slashPressed = false;
 
 	public Building()
 	{
-		try
-		{
-			this.audioStream = new AudioStream( new FileInputStream( "resources/sounds/sa.wav" ) );
-		}
-		catch ( FileNotFoundException e )
-		{
-			e.printStackTrace();
-		}
-		catch ( IOException e )
-		{
-			e.printStackTrace();
-		}
+		/*
+		 * try
+		 * {
+		 * this.audioStream = new AudioStream( new FileInputStream( "resources/sounds/sa.wav" ) );
+		 * }
+		 * catch ( FileNotFoundException e )
+		 * {
+		 * e.printStackTrace();
+		 * }
+		 * catch ( IOException e )
+		 * {
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(
 				new KeyEventDispatcher()
@@ -65,16 +61,20 @@ public class Building implements Visible, Runnable, ActionListener
 									if ( keyCode == KeyEvent.VK_LEFT )
 									{
 										leftPressed = true;
-										AudioPlayer.player.start( audioStream );
+										// AudioPlayer.player.start( audioStream );
 									}
 									else if ( keyCode == KeyEvent.VK_RIGHT )
 									{
 										rightPressed = true;
-										AudioPlayer.player.start( audioStream );
+										// AudioPlayer.player.start( audioStream );
 									}
 									else if ( keyCode == KeyEvent.VK_SPACE )
 									{
 										spacePressed = true;
+									}
+									else if ( keyCode == KeyEvent.VK_SLASH )
+									{
+										slashPressed = true;
 									}
 									break;
 
@@ -82,16 +82,20 @@ public class Building implements Visible, Runnable, ActionListener
 									if ( ke.getKeyCode() == KeyEvent.VK_LEFT )
 									{
 										leftPressed = false;
-										AudioPlayer.player.stop( audioStream );
+										// AudioPlayer.player.stop( audioStream );
 									}
 									else if ( ke.getKeyCode() == KeyEvent.VK_RIGHT )
 									{
 										rightPressed = false;
-										AudioPlayer.player.stop( audioStream );
+										// AudioPlayer.player.stop( audioStream );
 									}
 									else if ( keyCode == KeyEvent.VK_SPACE )
 									{
 										spacePressed = false;
+									}
+									else if ( keyCode == KeyEvent.VK_SLASH )
+									{
+										slashPressed = false;
 									}
 									break;
 							}
@@ -118,19 +122,19 @@ public class Building implements Visible, Runnable, ActionListener
 
 	void addLightAndSwitch( int xLight, int yLight, int xSwitch, int ySwitch )
 	{
-		Light newLight = new Light( xLight, yLight );
+		Light newLight = new Light( this, xLight, yLight );
 		this.lights.add( newLight );
-		this.lightSwitches.add( new LightSwitch( xSwitch, ySwitch, newLight ) );
+		this.lightSwitches.add( new LightSwitch( this, xSwitch, ySwitch, newLight ) );
 	}
 
 	void addDoor( int x, int floor )
 	{
-		this.doors.add( new Door( x, floor * Constants.FLOOR_DISTANCE ) );
+		this.doors.add( new Door( this, x, floor * Constants.FLOOR_DISTANCE ) );
 	}
 
 	void addPerson( int x, int y )
 	{
-		Person person = new Person( x, y );
+		Person person = new Person( this, x, y );
 		this.people.add( person );
 		new Thread( person ).start();
 
@@ -187,44 +191,7 @@ public class Building implements Visible, Runnable, ActionListener
 		}
 	}
 
-	/**
-	 * Finds the closest object to a person within its BoundingBox.
-	 * 
-	 * @param sourcePerson is the person trying to interact.
-	 * @return the interactive object closest to the person
-	 */
-	private BuildingObject getClosestInteractiveObject( Person sourcePerson )
-	{
-		Rectangle origBounds = sourcePerson.getBounds();
-		Rectangle bounds = new Rectangle( origBounds.x - 5, origBounds.y - 5,
-				origBounds.width + 10, origBounds.height + 10 );
-		for ( LightSwitch lightSwitch : lightSwitches )
-		{
-			if ( lightSwitch.getBounds().intersects( bounds ) )
-			{
-				return lightSwitch;
-			}
-		}
-
-		for ( ElevatorButton elevatorButton : elevatorButtons )
-		{
-			if ( elevatorButton.getBounds().intersects( bounds ) )
-			{
-				return elevatorButton;
-			}
-		}
-
-		for ( Door door : doors )
-		{
-			if ( door.getBounds().intersects( bounds ) )
-			{
-				return door;
-			}
-		}
-		return null;
-	}
-
-	AudioStream audioStream;
+	// AudioStream audioStream;
 
 	/**
 	 * Called each tick. Updates all positions based on the velocities of objects.
@@ -235,10 +202,10 @@ public class Building implements Visible, Runnable, ActionListener
 		// Only need to update positions of the mobile objects.
 
 		// User controlled person "Me"
-		if ( this.spacePressed )
+		if ( this.slashPressed )
 		{
 			this.me.velocityX = 0;
-			this.me.interactiveObjectWithinReach = this.getClosestInteractiveObject( this.me );
+			this.me.interactiveObjectWithinReach = this.me.getClosestInteractiveObject();
 			if ( this.me.interactiveObjectWithinReach != null )
 			{
 				( ( Interactive ) this.me.interactiveObjectWithinReach ).interact( this.me );
@@ -246,6 +213,19 @@ public class Building implements Visible, Runnable, ActionListener
 		}
 		else
 		{
+			if ( this.spacePressed && this.me.isFloorBelow() )
+			{
+				this.me.velocityY = -5;
+			}
+			else if ( !this.me.canMoveY( this ) )
+			{
+				this.me.velocityY = 0;
+			}
+			else if ( this.me.velocityY < Constants.TERMINAL_VELOCITY )
+			{
+				this.me.velocityY += 0.1;
+			}
+
 			if ( this.leftPressed && this.me.velocityX > -( Constants.PERSON_MAX_VELOCITY ) )
 			{
 				this.me.velocityX -= 0.1;

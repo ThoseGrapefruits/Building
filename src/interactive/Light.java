@@ -2,15 +2,16 @@ package interactive;
 
 import java.awt.Graphics2D;
 
+import main.Building;
 import base.BuildingObject;
 import base.Visible;
 import constants.Constants;
 
 public class Light extends BuildingObject implements Visible
 {
-	public Light( int x, int y )
+	public Light( Building building, int x, int y )
 	{
-		super( x, y, Constants.LIGHT_WIDTH, Constants.LIGHT_HEIGHT );
+		super( building, x, y, Constants.LIGHT_WIDTH, Constants.LIGHT_HEIGHT );
 	}
 
 	/**

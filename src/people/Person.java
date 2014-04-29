@@ -1,16 +1,16 @@
 package people;
 
 import interactive.Door;
+import interactive.ElevatorButton;
+import interactive.LightSwitch;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -24,9 +24,9 @@ import constants.Constants;
 
 public class Person extends BuildingObject implements Interactive, Visible, Runnable
 {
-	public Person( int x, int y )
+	public Person( Building building, int x, int y )
 	{
-		super( x, y, Constants.PERSON_WIDTH, Constants.PERSON_HEIGHT );
+		super( building, x, y, Constants.PERSON_WIDTH, Constants.PERSON_HEIGHT );
 
 		try
 		{
@@ -39,34 +39,74 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 		}
 	}
 
+	/**
+	 * People that the given person has already talked to (so that conversation
+	 * isn't repetitive).
+	 */
+	ArrayList < Person > interactedWith = new ArrayList < Person >();
+
 	public BuildingObject interactiveObjectWithinReach;
 
 	public double velocityX = 0, velocityY = 0;
 
 	public boolean wantsToInteract = false;
 
-	/**
-	 * List of listeners
-	 */
-	List < Interactive > listeners = new ArrayList < Interactive >();
-
-	/**
-	 * Adds a new listener to the list of listeners.
-	 * 
-	 * @param toAdd is the listener being added.
-	 */
-	public void addListener( Interactive toAdd )
+	public boolean isFloorBelow()
 	{
-		listeners.add( toAdd );
+		Rectangle bounds = new Rectangle( ( int ) this.x, ( int ) this.y + this.height, this.width,
+				0 );
+		for ( Floor floor : this.building.floors )
+		{
+			if ( bounds.intersects( floor.getBounds() ) )
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
-	public void interactWith()
+	/**
+	 * Finds the closest object to a person within its BoundingBox.
+	 * 
+	 * @param sourcePerson is the person trying to interact.
+	 * @return the interactive object closest to the person
+	 */
+	public BuildingObject getClosestInteractiveObject()
 	{
-		// Notify all possibly relevant objects.
-		for ( Interactive object : listeners )
+		Rectangle origBounds = this.getBounds();
+		Rectangle bounds = new Rectangle( origBounds.x - 5, origBounds.y - 5,
+				origBounds.width + 10, origBounds.height + 10 );
+		for ( Person person : this.building.people )
 		{
-			object.interact( this );
+			if ( person.getBounds().intersects( bounds ) )
+			{
+				return person;
+			}
 		}
+		for ( LightSwitch lightSwitch : this.building.lightSwitches )
+		{
+			if ( lightSwitch.getBounds().intersects( bounds ) )
+			{
+				return lightSwitch;
+			}
+		}
+
+		for ( ElevatorButton elevatorButton : this.building.elevatorButtons )
+		{
+			if ( elevatorButton.getBounds().intersects( bounds ) )
+			{
+				return elevatorButton;
+			}
+		}
+
+		for ( Door door : this.building.doors )
+		{
+			if ( door.getBounds().intersects( bounds ) )
+			{
+				return door;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -83,7 +123,7 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 		return head;
 	}
 
-	String toBeSaid = "";
+	String toBeSaid;
 
 	int time = 0;
 
@@ -104,42 +144,59 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 	{
 		this.inUse = true;
 		otherPerson.inUse = true;
+		this.animationStep[ 2 ] = 255;
+		otherPerson.animationStep[ 2 ] = 255;
 
-		// TODO interaction between people
+		if ( this.interactedWith.contains( otherPerson ) )
+		{ // Already interacted with
+			otherPerson.toBeSaid = "Hi.";
+			this.toBeSaid = "Hi.";
+		}
+		else
+		{ // Seen for the first time
+			try
+			{
+				this.toBeSaid = "Hi, my name is " + this.name;
+				Thread.sleep( 1500 );
+				otherPerson.toBeSaid = "Nice to meet you " + this.name;
+				Thread.sleep( 1500 );
+				otherPerson.animationStep[ 2 ] = 255;
+				otherPerson.toBeSaid = "My name is " + otherPerson.name;
+			}
+			catch ( InterruptedException e )
+			{
+				System.out.println( "Person was too impatient to wait." );
+			}
+		}
 
 		this.inUse = false;
 		otherPerson.inUse = false;
 	}
 
-	void say( String words )
-	{
-		this.toBeSaid = words;
-		this.time = Integer.parseInt( ( new SimpleDateFormat( "HHmmss" ) ).format( new Date() ) );
-		System.out.println( this.time );
-	}
-
 	@Override
 	public void run()
 	{
+		boolean LEFT = false;
+		boolean RIGHT = true;
 		boolean direction = true;
 		while ( true )
 		{
 			if ( this.velocityX == 0 )
 			{
-				if ( direction )
+				if ( direction == RIGHT )
 				{
-					direction = false;
+					direction = LEFT;
 					this.velocityX = -1;
 				}
 				else
 				{
-					direction = true;
+					direction = RIGHT;
 					this.velocityX = 1;
 				}
 			}
 			try
 			{
-				Thread.sleep( 1000 );
+				Thread.sleep( Constants.AI_CYCLE );
 			}
 			catch ( InterruptedException e )
 			{
@@ -152,7 +209,7 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 	public void interact( BuildingObject object )
 	{
 		this.inUse = true;
-		this.say( "No touching." );
+		this.toBeSaid = "This shouldn't even happen, because that would imply some object is interacting with a person. Only people should interact with other people.";
 		this.inUse = false;
 	}
 
@@ -207,6 +264,10 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 
 		if ( this.canMoveY( b ) )
 		{
+			if ( this.velocityY < Constants.TERMINAL_VELOCITY )
+			{
+				this.velocityY += 0.1;
+			}
 			this.y += this.velocityY;
 		}
 		else
@@ -267,6 +328,12 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 							Constants.PERSON_BODY_HEIGHT, 0 ), ( int ) this.x, ( int ) this.y
 							+ Constants.PERSON_HEAD_HEIGHT, null );
 			this.animationStep[ 1 ] = ( this.animationStep[ 1 ] + 1 ) % 36;
+		}
+		if ( this.toBeSaid != null && this.toBeSaid != "" && this.animationStep[ 2 ] != 0 )
+		{
+			g2d.setColor( new Color( 100, 100, 100, this.animationStep[ 2 ] ) );
+			g2d.fillRect( ( int ) this.x, ( int ) this.y, this.width, this.height );
+			this.animationStep[ 2 ]--;
 		}
 	}
 }

@@ -8,6 +8,7 @@ import javax.swing.Timer;
 import people.Me;
 import view.Surface;
 import view.View;
+import boundaries.Floor;
 import boundaries.Wall;
 import constants.Constants;
 
@@ -26,10 +27,11 @@ public class Main
 	{
 		// Create a new building
 		final Building building = new Building();
-		building.me = new Me( 100, 400 );
-		building.walls.add( new Wall( 700, 360, 30 ) );
-		building.walls.add( new Wall( 50, 360, 140 ) );
-		building.doors.add( new Door( 700, 390 ) );
+		building.me = new Me( building, 100, 400 );
+		building.walls.add( new Wall( building, 700, 360, 30 ) );
+		building.walls.add( new Wall( building, 50, 360, 140 ) );
+		building.doors.add( new Door( building, 700, 390 ) );
+		building.floors.add( new Floor( building, 100, 500, 500 ) );
 		building.addPerson( 100, 400 );
 
 		// Create the visuals

@@ -2,15 +2,16 @@ package objects;
 
 import java.awt.Graphics2D;
 
+import main.Building;
 import base.BuildingObject;
 import base.Interactive;
 import base.Visible;
 
 public class Decoration extends BuildingObject implements Interactive, Visible, Runnable
 {
-	protected Decoration( int x, int y, int width, int height, String filePath )
+	protected Decoration( Building building, int x, int y, int width, int height, String filePath )
 	{
-		super( x, y, width, height );
+		super( building, x, y, width, height );
 	}
 
 	@Override

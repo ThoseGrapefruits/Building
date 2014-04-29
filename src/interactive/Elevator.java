@@ -36,9 +36,9 @@ public class Elevator extends BuildingObject implements Interactive, Visible, Ru
 	 * @param location is the pixel location of the bottom elevator.
 	 * @param floors are the other floors that the elevator opens on.
 	 */
-	Elevator( int x, int y, int[] floors )
+	Elevator( Building building, int x, int y, int[] floors )
 	{
-		super( x, y, Constants.ELEVATOR_WIDTH, Constants.ELEVATOR_HEIGHT );
+		super( building, x, y, Constants.ELEVATOR_WIDTH, Constants.ELEVATOR_HEIGHT );
 		this.floors = floors;
 	}
 

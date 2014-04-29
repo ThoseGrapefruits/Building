@@ -6,14 +6,15 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import main.Building;
 import base.Interactive;
 import base.Visible;
 
 public class Me extends Person implements Interactive, Visible, Runnable
 {
-	public Me( int x, int y )
+	public Me( Building building, int x, int y )
 	{
-		super( x, y );
+		super( building, x, y );
 		this.name = "Logan";
 		try
 		{

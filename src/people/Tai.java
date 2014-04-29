@@ -6,15 +6,16 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import main.Building;
 import base.Interactive;
 import base.Visible;
 import constants.Constants;
 
 public class Tai extends Person implements Interactive, Visible, Runnable
 {
-	public Tai( int x, int y )
+	public Tai( Building building, int x, int y )
 	{
-		super( x, y );
+		super( building, x, y );
 
 		try
 		{

@@ -2,6 +2,7 @@ package interactive;
 
 import java.awt.Graphics2D;
 
+import main.Building;
 import base.BuildingObject;
 import base.Interactive;
 import base.Visible;
@@ -11,9 +12,9 @@ public class Door extends BuildingObject implements Interactive, Visible
 {
 	private final int CLOSED = 0, OPEN_LEFT = 1, OPEN_RIGHT = 2;
 
-	public Door( int x, int y )
+	public Door( Building building, int x, int y )
 	{
-		super( x, y, Constants.DOOR_CLOSED_WIDTH, Constants.DOOR_HEIGHT );
+		super( building, x, y, Constants.DOOR_CLOSED_WIDTH, Constants.DOOR_HEIGHT );
 	}
 
 	public int open = CLOSED;

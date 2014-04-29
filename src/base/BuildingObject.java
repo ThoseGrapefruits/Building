@@ -2,6 +2,8 @@ package base;
 
 import java.awt.Rectangle;
 
+import main.Building;
+
 /**
  * Superclass on which all objects in the building are based on. Includes
  * universal attributes applicable to any object.
@@ -10,13 +12,16 @@ import java.awt.Rectangle;
  */
 public abstract class BuildingObject
 {
-	protected BuildingObject( int x, int y, int width, int height )
+	protected BuildingObject( Building building, int x, int y, int width, int height )
 	{
+		this.building = building;
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
 	}
+
+	protected transient Building building;
 
 	public Rectangle getBounds()
 	{

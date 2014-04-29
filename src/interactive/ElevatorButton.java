@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import main.Building;
 import base.BuildingObject;
 import base.Interactive;
 import base.Visible;
@@ -16,9 +17,9 @@ public class ElevatorButton extends BuildingObject implements Interactive, Visib
 
 	int floor;
 
-	public ElevatorButton( int x, int y, Elevator linkedElevator, int floor )
+	public ElevatorButton( Building building, int x, int y, Elevator linkedElevator, int floor )
 	{
-		super( x, y, Constants.ELEVATOR_BUTTON_WIDTH, Constants.ELEVATOR_BUTTON_HEIGHT );
+		super( building, x, y, Constants.ELEVATOR_BUTTON_WIDTH, Constants.ELEVATOR_BUTTON_HEIGHT );
 		this.linkedElevator = linkedElevator;
 	}
 

@@ -26,7 +26,8 @@ public class Constants
 	/**
 	 * Speed limits (pixels / tick)
 	 */
-	public static final double ELEVATOR_MAX_VELOCITY = 1.0, PERSON_MAX_VELOCITY = 1.0;
+	public static final double ELEVATOR_MAX_VELOCITY = 1.0, PERSON_MAX_VELOCITY = 1.0,
+			TERMINAL_VELOCITY = 5.0;
 
 	/**
 	 * Rendering, scaling, & window management (pixels)
@@ -36,7 +37,7 @@ public class Constants
 	/**
 	 * Timing (milliseconds)
 	 */
-	public static final int TICK = 10;
+	public static final int TICK = 10, AI_CYCLE = 100;
 
 	/**
 	 * People (pixels)
