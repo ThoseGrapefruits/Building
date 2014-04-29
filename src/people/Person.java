@@ -53,8 +53,8 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 
 	public boolean isFloorBelow()
 	{
-		Rectangle bounds = new Rectangle( ( int ) this.x, ( int ) this.y + this.height, this.width,
-				0 );
+		Rectangle bounds = new Rectangle( ( int ) this.x, ( int ) this.y + this.height + 1,
+				this.width, 1 );
 		for ( Floor floor : this.building.floors )
 		{
 			if ( bounds.intersects( floor.getBounds() ) )
