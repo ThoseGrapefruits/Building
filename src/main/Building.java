@@ -9,6 +9,7 @@ import interactive.LightSwitch;
 import java.awt.Graphics2D;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -27,7 +28,7 @@ public class Building implements Visible, Runnable, ActionListener
 	boolean leftPressed = false;
 	boolean rightPressed = false;
 	boolean spacePressed = false;
-	boolean slashPressed = false;
+	boolean altPressed = false;
 
 	public Building()
 	{
@@ -72,9 +73,9 @@ public class Building implements Visible, Runnable, ActionListener
 									{
 										spacePressed = true;
 									}
-									else if ( keyCode == KeyEvent.VK_SLASH )
+									else if ( keyCode == KeyEvent.VK_ALT )
 									{
-										slashPressed = true;
+										altPressed = true;
 									}
 									break;
 
@@ -93,9 +94,9 @@ public class Building implements Visible, Runnable, ActionListener
 									{
 										spacePressed = false;
 									}
-									else if ( keyCode == KeyEvent.VK_SLASH )
+									else if ( keyCode == KeyEvent.VK_ALT )
 									{
-										slashPressed = false;
+										altPressed = false;
 									}
 									break;
 							}
@@ -151,9 +152,7 @@ public class Building implements Visible, Runnable, ActionListener
 	{
 		g2d.setColor( Constants.BUILDING_COLOR );
 
-		g2d.fillRect( Constants.WINDOW_WIDTH / 12, Constants.WINDOW_HEIGHT / 12,
-				Constants.WINDOW_WIDTH - Constants.WINDOW_WIDTH / 6, Constants.WINDOW_HEIGHT
-						- Constants.WINDOW_HEIGHT / 6 );
+		g2d.fillRect( 50, 50, Constants.WINDOW_WIDTH - 100, Constants.WINDOW_HEIGHT - 100 );
 
 		// Depth 3
 		for ( LightSwitch lightSwitch : this.lightSwitches )
@@ -164,6 +163,10 @@ public class Building implements Visible, Runnable, ActionListener
 		{
 			elevator.paint( g2d );
 		}
+		for ( Door door : this.doors )
+		{
+			door.paint( g2d );
+		}
 
 		// Depth 2
 		this.me.paint( g2d );
@@ -173,10 +176,6 @@ public class Building implements Visible, Runnable, ActionListener
 		}
 
 		// Depth 1
-		for ( Door door : this.doors )
-		{
-			door.paint( g2d );
-		}
 		for ( Light light : this.lights )
 		{
 			light.paint( g2d );
@@ -202,7 +201,15 @@ public class Building implements Visible, Runnable, ActionListener
 		// Only need to update positions of the mobile objects.
 
 		// User controlled person "Me"
-		if ( this.slashPressed )
+
+		if ( !this.me.getBounds().intersects(
+				new Rectangle( 0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT ) ) )
+		{
+			this.me.x = 400;
+			this.me.y = 200;
+		}
+
+		if ( this.altPressed )
 		{
 			this.me.velocityX = 0;
 			this.me.interactiveObjectWithinReach = this.me.getClosestInteractiveObject();
@@ -256,6 +263,12 @@ public class Building implements Visible, Runnable, ActionListener
 		for ( Person person : this.people )
 		{
 			person.move( this );
+			if ( !person.getBounds().intersects(
+					new Rectangle( 0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT ) ) )
+			{
+				person.x = 400;
+				person.y = 200;
+			}
 		}
 
 		// Elevators
