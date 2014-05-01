@@ -40,10 +40,10 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 	}
 
 	/**
-	 * People that the given person has already talked to (so that conversation
-	 * isn't repetitive).
+	 * Objects that the given person has already interacted with
+	 * (used to make conversation less repetitive, etc.)
 	 */
-	ArrayList < Person > interactedWith = new ArrayList < Person >();
+	ArrayList < BuildingObject > interactedWith = new ArrayList < BuildingObject >();
 
 	public BuildingObject interactiveObjectWithinReach;
 
@@ -74,8 +74,8 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 	public BuildingObject getClosestInteractiveObject()
 	{
 		Rectangle origBounds = this.getBounds();
-		Rectangle bounds = new Rectangle( origBounds.x - 5, origBounds.y - 5,
-				origBounds.width + 10, origBounds.height + 10 );
+		Rectangle bounds = new Rectangle( origBounds.x - 10, origBounds.y - 10,
+				origBounds.width + 20, origBounds.height + 20 );
 		for ( Person person : this.building.people )
 		{
 			if ( person.getBounds().intersects( bounds ) )
@@ -143,6 +143,7 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 	public void interact( Person otherPerson )
 	{
 		this.inUse = true;
+		otherPerson.velocityX = 0;
 		otherPerson.inUse = true;
 		this.animationStep[ 2 ] = 255;
 		otherPerson.animationStep[ 2 ] = 255;
@@ -157,11 +158,15 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 			try
 			{
 				this.toBeSaid = "Hi, my name is " + this.name;
-				Thread.sleep( 1500 );
+				Thread.sleep( 500 );
 				otherPerson.toBeSaid = "Nice to meet you " + this.name;
-				Thread.sleep( 1500 );
+				Thread.sleep( 1000 );
+				this.toBeSaid = "";
 				otherPerson.animationStep[ 2 ] = 255;
 				otherPerson.toBeSaid = "My name is " + otherPerson.name;
+				Thread.sleep( 1500 );
+				otherPerson.toBeSaid = "";
+
 			}
 			catch ( InterruptedException e )
 			{
@@ -181,6 +186,7 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 		boolean direction = true;
 		while ( true )
 		{
+			// Movement
 			if ( this.velocityX == 0 )
 			{
 				if ( direction == RIGHT )
@@ -194,6 +200,23 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 					this.velocityX = 1;
 				}
 			}
+
+			// Interaction
+			for ( Person person : this.building.people )
+			{
+				if ( person.getBounds().intersects( this.getBounds() ) && !person.equals( this ) )
+				{
+					System.out.println( "Interacting..." );
+					this.interactedWith.add( person );
+					person.interact( this );
+				}
+			}
+			if ( this.building.me.getBounds().intersects( this.getBounds() ) )
+			{
+				this.building.me.interact( this );
+			}
+
+			// Delay
 			try
 			{
 				Thread.sleep( Constants.AI_CYCLE );
@@ -279,29 +302,32 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 	@Override
 	public void paint( Graphics2D g2d )
 	{
+		g2d.setColor( Color.BLACK );
 		if ( this.velocityX == 0 )
 		{ // Standing still
 			// Head
 			this.animationStep[ 0 ] = 0;
 			g2d.drawImage(
-					this.head.getSubimage( 90, 0, 10, 10 ).getScaledInstance(
+					this.head.getSubimage( 0, 20, 10, 10 ).getScaledInstance(
 							Constants.PERSON_WIDTH, Constants.PERSON_HEAD_HEIGHT, 0 ),
 					( int ) this.x, ( int ) this.y, null );
 
 			// Body
 			this.animationStep[ 1 ] = 0;
 			g2d.drawImage(
-					this.body.getSubimage( 60, 0, 10, 15 ).getScaledInstance(
+					this.body.getSubimage( 0, 30, 10, 15 ).getScaledInstance(
 							Constants.PERSON_WIDTH, Constants.PERSON_BODY_HEIGHT, 0 ),
 					( int ) this.x, ( int ) this.y + Constants.PERSON_HEAD_HEIGHT, null );
 		}
 		else if ( this.velocityX > 0 )
 		{ // Moving to the right
 			// Head
-			g2d.drawImage( this.head.getSubimage( 10 * this.animationStep[ 0 ], 10, 10, 10 )
-					.getScaledInstance( Constants.PERSON_WIDTH, Constants.PERSON_HEAD_HEIGHT, 0 ),
-					( int ) this.x, ( int ) this.y, null );
-			this.animationStep[ 0 ] = ( this.animationStep[ 0 ] + 1 ) % 9;
+			g2d.drawImage(
+					this.head.getSubimage(
+							10 * ( this.animationStep[ 0 ] - ( this.animationStep[ 0 ] % 9 ) ) / 9,
+							10, 10, 10 ).getScaledInstance( Constants.PERSON_WIDTH,
+							Constants.PERSON_HEAD_HEIGHT, 0 ), ( int ) this.x, ( int ) this.y, null );
+			this.animationStep[ 0 ] = ( this.animationStep[ 0 ] + 1 ) % 81;
 
 			// Body
 			g2d.drawImage(
@@ -315,10 +341,12 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 		else
 		{ // Moving to the left
 			// Head
-			g2d.drawImage( this.head.getSubimage( 10 * this.animationStep[ 0 ], 0, 10, 10 )
-					.getScaledInstance( Constants.PERSON_WIDTH, Constants.PERSON_HEAD_HEIGHT, 0 ),
-					( int ) this.x, ( int ) this.y, null );
-			this.animationStep[ 0 ] = ( this.animationStep[ 0 ] + 1 ) % 9;
+			g2d.drawImage(
+					this.head.getSubimage(
+							10 * ( this.animationStep[ 0 ] - ( this.animationStep[ 0 ] % 9 ) ) / 9,
+							0, 10, 10 ).getScaledInstance( Constants.PERSON_WIDTH,
+							Constants.PERSON_HEAD_HEIGHT, 0 ), ( int ) this.x, ( int ) this.y, null );
+			this.animationStep[ 0 ] = ( this.animationStep[ 0 ] + 1 ) % 81;
 
 			// Body
 			g2d.drawImage(
@@ -331,9 +359,17 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 		}
 		if ( this.toBeSaid != null && this.toBeSaid != "" && this.animationStep[ 2 ] != 0 )
 		{
-			g2d.setColor( new Color( 100, 100, 100, this.animationStep[ 2 ] ) );
-			g2d.fillRect( ( int ) this.x, ( int ) this.y, this.width, this.height );
+			g2d.setColor( new Color( 255, 255, 255, this.animationStep[ 2 ] ) );
+			g2d.drawString( this.toBeSaid, ( int ) this.x
+					- ( ( Constants.TEXT_BOX_WIDTH - this.width ) / 2 ), ( int ) this.y
+					- Constants.TEXT_BOX_DISTANCE );
 			this.animationStep[ 2 ]--;
+		}
+		if ( this.drawBounds )
+		{
+			Rectangle bounds = this.getBounds();
+			g2d.setColor( Color.BLACK );
+			g2d.drawRect( bounds.x, bounds.y, bounds.width, bounds.height );
 		}
 	}
 }

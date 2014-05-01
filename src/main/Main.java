@@ -27,15 +27,22 @@ public class Main
 	{
 		// Create a new building
 		final Building building = new Building();
-		building.me = new Me( building, 100, 400 );
+
+		// Add people
+		building.me = new Me( building, 100, 450 );
+		building.addPerson( 500, 400 );
+
+		// Add barriers
 		building.walls.add( new Wall( building, 750, 50, 390 + Constants.FLOOR_HEIGHT ) );
-		building.doors.add( new Door( building, 750, 440 + Constants.FLOOR_HEIGHT ) );
 		building.walls.add( new Wall( building, 50, 50, 390 + Constants.FLOOR_HEIGHT ) );
+		building.doors.add( new Door( building, 750, 440 + Constants.FLOOR_HEIGHT ) );
 		building.doors.add( new Door( building, 50, 440 + Constants.FLOOR_HEIGHT ) );
 		building.floors.add( new Floor( building, 50, 550, 500 ) );
-		building.floors.add( new Floor( building, 50, 50, 500 ) );
-		// building.floors
-		building.addPerson( 500, 400 );
+		building.floors.add( new Floor( building, 50, 550, 500 ) );
+		building.floors.add( new Floor( building, 50, 550 - Constants.FLOOR_DISTANCE, 500 ) );
+		building.floors.add( new Floor( building, 50, 550 - Constants.FLOOR_DISTANCE * 2, 500 ) );
+		building.floors.add( new Floor( building, 50, 550 - Constants.FLOOR_DISTANCE * 3, 500 ) );
+		building.floors.add( new Floor( building, 50, 550 - Constants.FLOOR_DISTANCE * 4, 500 ) );
 
 		// Create the visuals
 		SwingUtilities.invokeLater( new Runnable()

@@ -23,6 +23,8 @@ public abstract class BuildingObject
 
 	protected transient Building building;
 
+	public boolean drawBounds = true;
+
 	public Rectangle getBounds()
 	{
 		return new Rectangle( ( int ) this.x, ( int ) this.y, this.width, this.height );

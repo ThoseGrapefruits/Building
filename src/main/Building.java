@@ -197,11 +197,9 @@ public class Building implements Visible, Runnable, ActionListener
 	 */
 	@Override
 	public void actionPerformed( ActionEvent e )
-	{
-		// Only need to update positions of the mobile objects.
+	{ // Only need to update positions of the mobile objects.
 
 		// User controlled person "Me"
-
 		if ( !this.me.getBounds().intersects(
 				new Rectangle( 0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT ) ) )
 		{

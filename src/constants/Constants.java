@@ -12,7 +12,7 @@ public class Constants
 	/**
 	 * Barriers (pixels)
 	 */
-	public static final int WALL_WIDTH = 8, FLOOR_HEIGHT = 5, FLOOR_DISTANCE = 40;
+	public static final int WALL_WIDTH = 8, FLOOR_HEIGHT = 8, FLOOR_DISTANCE = 125;
 
 	/**
 	 * Interactive objects (pixels)
@@ -44,6 +44,11 @@ public class Constants
 	 */
 	public static final int PERSON_WIDTH = 40, PERSON_HEIGHT = 100, PERSON_BODY_HEIGHT = 60,
 			PERSON_HEAD_HEIGHT = 40;
+
+	/**
+	 * Text boxes (pixels)
+	 */
+	public static final int TEXT_BOX_HEIGHT = 20, TEXT_BOX_WIDTH = 150, TEXT_BOX_DISTANCE = 10;
 
 	/**
 	 * Interaction & bounding boxes (pixels)
