@@ -192,6 +192,7 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 		boolean LEFT = false;
 		boolean RIGHT = true;
 		boolean direction = true;
+
 		while ( true )
 		{
 			// Movement
@@ -199,13 +200,49 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 			{
 				if ( direction == RIGHT )
 				{
-					direction = LEFT;
-					this.velocityX = -1;
+					Rectangle bounds = new Rectangle( ( int ) this.x, ( int ) this.y,
+							this.width + 1, this.height );
+					boolean wasADoor = false;
+					for ( Door door : this.building.doors )
+					{
+						if ( door.getBounds().intersects( bounds ) )
+						{
+							wasADoor = true;
+							door.interact( this );
+						}
+					}
+					if ( wasADoor )
+					{
+						this.velocityX = 1;
+					}
+					else
+					{
+						direction = LEFT;
+						this.velocityX = -1;
+					}
 				}
 				else
 				{
-					direction = RIGHT;
-					this.velocityX = 1;
+					Rectangle bounds = new Rectangle( ( int ) this.x - 1, ( int ) this.y,
+							this.width, this.height );
+					boolean wasADoor = false;
+					for ( Door door : this.building.doors )
+					{
+						if ( door.getBounds().intersects( bounds ) )
+						{
+							wasADoor = true;
+							door.interact( this );
+						}
+					}
+					if ( wasADoor )
+					{
+						this.velocityX = -1;
+					}
+					else
+					{
+						direction = RIGHT;
+						this.velocityX = 1;
+					}
 				}
 			}
 

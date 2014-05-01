@@ -154,7 +154,6 @@ public class Building implements Visible, Runnable, ActionListener
 
 		g2d.fillRect( 50, 50, Constants.WINDOW_WIDTH - 100, Constants.WINDOW_HEIGHT - 100 );
 
-		// Depth 3
 		for ( LightSwitch lightSwitch : this.lightSwitches )
 		{
 			lightSwitch.paint( g2d );
@@ -167,15 +166,6 @@ public class Building implements Visible, Runnable, ActionListener
 		{
 			door.paint( g2d );
 		}
-
-		// Depth 2
-		this.me.paint( g2d );
-		for ( Person person : this.people )
-		{
-			person.paint( g2d );
-		}
-
-		// Depth 1
 		for ( Light light : this.lights )
 		{
 			light.paint( g2d );
@@ -187,6 +177,11 @@ public class Building implements Visible, Runnable, ActionListener
 		for ( Floor floor : this.floors )
 		{
 			floor.paint( g2d );
+		}
+		this.me.paint( g2d );
+		for ( Person person : this.people )
+		{
+			person.paint( g2d );
 		}
 	}
 

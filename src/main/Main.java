@@ -30,7 +30,7 @@ public class Main
 
 		// Add people
 		building.me = new Me( building, 100, 450 );
-		building.addPerson( 500, 400 );
+		building.addPerson( 500, 450 );
 
 		// Add barriers
 		building.walls.add( new Wall( building, 750, 50, 390 + Constants.FLOOR_HEIGHT ) );

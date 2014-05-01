@@ -23,7 +23,7 @@ public abstract class BuildingObject
 
 	protected transient Building building;
 
-	public boolean drawBounds = true;
+	public boolean drawBounds = false;
 
 	public Rectangle getBounds()
 	{
