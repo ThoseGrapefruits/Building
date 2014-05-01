@@ -215,6 +215,13 @@ public class Building implements Visible, Runnable, ActionListener
 			{
 				( ( Interactive ) this.me.interactiveObjectWithinReach ).interact( this.me );
 			}
+			for ( Person person : this.people )
+			{
+				if ( person.getBounds().intersects( this.me.getBounds() ) )
+				{
+					person.interact( this.me );
+				}
+			}
 		}
 		else
 		{

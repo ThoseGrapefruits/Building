@@ -145,6 +145,14 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 		this.inUse = true;
 		otherPerson.velocityX = 0;
 		otherPerson.inUse = true;
+		if ( !this.interactedWith.contains( otherPerson ) )
+		{
+			this.interactedWith.add( otherPerson );
+		}
+		if ( !otherPerson.interactedWith.contains( this ) )
+		{
+			otherPerson.interactedWith.add( this );
+		}
 		this.animationStep[ 2 ] = 255;
 		otherPerson.animationStep[ 2 ] = 255;
 
@@ -202,19 +210,19 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 			}
 
 			// Interaction
-			for ( Person person : this.building.people )
-			{
-				if ( person.getBounds().intersects( this.getBounds() ) && !person.equals( this ) )
-				{
-					System.out.println( "Interacting..." );
-					this.interactedWith.add( person );
-					person.interact( this );
-				}
-			}
-			if ( this.building.me.getBounds().intersects( this.getBounds() ) )
-			{
-				this.building.me.interact( this );
-			}
+			/*
+			 * for ( Person person : this.building.people )
+			 * {
+			 * if ( person.getBounds().intersects( this.getBounds() ) && !person.equals( this ) )
+			 * {
+			 * person.interact( this );
+			 * }
+			 * }
+			 * if ( this.building.me.getBounds().intersects( this.getBounds() ) )
+			 * {
+			 * this.building.me.interact( this );
+			 * }
+			 */
 
 			// Delay
 			try
@@ -359,10 +367,10 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 		}
 		if ( this.toBeSaid != null && this.toBeSaid != "" && this.animationStep[ 2 ] != 0 )
 		{
+			int textWidth = this.toBeSaid.length() * 3;
 			g2d.setColor( new Color( 255, 255, 255, this.animationStep[ 2 ] ) );
-			g2d.drawString( this.toBeSaid, ( int ) this.x
-					- ( ( Constants.TEXT_BOX_WIDTH - this.width ) / 2 ), ( int ) this.y
-					- Constants.TEXT_BOX_DISTANCE );
+			g2d.drawString( this.toBeSaid, ( int ) this.x - ( ( textWidth - this.width ) / 2 ),
+					( int ) this.y - Constants.TEXT_BOX_DISTANCE );
 			this.animationStep[ 2 ]--;
 		}
 		if ( this.drawBounds )
