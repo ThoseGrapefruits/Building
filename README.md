@@ -11,12 +11,16 @@
 <br><hr><br>
 
 ##Brainstorming
-- How should I implement walls & other permanent impassable objects?
-- Coordinate system? Definitely need this in one way or another. I guess I could just stick to pixels, as I would otherwise just have a scaled-up equivalent of a per-pixel coordinate system. I'm not sure how easy it will be to associate the pixel locations of objects to the objects themselves. _Actually nevermind, I can just instantiate all objects with coordinates._
-	- I'm not going to even bother with scaling. Really isn't necessary for this project and it makes everything way more complicated.
+- <del>How should I implement walls & other permanent impassable objects?</del>
+	- Using java.awt.Rectangle for boundary detection.
+- </del>Coordinate system? Definitely need this in one way or another.</del>
+	- Using pixel coordinates.
 - Separate class for interaction that is extended by all the interactive objects. Specifications like `interactive` for every object and `inUse` for `Interactive` objects to specify interactivity and whether they are busy at the moment.
+	- Did exactly this.
 - The core problems are creating interactive objects and AI with intelligence enough to interact with objects they need to and choose random paths to travel on.
-- I want to make it scalable and somewhat randomly generated (as in, it will select a building size and the number of elevators, locations of doors, etc) but that will be a somewhat advanced feature.
+	- This is mostly done, but there will be a bit more complication when I add elevators, etc.
+- <del>I want to make it scalable and somewhat randomly generated (as in, it will select a building size and the number of elevators, locations of doors, etc) but that will be a somewhat advanced feature.</del>
+	- Not going to bother with this. Way too much complication for a nonessential feature.
 
 <br><hr><br>
 
@@ -60,7 +64,9 @@
 > Class to test all of the program's classes, with functions inside for each class.
 
 ######end `package main`
+
 <br>
+
 ######start `package boundaries`
 ###`Boundary`
 > Base functionality for all impassable objects.
@@ -72,7 +78,9 @@
 > Impassable object that exists on the outside of and within floors.
 
 ######end `package boundaries`
+
 <br>
+
 ######start `package view`
 ###`View`
 > JFrame window
@@ -84,6 +92,7 @@
 > Initializes a new `JPanel` window.
 
 <br>
+
 ###`Surface`
 > `JPanel` 2D rendering panel.
 
@@ -93,7 +102,9 @@
 - Creates a `Graphics2D` object to be used for rendering and passes it to various drawing functions which draw the specific object types.
 
 ######end `package view`
+
 <br>
+
 ######start `package interactive`
 ###`Interactive`
 > Includes standard properties of interactive objects.
@@ -115,6 +126,7 @@
 `// TODO function layout on Light`
 
 <br>
+
 ####`LightSwitch`
 > Activates a light linked to it.
 
@@ -131,6 +143,7 @@
 `// TODO documentation on Door`
 
 <br>
+
 ####`Person`
 > Virtual person that automatically pathfinds and interacts with objects that can be interacted with.
 
@@ -158,11 +171,13 @@
 ###Model
 - `Building`
 - `BuildingObject`
-	- `Elevator`
-	- `Door`
-	- `Light`
-	- `LightSwitch`
-	- `Person`
+	+ `Elevator`
+	+ `Door`
+	+ `Light`
+	+ `LightSwitch`
+	+ `Person`
+		* `Me`
+		* `Tai`
 
 ###View
 - `View`
@@ -175,16 +190,16 @@
 <br><hr><br>
 
 ##Plan
-1. Build `Test` class and continuously test the system throughout.
-2. Complete model classes, keeping in mind the bigger picture and making sure it will be easy to make visuals with them later.
-	1. `Elevator`
-	2. `Door`
-	3. `Light` & `LightSwitch`
-	4. `Building`
-	5. `Person`
-		1. Some sort of interaction detection system
+1. Complete model classes, keeping in mind the bigger picture and making sure it will be easy to make visuals with them later. ✓
+	1. `Elevator` ✓
+	2. `Door` ✓
+	3. `Light` ✓ & `LightSwitch` ✓
+	4. `Building` ✓
+	5. `Person` ✓
+		1. Some sort of interaction detection system ✓
 		2. Random movement & path-finding system
-3. Create view classes to visualize the models.
+2. Create view classes to visualize the models. ✓
 	1. `View` ✓
-	2. `Surface`
-4. Build controller to get everything going.
+	2. `Surface` ✓
+3. Build controller to get everything going. ✓
+4. Make everything look decent.
