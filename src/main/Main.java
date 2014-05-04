@@ -8,7 +8,6 @@ import javax.swing.Timer;
 import people.Me;
 import view.Surface;
 import view.View;
-import boundaries.Floor;
 import boundaries.Wall;
 import constants.Constants;
 
@@ -37,12 +36,12 @@ public class Main
 		building.walls.add( new Wall( building, 50, 50, 390 + Constants.FLOOR_HEIGHT ) );
 		building.doors.add( new Door( building, 750, 440 + Constants.FLOOR_HEIGHT ) );
 		building.doors.add( new Door( building, 50, 440 + Constants.FLOOR_HEIGHT ) );
-		building.floors.add( new Floor( building, 50, 550, 500 ) );
-		building.floors.add( new Floor( building, 50, 550, 500 ) );
-		building.floors.add( new Floor( building, 50, 550 - Constants.FLOOR_DISTANCE, 500 ) );
-		building.floors.add( new Floor( building, 50, 550 - Constants.FLOOR_DISTANCE * 2, 500 ) );
-		building.floors.add( new Floor( building, 50, 550 - Constants.FLOOR_DISTANCE * 3, 500 ) );
-		building.floors.add( new Floor( building, 50, 550 - Constants.FLOOR_DISTANCE * 4, 500 ) );
+		building.addFloor( 50, 550, 500 );
+		building.addFloor( 50, 550, 500 );
+		building.addFloor( 50, 550 - Constants.FLOOR_DISTANCE, 500 );
+		building.addFloor( 50, 550 - Constants.FLOOR_DISTANCE * 2, 500 );
+		building.addFloor( 50, 550 - Constants.FLOOR_DISTANCE * 3, 500 );
+		building.addFloor( 50, 550 - Constants.FLOOR_DISTANCE * 4, 500 );
 
 		// Create the visuals
 		SwingUtilities.invokeLater( new Runnable()

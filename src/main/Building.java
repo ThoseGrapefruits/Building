@@ -23,6 +23,11 @@ import boundaries.Floor;
 import boundaries.Wall;
 import constants.Constants;
 
+/**
+ * Building, in which all <pre>BuildingObject</pre>s exist. Manages drawing of the individual objects. User-controlled character is controlled entirely through this class.
+ * 
+ * @author Logan Moore
+ */
 public class Building implements Visible, Runnable, ActionListener
 {
 	boolean leftPressed = false;
@@ -35,7 +40,8 @@ public class Building implements Visible, Runnable, ActionListener
 		/*
 		 * try
 		 * {
-		 * this.audioStream = new AudioStream( new FileInputStream( "resources/sounds/sa.wav" ) );
+		 * this.audioStream = new AudioStream( new FileInputStream(
+		 * "resources/sounds/sa.wav" ) );
 		 * }
 		 * catch ( FileNotFoundException e )
 		 * {
@@ -83,12 +89,14 @@ public class Building implements Visible, Runnable, ActionListener
 									if ( ke.getKeyCode() == KeyEvent.VK_LEFT )
 									{
 										leftPressed = false;
-										// AudioPlayer.player.stop( audioStream );
+										// AudioPlayer.player.stop( audioStream
+										// );
 									}
 									else if ( ke.getKeyCode() == KeyEvent.VK_RIGHT )
 									{
 										rightPressed = false;
-										// AudioPlayer.player.stop( audioStream );
+										// AudioPlayer.player.stop( audioStream
+										// );
 									}
 									else if ( keyCode == KeyEvent.VK_SPACE )
 									{
@@ -131,6 +139,19 @@ public class Building implements Visible, Runnable, ActionListener
 	void addDoor( int x, int floor )
 	{
 		this.doors.add( new Door( this, x, floor * Constants.FLOOR_DISTANCE ) );
+	}
+
+	private int floorCount = 0;
+
+	public int getFloorCount()
+	{
+		return this.floorCount;
+	}
+
+	void addFloor( int x, int y, int width )
+	{
+		this.floors.add( new Floor( this, x, y, width ) );
+		this.floorCount++;
 	}
 
 	void addPerson( int x, int y )

@@ -28,7 +28,7 @@ public class Elevator extends BuildingObject implements Interactive, Visible, Ru
 	/**
 	 * Current height of elevator car
 	 */
-	int carHeight = 0;
+	double carHeight = 0;
 
 	/**
 	 * Creates a new elevator object.
@@ -38,7 +38,7 @@ public class Elevator extends BuildingObject implements Interactive, Visible, Ru
 	 */
 	Elevator( Building building, int x, int y, int[] floors )
 	{
-		super( building, x, y, Constants.ELEVATOR_WIDTH, Constants.ELEVATOR_HEIGHT );
+		super( building, x, y, Constants.ELEVATOR_WIDTH, Constants.ELEVATOR_CAR_HEIGHT );
 		this.floors = floors;
 	}
 
@@ -70,27 +70,23 @@ public class Elevator extends BuildingObject implements Interactive, Visible, Ru
 				while ( carHeight * Constants.FLOOR_DISTANCE != destinationFloor
 						* Constants.FLOOR_DISTANCE )
 				{
-					if ( currentFloor < destinationFloor )
+					if ( currentFloor < destinationFloor
+							&& velocityY < Constants.ELEVATOR_MAX_VELOCITY )
 					{
-						while ( velocityY < Constants.ELEVATOR_MAX_VELOCITY )
-						{
-							velocityY++;
-						}
+						velocityY++;
 					}
-					else if ( currentFloor > destinationFloor )
+					else if ( currentFloor > destinationFloor
+							&& velocityY < Constants.ELEVATOR_MAX_VELOCITY )
 					{
-						while ( velocityY < Constants.ELEVATOR_MAX_VELOCITY )
-						{
-							velocityY--;
-						}
+						velocityY--;
 					}
 					Thread.sleep( 5 );
 				}
-				this.currentFloor = carHeight / constants.Constants.FLOOR_DISTANCE;
+				this.currentFloor = ( int ) carHeight / constants.Constants.FLOOR_DISTANCE;
 			}
 			catch ( InterruptedException e )
 			{
-				e.printStackTrace();
+				System.out.println( "Elevator was interrupted." );
 			}
 		}
 	}
@@ -111,7 +107,10 @@ public class Elevator extends BuildingObject implements Interactive, Visible, Ru
 	@Override
 	public void paint( Graphics2D g2d )
 	{
-		// TODO Auto-generated method stub
-
+		g2d.setColor( Constants.ELEVATOR_SHAFT_COLOR );
+		g2d.fillRect( ( int ) this.x, ( int ) this.y, this.width, this.height );
+		g2d.setColor( Constants.ELEVATOR_CAR_COLOR );
+		g2d.fillRect( ( int ) this.x, ( int ) this.carHeight, Constants.ELEVATOR_CAR_WIDTH,
+				Constants.ELEVATOR_CAR_HEIGHT );
 	}
 }
