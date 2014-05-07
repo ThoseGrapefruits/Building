@@ -19,20 +19,17 @@ public class Decoration extends BuildingObject implements Interactive, Visible, 
 	public void run()
 	{
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void paint( Graphics2D g2d )
 	{
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void interact( BuildingObject interacter )
 	{
 		// TODO Auto-generated method stub
-
 	}
 }

@@ -141,6 +141,14 @@ public class Building implements Visible, Runnable, ActionListener
 		this.doors.add( new Door( this, x, floor * Constants.FLOOR_DISTANCE ) );
 	}
 
+	void addElevator( double x, double y, int[] floors )
+	{
+		Elevator newElevator = new Elevator( this, x, y, floors );
+		this.elevators.add( newElevator );
+		new Thread( newElevator ).start();
+
+	}
+
 	private int floorCount = 0;
 
 	public int getFloorCount()

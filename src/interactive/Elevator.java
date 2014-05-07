@@ -121,7 +121,9 @@ public class Elevator extends BuildingObject implements Interactive, Visible, Ru
 	public void paint( Graphics2D g2d )
 	{
 		g2d.setColor( Constants.ELEVATOR_SHAFT_COLOR );
-		g2d.fillRect( ( int ) this.x, ( int ) this.y, this.width, this.height );
+		g2d.fillRect( ( int ) this.x, ( int ) this.y, this.width, this.height
+				* Constants.FLOOR_DISTANCE
+				* ( this.floors[ this.floors.length - 1 ] - this.floors[ 0 ] ) );
 		g2d.setColor( Constants.ELEVATOR_CAR_COLOR );
 		g2d.fillRect( ( int ) this.x, ( int ) this.carHeight, Constants.ELEVATOR_CAR_WIDTH,
 				Constants.ELEVATOR_CAR_HEIGHT );
