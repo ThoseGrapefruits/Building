@@ -28,7 +28,7 @@ public class Elevator extends BuildingObject implements Interactive, Visible, Ru
 	/**
 	 * Current height of elevator car
 	 */
-	double carHeight = 0;
+	double carHeight;
 
 	/**
 	 * Creates a new elevator object.
@@ -36,10 +36,16 @@ public class Elevator extends BuildingObject implements Interactive, Visible, Ru
 	 * @param location is the pixel location of the bottom elevator.
 	 * @param floors are the other floors that the elevator opens on.
 	 */
-	Elevator( Building building, int x, int y, int[] floors )
+	public Elevator( Building building, double x, double y, int[] floors )
 	{
 		super( building, x, y, Constants.ELEVATOR_WIDTH, Constants.ELEVATOR_CAR_HEIGHT );
 		this.floors = floors;
+		this.carHeight = y;
+		for ( int floor : floors )
+		{
+			this.building.elevatorButtons.add( new ElevatorButton( this.building, x - 10, y + floor
+					* Constants.FLOOR_HEIGHT, this, floor ) );
+		}
 	}
 
 	public void call( int floor )
