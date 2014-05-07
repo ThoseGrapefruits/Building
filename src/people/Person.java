@@ -24,7 +24,7 @@ import constants.Constants;
 
 public class Person extends BuildingObject implements Interactive, Visible, Runnable
 {
-	public Person( Building building, int x, int y )
+	public Person( Building building, double x, double y )
 	{
 		super( building, x, y, Constants.PERSON_WIDTH, Constants.PERSON_HEIGHT );
 

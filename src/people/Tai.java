@@ -13,7 +13,7 @@ import constants.Constants;
 
 public class Tai extends Person implements Interactive, Visible, Runnable
 {
-	public Tai( Building building, int x, int y )
+	public Tai( Building building, double x, double y )
 	{
 		super( building, x, y );
 

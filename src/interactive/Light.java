@@ -9,7 +9,7 @@ import constants.Constants;
 
 public class Light extends BuildingObject implements Visible
 {
-	public Light( Building building, int x, int y )
+	public Light( Building building, double x, double y )
 	{
 		super( building, x, y, Constants.LIGHT_WIDTH, Constants.LIGHT_HEIGHT );
 	}

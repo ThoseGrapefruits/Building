@@ -17,7 +17,7 @@ public class ElevatorButton extends BuildingObject implements Interactive, Visib
 
 	int floor;
 
-	public ElevatorButton( Building building, int x, int y, Elevator linkedElevator, int floor )
+	public ElevatorButton( Building building, double x, double y, Elevator linkedElevator, int floor )
 	{
 		super( building, x, y, Constants.ELEVATOR_BUTTON_WIDTH, Constants.ELEVATOR_BUTTON_HEIGHT );
 		this.linkedElevator = linkedElevator;

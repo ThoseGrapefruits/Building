@@ -12,14 +12,14 @@ public class Floor extends Boundary
 	 */
 	int number = 0;
 
-	public Floor( Building building, int x, int y, int width, int number )
+	public Floor( Building building, double x, double y, int width, int number )
 	{
 		super( building, x, y, width, Constants.FLOOR_HEIGHT );
 		this.number = number;
 		this.width = width;
 	}
 
-	public Floor( Building building, int x, int y, int number )
+	public Floor( Building building, double x, double y, int number )
 	{
 		super( building, x, y, Constants.BUILDING_WIDTH, Constants.FLOOR_HEIGHT );
 		this.number = number;

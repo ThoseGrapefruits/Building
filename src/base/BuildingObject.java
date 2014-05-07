@@ -12,7 +12,7 @@ import main.Building;
  */
 public abstract class BuildingObject
 {
-	protected BuildingObject( Building building, int x, int y, int width, int height )
+	protected BuildingObject( Building building, double x, double y, int width, int height )
 	{
 		this.building = building;
 		this.x = x;

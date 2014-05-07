@@ -12,7 +12,7 @@ public class LightSwitch extends BuildingObject implements Interactive, Visible
 {
 	Light linkedLight;
 
-	public LightSwitch( Building building, int x, int y, Light light )
+	public LightSwitch( Building building, double x, double y, Light light )
 	{
 		super( building, x, y, Constants.LIGHT_SWITCH_WIDTH, Constants.LIGHT_SWITCH_HEIGHT );
 		this.linkedLight = light;

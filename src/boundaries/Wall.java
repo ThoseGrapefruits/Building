@@ -7,7 +7,7 @@ import constants.Constants;
 
 public class Wall extends Boundary
 {
-	public Wall( Building building, int x, int y, int height )
+	public Wall( Building building, double x, double y, int height )
 	{
 		super( building, x, y, Constants.WALL_WIDTH, height );
 	}

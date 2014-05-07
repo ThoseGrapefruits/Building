@@ -12,7 +12,7 @@ import base.Visible;
 
 public class Me extends Person implements Interactive, Visible, Runnable
 {
-	public Me( Building building, int x, int y )
+	public Me( Building building, double x, double y )
 	{
 		super( building, x, y );
 		this.name = "Logan";

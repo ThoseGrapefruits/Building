@@ -9,7 +9,8 @@ import base.Visible;
 
 public class Decoration extends BuildingObject implements Interactive, Visible, Runnable
 {
-	protected Decoration( Building building, int x, int y, int width, int height, String filePath )
+	protected Decoration( Building building, double x, double y, int width, int height,
+			String filePath )
 	{
 		super( building, x, y, width, height );
 	}

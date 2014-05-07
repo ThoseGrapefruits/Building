@@ -12,7 +12,7 @@ public class Door extends BuildingObject implements Interactive, Visible
 {
 	private final int CLOSED = 0, OPEN_LEFT = 1, OPEN_RIGHT = 2;
 
-	public Door( Building building, int x, int y )
+	public Door( Building building, double x, double y )
 	{
 		super( building, x, y, Constants.DOOR_CLOSED_WIDTH, Constants.DOOR_HEIGHT );
 	}

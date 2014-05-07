@@ -6,7 +6,7 @@ import base.Visible;
 
 public abstract class Boundary extends BuildingObject implements Visible
 {
-	Boundary( Building building, int x, int y, int width, int height )
+	Boundary( Building building, double x, double y, int width, int height )
 	{
 		super( building, x, y, width, height );
 	}
