@@ -2,11 +2,13 @@ package main;
 
 import interactive.Door;
 import interactive.Elevator;
+import interactive.ElevatorButton;
 
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import people.Me;
+import people.Tai;
 import view.Surface;
 import view.View;
 import boundaries.Wall;
@@ -31,6 +33,7 @@ public class Main
 		// Add people
 		building.me = new Me( building, 100, 450 );
 		building.addPerson( 500, 450 );
+		building.addPerson( new Tai( building, 400, 450 ) );
 
 		// Add barriers
 		building.walls.add( new Wall( building, 750, 50, 390 + Constants.FLOOR_HEIGHT ) );
@@ -45,6 +48,11 @@ public class Main
 		building.addFloor( 50, 550 - Constants.FLOOR_DISTANCE * 4, 500 );
 		building.elevators.add( new Elevator( building, 200, 50, new int[]
 		{ 0, 1, 2, 3, 4 } ) );
+		for ( ElevatorButton button : building.elevatorButtons )
+		{
+			button.drawBounds = true;
+		}
+		building.me.drawBounds = true;
 
 		// Create the visuals
 		SwingUtilities.invokeLater( new Runnable()
