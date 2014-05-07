@@ -412,9 +412,7 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 		}
 		if ( this.drawBounds )
 		{
-			Rectangle bounds = this.getBounds();
-			g2d.setColor( Color.BLACK );
-			g2d.drawRect( bounds.x, bounds.y, bounds.width, bounds.height );
+			this.drawBounds( g2d );
 		}
 	}
 }

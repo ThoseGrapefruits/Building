@@ -43,8 +43,10 @@ public class Elevator extends BuildingObject implements Interactive, Visible, Ru
 		this.carHeight = y;
 		for ( int floor : floors )
 		{
-			this.building.elevatorButtons.add( new ElevatorButton( this.building, x - 10, y + floor
-					* Constants.FLOOR_HEIGHT, this, floor ) );
+			this.building.elevatorButtons
+					.add( new ElevatorButton( this.building, x - 20, y + floor
+							* Constants.FLOOR_DISTANCE + ( Constants.FLOOR_DISTANCE * 2 / 3 ),
+							this, floor ) );
 		}
 	}
 
