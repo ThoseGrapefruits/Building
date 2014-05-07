@@ -12,6 +12,15 @@ import main.Building;
  */
 public abstract class BuildingObject
 {
+	/**
+	 * Creates a new <pre>BuildingObject</pre> 
+	 * 
+	 * @param building is the building in which the object exists.
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 */
 	protected BuildingObject( Building building, double x, double y, int width, int height )
 	{
 		this.building = building;
@@ -21,10 +30,23 @@ public abstract class BuildingObject
 		this.height = height;
 	}
 
+	/**
+	 * The building in which the current object exists.
+	 * 
+	 * This is used so that given objects can interact with the building itself easier, and have access to the lists of objects in the <pre>Building</pre>.
+	 */
 	protected transient Building building;
 
+	/**
+	 * Whether or not to draw the boundaries of the current object.
+	 */
 	public boolean drawBounds = false;
 
+	/**
+	 * Generates and returns the bounds of the current object using the <pre>x</pre>, </pre>y</pre>, <pre>width</pre>, and <pre>height</pre> of the object.
+	 * 
+	 * @return the bounds of an object, of type <pre>Rectangle</pre>.
+	 */
 	public Rectangle getBounds()
 	{
 		return new Rectangle( ( int ) this.x, ( int ) this.y, this.width, this.height );
@@ -47,6 +69,11 @@ public abstract class BuildingObject
 	 */
 	protected final boolean visible = false;
 
+	/**
+	 * Visibility of the object (whether or not it is to be drawn).
+	 * 
+	 * @return if the object is visible or not.
+	 */
 	public boolean isVisible()
 	{
 		return visible;
@@ -57,6 +84,11 @@ public abstract class BuildingObject
 	 */
 	boolean passable = true;
 
+	/**
+	 * If the object can be walked "through" by other objects (such as people) or if it collides.
+	 * 
+	 * @return if the object can be passed.
+	 */
 	public boolean isPassable()
 	{
 		return passable;
@@ -101,7 +133,7 @@ public abstract class BuildingObject
 	/**
 	 * Returns whether or not the given object is interactive.
 	 * 
-	 * @return interactivity of the object
+	 * @return <pre>interactive</pre>
 	 */
 	public boolean isInteractive()
 	{
@@ -113,6 +145,11 @@ public abstract class BuildingObject
 	 */
 	protected boolean inUse = false;
 
+	/**
+	 * Whether or not the given object is being used by something else.
+	 * 
+	 * @return inUse
+	 */
 	public boolean isInUse()
 	{
 		return inUse;
