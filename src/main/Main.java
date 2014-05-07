@@ -1,6 +1,7 @@
 package main;
 
 import interactive.Door;
+import interactive.Elevator;
 
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
@@ -42,6 +43,8 @@ public class Main
 		building.addFloor( 50, 550 - Constants.FLOOR_DISTANCE * 2, 500 );
 		building.addFloor( 50, 550 - Constants.FLOOR_DISTANCE * 3, 500 );
 		building.addFloor( 50, 550 - Constants.FLOOR_DISTANCE * 4, 500 );
+		building.elevators.add( new Elevator( building, 200, 50, new int[]
+		{ 0, 1, 2, 3, 4 } ) );
 
 		// Create the visuals
 		SwingUtilities.invokeLater( new Runnable()
