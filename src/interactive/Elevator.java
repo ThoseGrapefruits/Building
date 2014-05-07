@@ -48,6 +48,11 @@ public class Elevator extends BuildingObject implements Interactive, Visible, Ru
 		}
 	}
 
+	/**
+	 * Brings the elevator to the given floor. Called by <pre>ElevatorButton</pre>s.
+	 * 
+	 * @param floor is the floor the elevator is called from.
+	 */
 	public void call( int floor )
 	{
 		for ( int i : this.floors )

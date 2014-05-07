@@ -15,7 +15,7 @@ public class ElevatorButton extends BuildingObject implements Interactive, Visib
 {
 	Elevator linkedElevator;
 
-	int floor;
+	private int floor;
 
 	public ElevatorButton( Building building, double x, double y, Elevator linkedElevator, int floor )
 	{
@@ -32,7 +32,7 @@ public class ElevatorButton extends BuildingObject implements Interactive, Visib
 	@Override
 	public void interact( BuildingObject interacter )
 	{
-		// TODO Auto-generated method stub
+		this.linkedElevator.call( this.floor );
 	}
 
 	@Override
