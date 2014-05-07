@@ -159,7 +159,12 @@ public class Building implements Visible, Runnable, ActionListener
 		Person person = new Person( this, x, y );
 		this.people.add( person );
 		new Thread( person ).start();
+	}
 
+	void addPerson( Person person )
+	{
+		this.people.add( person );
+		new Thread( person ).start();
 	}
 
 	@Override
@@ -182,6 +187,10 @@ public class Building implements Visible, Runnable, ActionListener
 		for ( Elevator elevator : this.elevators )
 		{
 			elevator.paint( g2d );
+		}
+		for ( ElevatorButton elevatorButton : this.elevatorButtons )
+		{
+			elevatorButton.paint( g2d );
 		}
 		for ( Door door : this.doors )
 		{
@@ -239,46 +248,43 @@ public class Building implements Visible, Runnable, ActionListener
 				}
 			}
 		}
+		if ( this.spacePressed && this.me.isFloorBelow() )
+		{
+			this.me.velocityY = -5;
+		}
+		else if ( !this.me.canMoveY( this ) )
+		{
+			this.me.velocityY = 0;
+		}
+		else if ( this.me.velocityY < Constants.TERMINAL_VELOCITY )
+		{
+			this.me.velocityY += 0.1;
+		}
+
+		if ( this.leftPressed && this.me.velocityX > -( Constants.PERSON_MAX_VELOCITY ) )
+		{
+			this.me.velocityX -= 0.1;
+		}
+		else if ( this.rightPressed && this.me.velocityX < Constants.PERSON_MAX_VELOCITY )
+		{
+			this.me.velocityX += 0.1;
+		}
+		else if ( this.me.velocityX > -0.01 && this.me.velocityX < 0.01 )
+		{
+			this.me.velocityX = 0;
+		}
 		else
 		{
-			if ( this.spacePressed && this.me.isFloorBelow() )
-			{
-				this.me.velocityY = -5;
-			}
-			else if ( !this.me.canMoveY( this ) )
-			{
-				this.me.velocityY = 0;
-			}
-			else if ( this.me.velocityY < Constants.TERMINAL_VELOCITY )
-			{
-				this.me.velocityY += 0.1;
-			}
-
-			if ( this.leftPressed && this.me.velocityX > -( Constants.PERSON_MAX_VELOCITY ) )
-			{
-				this.me.velocityX -= 0.1;
-			}
-			else if ( this.rightPressed && this.me.velocityX < Constants.PERSON_MAX_VELOCITY )
+			if ( this.me.velocityX < 0 )
 			{
 				this.me.velocityX += 0.1;
 			}
-			else if ( this.me.velocityX > -0.01 && this.me.velocityX < 0.01 )
+			else if ( this.me.velocityX > 0 )
 			{
-				this.me.velocityX = 0;
+				this.me.velocityX -= 0.1;
 			}
-			else
-			{
-				if ( this.me.velocityX < 0 )
-				{
-					this.me.velocityX += 0.1;
-				}
-				else if ( this.me.velocityX > 0 )
-				{
-					this.me.velocityX -= 0.1;
-				}
-			}
-			me.move( this );
 		}
+		me.move( this );
 
 		// AI people
 		for ( Person person : this.people )
