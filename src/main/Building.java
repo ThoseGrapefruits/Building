@@ -33,7 +33,7 @@ public class Building implements Visible, Runnable, ActionListener
 	boolean leftPressed = false;
 	boolean rightPressed = false;
 	boolean spacePressed = false;
-	boolean altPressed = false;
+	boolean shiftPressed = false;
 
 	public Building()
 	{
@@ -79,9 +79,9 @@ public class Building implements Visible, Runnable, ActionListener
 									{
 										spacePressed = true;
 									}
-									else if ( keyCode == KeyEvent.VK_ALT )
+									else if ( keyCode == KeyEvent.VK_SHIFT )
 									{
-										altPressed = true;
+										shiftPressed = true;
 									}
 									break;
 
@@ -102,9 +102,9 @@ public class Building implements Visible, Runnable, ActionListener
 									{
 										spacePressed = false;
 									}
-									else if ( keyCode == KeyEvent.VK_ALT )
+									else if ( keyCode == KeyEvent.VK_SHIFT )
 									{
-										altPressed = false;
+										shiftPressed = false;
 									}
 									break;
 							}
@@ -223,7 +223,7 @@ public class Building implements Visible, Runnable, ActionListener
 			this.me.y = 200;
 		}
 
-		if ( this.altPressed )
+		if ( this.shiftPressed )
 		{
 			this.me.velocityX = 0;
 			this.me.interactiveObjectWithinReach = this.me.getClosestInteractiveObject();
