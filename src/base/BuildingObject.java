@@ -1,5 +1,7 @@
 package base;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import main.Building;
@@ -41,6 +43,13 @@ public abstract class BuildingObject
 	 * Whether or not to draw the boundaries of the current object.
 	 */
 	public boolean drawBounds = false;
+
+	public void drawBounds( Graphics2D g2d )
+	{
+		Rectangle bounds = this.getBounds();
+		g2d.setColor( Color.CYAN );
+		g2d.drawRect( bounds.x, bounds.y, bounds.width, bounds.height );
+	}
 
 	/**
 	 * Generates and returns the bounds of the current object using the <pre>x</pre>, </pre>y</pre>, <pre>width</pre>, and <pre>height</pre> of the object.
