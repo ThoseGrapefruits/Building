@@ -46,9 +46,12 @@ public abstract class BuildingObject
 
 	public void drawBounds( Graphics2D g2d )
 	{
-		Rectangle bounds = this.getBounds();
-		g2d.setColor( Color.CYAN );
-		g2d.drawRect( bounds.x, bounds.y, bounds.width, bounds.height );
+		if ( this.drawBounds )
+		{
+			Rectangle bounds = this.getBounds();
+			g2d.setColor( Color.CYAN );
+			g2d.drawRect( bounds.x, bounds.y, bounds.width, bounds.height );
+		}
 	}
 
 	/**
