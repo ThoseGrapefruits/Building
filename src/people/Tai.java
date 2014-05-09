@@ -2,7 +2,6 @@ package people;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
 
@@ -67,19 +66,8 @@ public class Tai extends Person implements Interactive, Visible, Runnable
 							+ Constants.PERSON_HEAD_HEIGHT, null );
 			this.animationStep[ 1 ] = ( this.animationStep[ 1 ] + 1 ) % 36;
 		}
-		if ( this.toBeSaid != null && this.toBeSaid != "" && this.animationStep[ 2 ] != 0 )
-		{
-			int textWidth = this.toBeSaid.length() * 3;
-			g2d.setColor( new Color( 255, 255, 255, this.animationStep[ 2 ] ) );
-			g2d.drawString( this.toBeSaid, ( int ) this.x - ( ( textWidth - this.width ) / 2 ),
-					( int ) this.y - Constants.TEXT_BOX_DISTANCE );
-			this.animationStep[ 2 ]--;
-		}
-		if ( this.drawBounds )
-		{
-			Rectangle bounds = this.getBounds();
-			g2d.setColor( Color.BLACK );
-			g2d.drawRect( bounds.x, bounds.y, bounds.width, bounds.height );
-		}
+
+		this.say( g2d );
+		this.drawBounds( g2d );
 	}
 }

@@ -281,6 +281,18 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 		this.inUse = false;
 	}
 
+	public void say( Graphics2D g2d )
+	{
+		if ( this.toBeSaid != null && this.toBeSaid != "" && this.animationStep[ 2 ] != 0 )
+		{
+			int textWidth = this.toBeSaid.length() * 3;
+			g2d.setColor( new Color( 0, 0, 0, this.animationStep[ 2 ] ) );
+			g2d.drawString( this.toBeSaid, ( int ) this.x - ( ( textWidth - this.width ) / 2 ),
+					( int ) this.y - Constants.TEXT_BOX_DISTANCE );
+			this.animationStep[ 2 ]--;
+		}
+	}
+
 	public boolean canMoveX( Building b )
 	{
 		boolean canMoveX = true;
@@ -404,14 +416,9 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 					( int ) this.y + Constants.PERSON_HEAD_HEIGHT, null );
 			this.animationStep[ 1 ] = ( this.animationStep[ 1 ] + 1 ) % 100;
 		}
-		if ( this.toBeSaid != null && this.toBeSaid != "" && this.animationStep[ 2 ] != 0 )
-		{
-			int textWidth = this.toBeSaid.length() * 3;
-			g2d.setColor( new Color( 255, 255, 255, this.animationStep[ 2 ] ) );
-			g2d.drawString( this.toBeSaid, ( int ) this.x - ( ( textWidth - this.width ) / 2 ),
-					( int ) this.y - Constants.TEXT_BOX_DISTANCE );
-			this.animationStep[ 2 ]--;
-		}
+
+		this.say( g2d );
+
 		if ( this.drawBounds )
 		{
 			this.drawBounds( g2d );
