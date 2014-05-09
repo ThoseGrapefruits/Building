@@ -59,12 +59,14 @@ public class Door extends BuildingObject implements Interactive, Visible
 			g2d.fillOval( ( int ) this.x + Constants.DOOR_CLOSED_WIDTH, ( int ) this.y
 					+ Constants.DOOR_HEIGHT / 2, 8, 8 );
 			g2d.fillRect( ( int ) this.x + Constants.DOOR_CLOSED_WIDTH, ( int ) this.y
-					+ Constants.DOOR_HEIGHT / 2, 8, 8 );
+					+ Constants.DOOR_HEIGHT / 2 + 2, 4, 4 );
 
 			// Left door handle
 			g2d.setColor( Constants.DOORKNOB_COLOR );
 			g2d.fillOval( ( int ) this.x - Constants.DOOR_CLOSED_WIDTH, ( int ) this.y
 					+ Constants.DOOR_HEIGHT / 2, 8, 8 );
+			g2d.fillRect( ( int ) this.x - Constants.DOOR_CLOSED_WIDTH + 4, ( int ) this.y
+					+ Constants.DOOR_HEIGHT / 2 + 2, 4, 4 );
 		}
 		else if ( this.open == OPEN_LEFT )
 		{
