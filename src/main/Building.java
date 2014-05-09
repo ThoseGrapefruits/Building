@@ -82,6 +82,7 @@ public class Building implements Visible, Runnable, ActionListener
 									else if ( keyCode == KeyEvent.VK_SHIFT )
 									{
 										shiftPressed = true;
+										interactMe();
 									}
 									break;
 
@@ -134,6 +135,22 @@ public class Building implements Visible, Runnable, ActionListener
 		Light newLight = new Light( this, xLight, yLight );
 		this.lights.add( newLight );
 		this.lightSwitches.add( new LightSwitch( this, xSwitch, ySwitch, newLight ) );
+	}
+
+	void interactMe()
+	{
+		this.me.interactiveObjectWithinReach = this.me.getClosestInteractiveObject();
+		if ( this.me.interactiveObjectWithinReach != null )
+		{
+			( ( Interactive ) this.me.interactiveObjectWithinReach ).interact( this.me );
+		}
+		for ( Person person : this.people )
+		{
+			if ( person.getBounds().intersects( this.me.getBounds() ) )
+			{
+				person.interact( this.me );
+			}
+		}
 	}
 
 	void addDoor( int x, int floor )
@@ -240,22 +257,6 @@ public class Building implements Visible, Runnable, ActionListener
 			this.me.y = 200;
 		}
 
-		if ( this.shiftPressed )
-		{
-			this.me.velocityX = 0;
-			this.me.interactiveObjectWithinReach = this.me.getClosestInteractiveObject();
-			if ( this.me.interactiveObjectWithinReach != null )
-			{
-				( ( Interactive ) this.me.interactiveObjectWithinReach ).interact( this.me );
-			}
-			for ( Person person : this.people )
-			{
-				if ( person.getBounds().intersects( this.me.getBounds() ) )
-				{
-					person.interact( this.me );
-				}
-			}
-		}
 		if ( this.spacePressed && this.me.isFloorBelow() )
 		{
 			this.me.velocityY = -5;
