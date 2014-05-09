@@ -34,8 +34,8 @@ public class Door extends BuildingObject implements Interactive, Visible
 			}
 			else
 			{
-				this.passable = true;
 				this.open = OPEN_LEFT;
+				this.passable = true;
 			}
 		}
 		else if ( !( this.getBounds().intersects( object.getBounds() ) ) )
@@ -54,18 +54,35 @@ public class Door extends BuildingObject implements Interactive, Visible
 			g2d.setColor( Constants.DOOR_COLOR );
 			g2d.fillRect( ( int ) this.x, ( int ) this.y, Constants.DOOR_CLOSED_WIDTH,
 					Constants.DOOR_HEIGHT );
+			g2d.setColor( Constants.DOORKNOB_COLOR );
+			// Right door handle
+			g2d.fillOval( ( int ) this.x + Constants.DOOR_CLOSED_WIDTH, ( int ) this.y
+					+ Constants.DOOR_HEIGHT / 2, 8, 8 );
+			g2d.fillRect( ( int ) this.x + Constants.DOOR_CLOSED_WIDTH, ( int ) this.y
+					+ Constants.DOOR_HEIGHT / 2, 8, 8 );
+
+			// Left door handle
+			g2d.setColor( Constants.DOORKNOB_COLOR );
+			g2d.fillOval( ( int ) this.x - Constants.DOOR_CLOSED_WIDTH, ( int ) this.y
+					+ Constants.DOOR_HEIGHT / 2, 8, 8 );
 		}
 		else if ( this.open == OPEN_LEFT )
 		{
 			g2d.setColor( Constants.DOOR_COLOR );
 			g2d.fillRect( ( int ) this.x - Constants.DOOR_OPEN_WIDTH, ( int ) this.y,
 					Constants.DOOR_OPEN_WIDTH, Constants.DOOR_HEIGHT );
+			g2d.setColor( Constants.DOORKNOB_COLOR );
+			g2d.fillOval( ( int ) this.x - Constants.DOOR_OPEN_WIDTH + 4, ( int ) this.y
+					+ Constants.DOOR_HEIGHT / 2, 8, 8 );
 		}
 		else if ( this.open == OPEN_RIGHT )
 		{
 			g2d.setColor( Constants.DOOR_COLOR );
 			g2d.fillRect( ( int ) this.x, ( int ) this.y, Constants.DOOR_OPEN_WIDTH,
 					Constants.DOOR_HEIGHT );
+			g2d.setColor( Constants.DOORKNOB_COLOR );
+			g2d.fillOval( ( int ) this.x + Constants.DOOR_OPEN_WIDTH - 12, ( int ) this.y
+					+ Constants.DOOR_HEIGHT / 2, 8, 8 );
 		}
 	}
 }

@@ -376,12 +376,13 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 
 			// Body
 			g2d.drawImage(
-					this.body.getSubimage(
-							10 * ( this.animationStep[ 1 ] - ( this.animationStep[ 1 ] % 6 ) ) / 6,
-							15, 10, 15 ).getScaledInstance( Constants.PERSON_WIDTH,
-							Constants.PERSON_BODY_HEIGHT, 0 ), ( int ) this.x, ( int ) this.y
-							+ Constants.PERSON_HEAD_HEIGHT, null );
-			this.animationStep[ 1 ] = ( this.animationStep[ 1 ] + 1 ) % 36;
+					this.body
+							.getSubimage(
+									10 * ( this.animationStep[ 1 ] - ( this.animationStep[ 1 ] % 10 ) ) / 10,
+									15, 10, 15 ).getScaledInstance( Constants.PERSON_WIDTH,
+									Constants.PERSON_BODY_HEIGHT, 0 ), ( int ) this.x,
+					( int ) this.y + Constants.PERSON_HEAD_HEIGHT, null );
+			this.animationStep[ 1 ] = ( this.animationStep[ 1 ] + 1 ) % 100;
 		}
 		else
 		{ // Moving to the left
@@ -395,12 +396,13 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 
 			// Body
 			g2d.drawImage(
-					this.body.getSubimage(
-							10 * ( this.animationStep[ 1 ] - ( this.animationStep[ 1 ] % 6 ) ) / 6,
-							0, 10, 15 ).getScaledInstance( Constants.PERSON_WIDTH,
-							Constants.PERSON_BODY_HEIGHT, 0 ), ( int ) this.x, ( int ) this.y
-							+ Constants.PERSON_HEAD_HEIGHT, null );
-			this.animationStep[ 1 ] = ( this.animationStep[ 1 ] + 1 ) % 36;
+					this.body
+							.getSubimage(
+									10 * ( this.animationStep[ 1 ] - ( this.animationStep[ 1 ] % 10 ) ) / 10,
+									0, 10, 15 ).getScaledInstance( Constants.PERSON_WIDTH,
+									Constants.PERSON_BODY_HEIGHT, 0 ), ( int ) this.x,
+					( int ) this.y + Constants.PERSON_HEAD_HEIGHT, null );
+			this.animationStep[ 1 ] = ( this.animationStep[ 1 ] + 1 ) % 100;
 		}
 		if ( this.toBeSaid != null && this.toBeSaid != "" && this.animationStep[ 2 ] != 0 )
 		{

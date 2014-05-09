@@ -33,17 +33,26 @@ public class Main
 		building.addPerson( 500, 450 );
 		building.addPerson( new Tai( building, 400, 450 ) );
 
-		// Add barriers
+		// Outer doors/walls
 		building.walls.add( new Wall( building, 750, 50, 390 + Constants.FLOOR_HEIGHT ) );
 		building.walls.add( new Wall( building, 50, 50, 390 + Constants.FLOOR_HEIGHT ) );
 		building.doors.add( new Door( building, 750, 440 + Constants.FLOOR_HEIGHT ) );
 		building.doors.add( new Door( building, 50, 440 + Constants.FLOOR_HEIGHT ) );
+
+		// Inner doors/walls
+		building.doors.add( new Door( building, 350, 440 + Constants.FLOOR_HEIGHT ) );
+		building.walls.add( new Wall( building, 350, 440 - Constants.FLOOR_HEIGHT,
+				Constants.FLOOR_DISTANCE - Constants.DOOR_HEIGHT ) );
+
+		// Floors
 		building.addFloor( 50, 550, 500 );
 		building.addFloor( 50, 550, 500 );
 		building.addFloor( 50, 550 - Constants.FLOOR_DISTANCE, 500 );
 		building.addFloor( 50, 550 - Constants.FLOOR_DISTANCE * 2, 500 );
 		building.addFloor( 50, 550 - Constants.FLOOR_DISTANCE * 3, 500 );
 		building.addFloor( 50, 550 - Constants.FLOOR_DISTANCE * 4, 500 );
+
+		// Elevators
 		building.addElevator( 200.0, 50.0, new int[]
 		{ 0, 1, 2, 3, 4 } );
 

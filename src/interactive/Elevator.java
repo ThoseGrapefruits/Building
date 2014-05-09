@@ -79,19 +79,19 @@ public class Elevator extends BuildingObject implements Interactive, Visible, Ru
 		{
 			try
 			{
-				Thread.sleep( 1000 );
-				while ( carHeight * Constants.FLOOR_DISTANCE != destinationFloor
+				Thread.sleep( 100 );
+				if ( carHeight * Constants.FLOOR_DISTANCE != destinationFloor
 						* Constants.FLOOR_DISTANCE )
 				{
 					if ( currentFloor < destinationFloor
 							&& velocityY < Constants.ELEVATOR_MAX_VELOCITY )
 					{
-						velocityY++;
+						velocityY += 0.1;
 					}
 					else if ( currentFloor > destinationFloor
 							&& velocityY < Constants.ELEVATOR_MAX_VELOCITY )
 					{
-						velocityY--;
+						velocityY += 0.1;
 					}
 					Thread.sleep( 5 );
 				}
@@ -114,16 +114,14 @@ public class Elevator extends BuildingObject implements Interactive, Visible, Ru
 	@Override
 	public void interact( BuildingObject interacter )
 	{
-		// TODO Auto-generated method stub
+		this.inUse = true;
+
+		this.inUse = false;
 	}
 
 	@Override
 	public void paint( Graphics2D g2d )
 	{
-		g2d.setColor( Constants.ELEVATOR_SHAFT_COLOR );
-		g2d.fillRect( ( int ) this.x, ( int ) this.y, this.width, this.height
-				* Constants.FLOOR_DISTANCE
-				* ( this.floors[ this.floors.length - 1 ] - this.floors[ 0 ] ) );
 		g2d.setColor( Constants.ELEVATOR_CAR_COLOR );
 		g2d.fillRect( ( int ) this.x, ( int ) this.carHeight, Constants.ELEVATOR_CAR_WIDTH,
 				Constants.ELEVATOR_CAR_HEIGHT );

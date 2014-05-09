@@ -18,11 +18,11 @@ public class Constants
 	 * Interactive objects (pixels)
 	 */
 	public static final int ELEVATOR_BUTTON_BACKING_WIDTH = 8, ELEVATOR_BUTTON_BACKING_HEIGHT = 16,
-			ELEVATOR_BUTTON_WIDTH = 4, ELEVATOR_BUTTON_HEIGHT = 4, LIGHT_SWITCH_WIDTH = 3,
-			LIGHT_SWITCH_HEIGHT = 5, ELEVATOR_CAR_WIDTH = 80, DOOR_HEIGHT = 110,
+			DOOR_CLOSED_WIDTH = 8, DOOR_OPEN_WIDTH = 50, ELEVATOR_BUTTON_WIDTH = 4,
+			ELEVATOR_BUTTON_HEIGHT = 4, LIGHT_SWITCH_WIDTH = 3, LIGHT_SWITCH_HEIGHT = 5,
+			ELEVATOR_CAR_WIDTH = DOOR_OPEN_WIDTH * 2, DOOR_HEIGHT = 110,
 			ELEVATOR_WIDTH = ELEVATOR_CAR_WIDTH + 10, ELEVATOR_SHAFT_WIDTH = ELEVATOR_WIDTH,
-			ELEVATOR_CAR_HEIGHT = DOOR_HEIGHT, DOOR_CLOSED_WIDTH = 8, DOOR_OPEN_WIDTH = 40,
-			LIGHT_WIDTH = 5, LIGHT_HEIGHT = 5;
+			ELEVATOR_CAR_HEIGHT = DOOR_HEIGHT, LIGHT_WIDTH = 5, LIGHT_HEIGHT = 5;
 
 	/**
 	 * Speed limits (pixels / tick)
@@ -65,9 +65,10 @@ public class Constants
 	/**
 	 * Color scheme.
 	 */
-	public static final Color BUILDING_COLOR = new Color( 100, 100, 100 ), WALL_COLOR = new Color(
-			50, 40, 40 ), FLOOR_COLOR = new Color( 50, 20, 20 ),
-			DOOR_COLOR = new Color( 60, 30, 30 ), ELEVATOR_SHAFT_COLOR = new Color( 0, 0, 0, 50 ),
-			ELEVATOR_CAR_COLOR = new Color( 100, 0, 0 ), BUTTON_BACKING_COLOR = new Color( 50, 50,
-					50 ), BUTTON_COLOR = new Color( 200, 200, 200 );
+	public static final Color BUILDING_COLOR = new Color( 243, 226, 216 ), WALL_COLOR = new Color(
+			183, 166, 156 ), FLOOR_COLOR = new Color( 100, 100, 0 ), DOOR_COLOR = new Color( 173,
+			136, 126 ), DOORKNOB_COLOR = new Color( 126, 8, 84 ), ELEVATOR_SHAFT_COLOR = new Color(
+			0, 0, 0, 50 ), ELEVATOR_CAR_COLOR = new Color( 100, 0, 0 ),
+			BUTTON_BACKING_COLOR = new Color( 50, 50, 50 ),
+			BUTTON_COLOR = new Color( 200, 200, 200 );
 }
