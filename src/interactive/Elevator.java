@@ -2,6 +2,7 @@ package interactive;
 
 import java.awt.Graphics2D;
 
+import people.Person;
 import main.Building;
 import base.BuildingObject;
 import base.Interactive;
@@ -16,19 +17,34 @@ public class Elevator extends BuildingObject implements Interactive, Visible, Ru
 	int[] floors;
 
 	/**
-	 * Destination floor
+	 * <pre>BuildingObject</pre> currently riding in the elevator.
 	 */
-	int destinationFloor = 0;
+	BuildingObject passenger;
 
 	/**
-	 * Current floor
+	 * Destination floor
 	 */
-	int currentFloor = 0;
+	int destinationFloor;
+
+	/**
+	 * Current floor;
+	 */
+	int currentFloor;
 
 	/**
 	 * Current height of elevator car
 	 */
 	double carHeight;
+
+	/**
+	 * How open the doors of the elevator are.
+	 */
+	double doors = 1.0;
+
+	/**
+	 * Whether or not the elevator is open / opening.
+	 */
+	boolean open = false;
 
 	/**
 	 * Creates a new elevator object.
@@ -48,6 +64,7 @@ public class Elevator extends BuildingObject implements Interactive, Visible, Ru
 							* Constants.FLOOR_DISTANCE + ( Constants.FLOOR_DISTANCE * 2 / 3 ),
 							this, floor ) );
 		}
+		this.destinationFloor = floors[ 0 ];
 	}
 
 	/**
@@ -55,51 +72,62 @@ public class Elevator extends BuildingObject implements Interactive, Visible, Ru
 	 * 
 	 * @param floor is the floor the elevator is called from.
 	 */
-	public void call( int floor )
+	public void call( ElevatorButton button )
 	{
-		for ( int i : this.floors )
-		{
-			if ( i == floor )
-			{
-				this.destinationFloor = floor;
-			}
-		}
+		this.building.elevatorButtons.get( this.destinationFloor ).currentFloor = false;
+		this.destinationFloor = button.floor;
+		System.out.println( "Elevator called to floor " + this.destinationFloor + "." );
 	}
 
 	public void move( Building b )
 	{
-		this.y += this.velocityY;
+		int destinationFloorHeight = ( int ) ( this.y + this.destinationFloor
+				* Constants.FLOOR_DISTANCE + Constants.FLOOR_HEIGHT );
+		if ( destinationFloorHeight == ( int ) this.carHeight )
+		{
+			this.velocityY = 0;
+			this.building.elevatorButtons.get( this.destinationFloor ).currentFloor = true;
+			this.open = true;
+			this.passenger = null;
+			this.currentFloor = this.destinationFloor;
+		}
+		else if ( ( int ) this.carHeight > destinationFloorHeight
+				&& this.velocityY > -Constants.ELEVATOR_MAX_VELOCITY )
+		{
+			this.velocityY -= 0.01;
+			this.building.elevatorButtons.get( this.destinationFloor ).currentFloor = false;
+			this.open = false;
+		}
+		else if ( ( int ) this.carHeight < destinationFloorHeight
+				&& this.velocityY < Constants.ELEVATOR_MAX_VELOCITY )
+		{
+			this.velocityY += 0.01;
+			this.building.elevatorButtons.get( this.destinationFloor ).currentFloor = false;
+			this.open = false;
+		}
+		this.carHeight += this.velocityY;
 	}
 
 	@Override
 	public void run()
 	{
-		// TODO probably overhaul this.
 		while ( true )
 		{
+			if ( this.open && this.doors > 0.001 )
+			{
+				this.doors *= 0.9;
+			}
+			else if ( !this.open && this.doors < 0.999 )
+			{
+				this.doors *= 1.2;
+			}
 			try
 			{
-				Thread.sleep( 100 );
-				if ( carHeight * Constants.FLOOR_DISTANCE != destinationFloor
-						* Constants.FLOOR_DISTANCE )
-				{
-					if ( currentFloor < destinationFloor
-							&& velocityY < Constants.ELEVATOR_MAX_VELOCITY )
-					{
-						velocityY += 0.1;
-					}
-					else if ( currentFloor > destinationFloor
-							&& velocityY < Constants.ELEVATOR_MAX_VELOCITY )
-					{
-						velocityY += 0.1;
-					}
-					Thread.sleep( 5 );
-				}
-				this.currentFloor = ( int ) carHeight / constants.Constants.FLOOR_DISTANCE;
+				Thread.sleep( Constants.TICK );
 			}
 			catch ( InterruptedException e )
 			{
-				System.out.println( "Elevator was interrupted." );
+				e.printStackTrace();
 			}
 		}
 	}
@@ -115,17 +143,52 @@ public class Elevator extends BuildingObject implements Interactive, Visible, Ru
 	public void interact( BuildingObject interacter )
 	{
 		this.inUse = true;
-
+		this.passenger = interacter;
+		this.destinationFloor = ( int ) ( Math.random() * this.floors.length );
 		this.inUse = false;
 	}
 
 	@Override
 	public void paint( Graphics2D g2d )
 	{
+
+		g2d.setColor( Constants.ELEVATOR_SHAFT_COLOR );
+		for ( int floor : floors )
+		{
+			g2d.fillRect( ( int ) this.x, ( int ) this.y + Constants.FLOOR_HEIGHT * 2 + floor
+					* Constants.FLOOR_DISTANCE, Constants.DOOR_OPEN_WIDTH * 2 + 4,
+					Constants.ELEVATOR_CAR_HEIGHT );
+		}
+
 		g2d.setColor( Constants.ELEVATOR_CAR_COLOR );
-		g2d.fillRect( ( int ) this.x, ( int ) this.carHeight, Constants.DOOR_OPEN_WIDTH,
-				Constants.ELEVATOR_CAR_HEIGHT );
-		g2d.fillRect( ( int ) this.x + Constants.DOOR_OPEN_WIDTH + 4, ( int ) this.carHeight,
-				Constants.DOOR_OPEN_WIDTH, Constants.ELEVATOR_CAR_HEIGHT );
+		g2d.fillRect( ( int ) this.x, ( int ) this.carHeight + Constants.FLOOR_HEIGHT, this.width,
+				this.height );
+
+		g2d.setColor( Constants.ELEVATOR_DOOR_COLOR );
+		for ( int floor : floors )
+		{
+			if ( floor == this.destinationFloor || floor == this.currentFloor )
+			{
+				g2d.fillRect( ( int ) this.x, ( int ) ( this.y + Constants.FLOOR_HEIGHT * 2 + floor
+						* Constants.FLOOR_DISTANCE ),
+						( int ) ( Constants.DOOR_OPEN_WIDTH * this.doors ),
+						Constants.ELEVATOR_CAR_HEIGHT );
+				g2d.fillRect(
+						( int ) ( this.x + 4 + Constants.DOOR_OPEN_WIDTH * 2 - Constants.DOOR_OPEN_WIDTH
+								* this.doors ), ( int ) this.y + Constants.FLOOR_HEIGHT * 2 + floor
+								* Constants.FLOOR_DISTANCE,
+						( int ) ( Constants.DOOR_OPEN_WIDTH * this.doors ),
+						Constants.ELEVATOR_CAR_HEIGHT );
+			}
+			else
+			{
+				g2d.fillRect( ( int ) this.x, ( int ) this.y + Constants.FLOOR_HEIGHT * 2 + floor
+						* Constants.FLOOR_DISTANCE, Constants.DOOR_OPEN_WIDTH,
+						Constants.ELEVATOR_CAR_HEIGHT );
+				g2d.fillRect( ( int ) this.x + Constants.DOOR_OPEN_WIDTH + 4, ( int ) this.y
+						+ Constants.FLOOR_HEIGHT * 2 + floor * Constants.FLOOR_DISTANCE,
+						Constants.DOOR_OPEN_WIDTH, Constants.ELEVATOR_CAR_HEIGHT );
+			}
+		}
 	}
 }
