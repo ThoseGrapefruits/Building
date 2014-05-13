@@ -175,7 +175,7 @@ public class Building implements Visible, Runnable, ActionListener
 
 	void addFloor( int x, int y, int width )
 	{
-		this.floors.add( new Floor( this, x, y, width ) );
+		this.floors.add( new Floor( this, x, y, width, floorCount ) );
 		this.floorCount++;
 	}
 
