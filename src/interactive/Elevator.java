@@ -2,7 +2,6 @@ package interactive;
 
 import java.awt.Graphics2D;
 
-import people.Person;
 import main.Building;
 import base.BuildingObject;
 import base.Interactive;
