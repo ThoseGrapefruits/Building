@@ -1,5 +1,6 @@
 package interactive;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +22,12 @@ public class ElevatorButton extends BuildingObject implements Interactive, Visib
 	/**
 	 * The floor location of the button.
 	 */
-	private int floor;
+	public int floor;
+
+	/**
+	 * Whether the elevator is on the same floor as the button
+	 */
+	public boolean currentFloor = false;
 
 	/**
 	 * Creates a new button with a linked elevator and a floor index.
@@ -37,6 +43,7 @@ public class ElevatorButton extends BuildingObject implements Interactive, Visib
 		super( building, x, y, Constants.ELEVATOR_BUTTON_BACKING_WIDTH,
 				Constants.ELEVATOR_BUTTON_BACKING_HEIGHT );
 		this.linkedElevator = linkedElevator;
+		this.floor = floor;
 	}
 
 	@Override
@@ -48,7 +55,7 @@ public class ElevatorButton extends BuildingObject implements Interactive, Visib
 	@Override
 	public void interact( BuildingObject interacter )
 	{
-		this.linkedElevator.call( this.floor );
+		this.linkedElevator.call( this );
 	}
 
 	@Override
@@ -56,7 +63,14 @@ public class ElevatorButton extends BuildingObject implements Interactive, Visib
 	{
 		g2d.setColor( Constants.BUTTON_BACKING_COLOR );
 		g2d.fillRect( ( int ) this.x, ( int ) this.y, this.width, this.height );
-		g2d.setColor( Constants.BUTTON_COLOR );
+		if ( this.currentFloor )
+		{
+			g2d.setColor( Color.RED );
+		}
+		else
+		{
+			g2d.setColor( Constants.BUTTON_COLOR );
+		}
 		g2d.fillRoundRect( ( int ) this.x + this.width / 4, ( int ) this.y + this.height / 8,
 				Constants.ELEVATOR_BUTTON_WIDTH, Constants.ELEVATOR_BUTTON_HEIGHT,
 				Constants.ELEVATOR_BUTTON_WIDTH / 2, Constants.ELEVATOR_BUTTON_HEIGHT / 2 );
@@ -73,6 +87,6 @@ public class ElevatorButton extends BuildingObject implements Interactive, Visib
 	@Override
 	public void actionPerformed( ActionEvent e )
 	{
-		this.linkedElevator.call( this.floor );
+		this.linkedElevator.call( this );
 	}
 }
