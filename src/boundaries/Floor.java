@@ -16,7 +16,6 @@ public class Floor extends Boundary
 	{
 		super( building, x, y, width, Constants.FLOOR_HEIGHT );
 		this.number = number;
-		this.width = width;
 	}
 
 	public Floor( Building building, double x, double y, int number )
