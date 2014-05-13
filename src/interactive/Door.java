@@ -10,6 +10,9 @@ import constants.Constants;
 
 public class Door extends BuildingObject implements Interactive, Visible
 {
+	/**
+	 * Possible states for the door.
+	 */
 	private final int CLOSED = 0, OPEN_LEFT = 1, OPEN_RIGHT = 2;
 
 	public Door( Building building, double x, double y )
@@ -17,6 +20,9 @@ public class Door extends BuildingObject implements Interactive, Visible
 		super( building, x, y, Constants.DOOR_CLOSED_WIDTH, Constants.DOOR_HEIGHT );
 	}
 
+	/**
+	 * Whether the door is open or closed, and which direction it is open in.
+	 */
 	public int open = CLOSED;
 
 	protected boolean passable = false;
@@ -37,6 +43,7 @@ public class Door extends BuildingObject implements Interactive, Visible
 				this.open = OPEN_LEFT;
 				this.passable = true;
 			}
+			this.animationStep[ 0 ] = 1;
 		}
 		else if ( !( this.getBounds().intersects( object.getBounds() ) ) )
 		{
@@ -51,6 +58,7 @@ public class Door extends BuildingObject implements Interactive, Visible
 	{
 		if ( this.open == CLOSED )
 		{
+			this.animationStep[ 0 ] = 0;
 			g2d.setColor( Constants.DOOR_COLOR );
 			g2d.fillRect( ( int ) this.x, ( int ) this.y, Constants.DOOR_CLOSED_WIDTH,
 					Constants.DOOR_HEIGHT );
@@ -70,21 +78,31 @@ public class Door extends BuildingObject implements Interactive, Visible
 		}
 		else if ( this.open == OPEN_LEFT )
 		{
+			if ( this.animationStep[ 0 ] < 100 )
+			{
+				this.animationStep[ 0 ] = ( int ) Math.ceil( this.animationStep[ 0 ] * 1.2 );
+			}
 			g2d.setColor( Constants.DOOR_COLOR );
-			g2d.fillRect( ( int ) this.x - Constants.DOOR_OPEN_WIDTH, ( int ) this.y,
-					Constants.DOOR_OPEN_WIDTH, Constants.DOOR_HEIGHT );
+			g2d.fillRect( ( int ) ( this.x - Constants.DOOR_OPEN_WIDTH
+					* ( this.animationStep[ 0 ] / 100.0 ) ), ( int ) this.y,
+					( int ) ( Constants.DOOR_OPEN_WIDTH * this.animationStep[ 0 ] / 100 ),
+					Constants.DOOR_HEIGHT );
 			g2d.setColor( Constants.DOORKNOB_COLOR );
-			g2d.fillOval( ( int ) this.x - Constants.DOOR_OPEN_WIDTH + 4, ( int ) this.y
-					+ Constants.DOOR_HEIGHT / 2, 8, 8 );
+			g2d.fillOval( ( int ) ( this.x - Constants.DOOR_OPEN_WIDTH * this.animationStep[ 0 ]
+					/ 100 + 4 ), ( int ) this.y + Constants.DOOR_HEIGHT / 2, 8, 8 );
 		}
 		else if ( this.open == OPEN_RIGHT )
 		{
+			if ( this.animationStep[ 0 ] < 100 )
+			{
+				this.animationStep[ 0 ] = ( int ) Math.ceil( this.animationStep[ 0 ] * 1.2 );
+			}
 			g2d.setColor( Constants.DOOR_COLOR );
-			g2d.fillRect( ( int ) this.x, ( int ) this.y, Constants.DOOR_OPEN_WIDTH,
-					Constants.DOOR_HEIGHT );
+			g2d.fillRect( ( int ) this.x, ( int ) this.y, ( int ) ( Constants.DOOR_OPEN_WIDTH
+					* this.animationStep[ 0 ] / 100 ), Constants.DOOR_HEIGHT );
 			g2d.setColor( Constants.DOORKNOB_COLOR );
-			g2d.fillOval( ( int ) this.x + Constants.DOOR_OPEN_WIDTH - 12, ( int ) this.y
-					+ Constants.DOOR_HEIGHT / 2, 8, 8 );
+			g2d.fillOval( ( int ) ( this.x + Constants.DOOR_OPEN_WIDTH * this.animationStep[ 0 ]
+					/ 100 - 12 ), ( int ) this.y + Constants.DOOR_HEIGHT / 2, 8, 8 );
 		}
 	}
 }
