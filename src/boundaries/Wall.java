@@ -5,6 +5,11 @@ import java.awt.Graphics2D;
 import main.Building;
 import constants.Constants;
 
+/**
+ * Wall boundary, prevents people from walking horizontally.
+ * 
+ * @author Logan Moore
+ */
 public class Wall extends Boundary
 {
 	public Wall( Building building, double x, double y, int height )

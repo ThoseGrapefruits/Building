@@ -51,6 +51,9 @@ public class Main
 		building.addFloor( 50, 550 - Constants.FLOOR_DISTANCE * 3, 700 );
 		building.addFloor( 50, 550 - Constants.FLOOR_DISTANCE * 4, 700 );
 
+		// Lights
+		building.addLightAndSwitch( 100, 420, 100, 450 );
+
 		// Elevators
 		building.addElevator( 200.0, 50.0, new int[]
 		{ 0, 1, 2, 3 } );

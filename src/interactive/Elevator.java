@@ -8,6 +8,11 @@ import base.Interactive;
 import base.Visible;
 import constants.Constants;
 
+/**
+ * A big metal box that goes up and down when you press buttons.
+ * 
+ * @author Logan Moore
+ */
 public class Elevator extends BuildingObject implements Interactive, Visible, Runnable
 {
 	/**

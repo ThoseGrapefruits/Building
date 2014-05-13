@@ -2,6 +2,13 @@ package constants;
 
 import java.awt.Color;
 
+/**
+ * The various constants to be used throughout the <pre>Building</pre>.
+ * 
+ * Includes colors, dimensions, speed limits, timing, etc.
+ * 
+ * @author Logan Moore
+ */
 public class Constants
 {
 	/**

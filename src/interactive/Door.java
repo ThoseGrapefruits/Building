@@ -8,6 +8,11 @@ import base.Interactive;
 import base.Visible;
 import constants.Constants;
 
+/**
+ * A tall, rectangular, flat piece of wood which can be pushed or pulled with a circular metal knob in order to allow transport through a passage.
+ * 
+ * @author Logan Moore
+ */
 public class Door extends BuildingObject implements Interactive, Visible
 {
 	/**

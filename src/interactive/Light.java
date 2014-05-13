@@ -1,5 +1,6 @@
 package interactive;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import main.Building;
@@ -7,6 +8,11 @@ import base.BuildingObject;
 import base.Visible;
 import constants.Constants;
 
+/**
+ * Something that emits light, making things around it appear brighter.
+ * 
+ * @author Logan Moore
+ */
 public class Light extends BuildingObject implements Visible
 {
 	public Light( Building building, double x, double y )
@@ -45,7 +51,14 @@ public class Light extends BuildingObject implements Visible
 	@Override
 	public void paint( Graphics2D g2d )
 	{
-		// TODO Auto-generated method stub
-
+		if ( this.isOn() )
+		{
+			// TODO Lightbulb drawing
+			for ( int i = 0; i < 100; i++ )
+			{
+				g2d.setColor( new Color( 255, 255, 255, 100 - i ) );
+				g2d.drawOval( ( int ) ( this.x - i / 2 ), ( int ) ( this.y - i / 2 ), i, i );
+			}
+		}
 	}
 }

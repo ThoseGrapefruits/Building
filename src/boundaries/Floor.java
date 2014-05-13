@@ -5,6 +5,11 @@ import java.awt.Graphics2D;
 import main.Building;
 import constants.Constants;
 
+/**
+ * Floor boundary, prevents people from falling into the abyss.
+ * 
+ * @author Logan Moore
+ */
 public class Floor extends Boundary
 {
 	/**

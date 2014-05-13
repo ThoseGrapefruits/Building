@@ -11,6 +11,11 @@ import base.Interactive;
 import base.Visible;
 import constants.Constants;
 
+/**
+ * The buttons you press to make the big metal box go up or down.
+ * 
+ * @author Logan Moore
+ */
 public class ElevatorButton extends BuildingObject implements Interactive, Visible, Runnable,
 		ActionListener
 {
