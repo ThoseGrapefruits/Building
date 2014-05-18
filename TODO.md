@@ -15,4 +15,7 @@
 8. (optional) Implement sounds for the various objects
 	+ Elevator ding
 	+ Door open/shut
-	+ Jumping (?)
+	+ Jumping
+9. Background drawing
+	+ Ground
+	+ Seasons / transitions

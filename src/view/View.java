@@ -35,9 +35,12 @@ public class View extends JFrame
 		setBounds( 100, 100, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT );
 		setResizable( false );
 		setTitle( "Building Simulator 2014" );
+		setBackground( Constants.SKY_COLOR );
+		surface.setBackground( Constants.SKY_COLOR );
 		contentPane = new JPanel();
 		contentPane.setBorder( new EmptyBorder( 5, 5, 5, 5 ) );
 		contentPane.setLayout( new BorderLayout( 0, 0 ) );
+		contentPane.setBackground( Constants.SKY_COLOR );
 		setContentPane( contentPane );
 
 		contentPane.add( surface, BorderLayout.CENTER );

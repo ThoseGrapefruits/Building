@@ -76,5 +76,6 @@ public class Constants
 			106, 96 ), DOORKNOB_COLOR = new Color( 126, 8, 84 ), ELEVATOR_SHAFT_COLOR = new Color(
 			50, 50, 50 ), ELEVATOR_CAR_COLOR = new Color( 250, 200, 160 ),
 			ELEVATOR_DOOR_COLOR = new Color( 100, 0, 0 ), BUTTON_BACKING_COLOR = new Color( 50, 50,
-					50 ), BUTTON_COLOR = new Color( 200, 200, 200 );
+					50 ), BUTTON_COLOR = new Color( 200, 200, 200 ), SKY_COLOR = new Color( 163,
+					201, 244 );
 }

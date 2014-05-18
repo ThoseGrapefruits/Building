@@ -6,7 +6,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import people.Me;
-import people.Tai;
 import view.Surface;
 import view.View;
 import boundaries.Wall;

@@ -27,8 +27,7 @@ public class Surface extends JPanel implements ActionListener
 	public void paintComponent( Graphics g )
 	{
 		super.paintComponent( g );
-		Graphics2D g2d = ( Graphics2D ) g;
-		this.building.paint( g2d );
+		this.building.paint( ( Graphics2D ) g );
 	}
 
 	@Override
