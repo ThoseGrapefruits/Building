@@ -29,10 +29,10 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 
 		try
 		{
-			this.head = ImageIO
-					.read( getClass().getResource( "/images/person/standard/_head.png" ) );
-			this.body = ImageIO
-					.read( getClass().getResource( "/images/person/standard/_body.png" ) );
+			this.head = ImageIO.read( getClass().getResource(
+					"/resources/images/person/standard/_head.png" ) );
+			this.body = ImageIO.read( getClass().getResource(
+					"/resources/images/person/standard/_body.png" ) );
 		}
 		catch ( IOException e )
 		{

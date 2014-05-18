@@ -17,8 +17,10 @@ public class Me extends Person implements Interactive, Visible, Runnable
 		this.name = "Logan";
 		try
 		{
-			this.head = ImageIO.read( getClass().getResource( "/images/person/me/_head.png" ) );
-			this.body = ImageIO.read( getClass().getResource( "/images/person/me/_body.png" ) );
+			this.head = ImageIO.read( getClass().getResource(
+					"/resources/images/person/me/_head.png" ) );
+			this.body = ImageIO.read( getClass().getResource(
+					"/resources/images/person/me/_body.png" ) );
 		}
 		catch ( IOException e )
 		{
