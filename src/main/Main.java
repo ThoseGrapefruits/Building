@@ -31,7 +31,6 @@ public class Main
 		// Add people
 		building.me = new Me( building, 100, 450 );
 		building.addPerson( 500, 450 );
-		building.addPerson( new Tai( building, 400, 450 ) );
 
 		// Outer doors/walls
 		building.walls.add( new Wall( building, 750, 50, 390 ) );
@@ -40,9 +39,21 @@ public class Main
 		building.doors.add( new Door( building, 50, 440 ) );
 
 		// Inner doors/walls
-		building.doors.add( new Door( building, 350, 440 ) );
-		building.walls.add( new Wall( building, 350, 440 - Constants.FLOOR_HEIGHT,
+		building.doors.add( new Door( building, 375, 440 ) );
+		building.walls.add( new Wall( building, 375, 440 - Constants.FLOOR_HEIGHT,
 				Constants.FLOOR_DISTANCE - Constants.DOOR_HEIGHT - Constants.FLOOR_HEIGHT ) );
+		building.doors.add( new Door( building, 375, 440 - Constants.FLOOR_DISTANCE ) );
+		building.walls.add( new Wall( building, 375, 440 - Constants.FLOOR_DISTANCE
+				- Constants.FLOOR_HEIGHT, Constants.FLOOR_DISTANCE - Constants.DOOR_HEIGHT
+				- Constants.FLOOR_HEIGHT ) );
+		building.doors.add( new Door( building, 375, 440 - 2 * Constants.FLOOR_DISTANCE ) );
+		building.walls.add( new Wall( building, 375, 440 - 2 * Constants.FLOOR_DISTANCE
+				- Constants.FLOOR_HEIGHT, Constants.FLOOR_DISTANCE - Constants.DOOR_HEIGHT
+				- Constants.FLOOR_HEIGHT ) );
+		building.doors.add( new Door( building, 375, 440 - 3 * Constants.FLOOR_DISTANCE ) );
+		building.walls.add( new Wall( building, 375, 440 - 3 * Constants.FLOOR_DISTANCE
+				- Constants.FLOOR_HEIGHT, Constants.FLOOR_DISTANCE - Constants.DOOR_HEIGHT
+				- Constants.FLOOR_HEIGHT ) );
 
 		// Floors
 		building.addFloor( 50, 550, 800 );
@@ -52,7 +63,7 @@ public class Main
 		building.addFloor( 50, 550 - Constants.FLOOR_DISTANCE * 4, 700 );
 
 		// Lights
-		building.addLightAndSwitch( 100, 420, 100, 450 );
+		// building.addLightAndSwitch( 100, 420, 100, 450 );
 
 		// Elevators
 		building.addElevator( 200.0, 50.0, new int[]
