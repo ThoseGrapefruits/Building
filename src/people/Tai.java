@@ -2,7 +2,6 @@ package people;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -20,8 +19,9 @@ public class Tai extends Person implements Interactive, Visible, Runnable
 
 		try
 		{
-			this.head = ImageIO.read( new File( "resources/images/person/Tai/head.png" ) );
-			this.body = ImageIO.read( new File( "resources/images/person/default/_body.png" ) );
+			this.head = ImageIO.read( getClass().getResource( "/images/person/Tai/head.png" ) );
+			this.body = ImageIO
+					.read( getClass().getResource( "/images/person/standard/_body.png" ) );
 		}
 		catch ( IOException e )
 		{

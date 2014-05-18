@@ -14,4 +14,36 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/resources/images/person/me/_body.png</name>
+			<type>1</type>
+			<locationURI>PROJECT_LOC/resources/images/person/me/_body.png</locationURI>
+		</link>
+		<link>
+			<name>src/resources/images/person/me/_head.png</name>
+			<type>1</type>
+			<locationURI>PROJECT_LOC/resources/images/person/me/_head.png</locationURI>
+		</link>
+		<link>
+			<name>src/resources/images/person/standard/_body.png</name>
+			<type>1</type>
+			<locationURI>PROJECT_LOC/resources/images/person/standard/_body.png</locationURI>
+		</link>
+		<link>
+			<name>src/resources/images/person/standard/_head.png</name>
+			<type>1</type>
+			<locationURI>PROJECT_LOC/resources/images/person/standard/_head.png</locationURI>
+		</link>
+		<link>
+			<name>src/resources/images/person/tai/_body.png</name>
+			<type>1</type>
+			<locationURI>PROJECT_LOC/resources/images/person/tai/_body.png</locationURI>
+		</link>
+		<link>
+			<name>src/resources/images/person/tai/head.png</name>
+			<type>1</type>
+			<locationURI>PROJECT_LOC/resources/images/person/tai/head.png</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>

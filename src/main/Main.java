@@ -57,6 +57,8 @@ public class Main
 		// Elevators
 		building.addElevator( 200.0, 50.0, new int[]
 		{ 0, 1, 2, 3 } );
+		building.addElevator( 500.0, 50.0, new int[]
+		{ 0, 1, 2, 3 } );
 
 		// Create the visuals
 		SwingUtilities.invokeLater( new Runnable()

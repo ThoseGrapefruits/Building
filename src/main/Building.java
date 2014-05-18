@@ -28,7 +28,7 @@ import constants.Constants;
  * 
  * @author Logan Moore
  */
-public class Building implements Visible, Runnable, ActionListener
+public class Building implements Visible, ActionListener
 {
 	boolean leftPressed = false;
 	boolean rightPressed = false;
@@ -190,12 +190,6 @@ public class Building implements Visible, Runnable, ActionListener
 	{
 		this.people.add( person );
 		new Thread( person ).start();
-	}
-
-	@Override
-	public void run()
-	{
-		// TODO thread creations for individual objects (probs just elevators)
 	}
 
 	@Override
