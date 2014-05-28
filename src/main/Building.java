@@ -32,6 +32,7 @@ public class Building implements Visible, ActionListener
 {
 	boolean leftPressed = false;
 	boolean rightPressed = false;
+	boolean upPressed = false;
 	boolean spacePressed = false;
 	boolean shiftPressed = false;
 
@@ -75,29 +76,37 @@ public class Building implements Visible, ActionListener
 										rightPressed = true;
 										// AudioPlayer.player.start( audioStream );
 									}
+									else if ( keyCode == KeyEvent.VK_UP )
+									{
+										upPressed = true;
+									}
 									else if ( keyCode == KeyEvent.VK_SPACE )
 									{
 										spacePressed = true;
+										interactMe();
 									}
 									else if ( keyCode == KeyEvent.VK_SHIFT )
 									{
 										shiftPressed = true;
-										interactMe();
 									}
 									break;
 
 								case KeyEvent.KEY_RELEASED:
-									if ( ke.getKeyCode() == KeyEvent.VK_LEFT )
+									if ( keyCode == KeyEvent.VK_LEFT )
 									{
 										leftPressed = false;
 										// AudioPlayer.player.stop( audioStream
 										// );
 									}
-									else if ( ke.getKeyCode() == KeyEvent.VK_RIGHT )
+									else if ( keyCode == KeyEvent.VK_RIGHT )
 									{
 										rightPressed = false;
 										// AudioPlayer.player.stop( audioStream
 										// );
+									}
+									else if ( keyCode == KeyEvent.VK_UP )
+									{
+										upPressed = true;
 									}
 									else if ( keyCode == KeyEvent.VK_SPACE )
 									{
@@ -251,7 +260,7 @@ public class Building implements Visible, ActionListener
 			this.me.y = 200;
 		}
 
-		if ( this.spacePressed && this.me.isFloorBelow() )
+		if ( this.upPressed && this.me.isFloorBelow() )
 		{
 			this.me.velocityY = -5;
 		}
