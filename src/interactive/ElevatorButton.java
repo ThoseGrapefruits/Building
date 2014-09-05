@@ -32,7 +32,7 @@ public class ElevatorButton extends BuildingObject implements Interactive, Visib
 	/**
 	 * Whether the elevator is on the same floor as the button
 	 */
-	public boolean currentFloor = false;
+	public boolean elevatorOnCurrentFloor = false;
 
 	/**
 	 * Creates a new button with a linked elevator and a floor index.
@@ -68,7 +68,7 @@ public class ElevatorButton extends BuildingObject implements Interactive, Visib
 	{
 		g2d.setColor( Constants.BUTTON_BACKING_COLOR );
 		g2d.fillRect( ( int ) this.x, ( int ) this.y, this.width, this.height );
-		if ( this.currentFloor )
+		if ( this.elevatorOnCurrentFloor )
 		{
 			g2d.setColor( Color.RED );
 		}

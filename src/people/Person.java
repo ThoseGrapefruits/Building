@@ -1,6 +1,7 @@
 package people;
 
 import interactive.Door;
+import interactive.Elevator;
 import interactive.ElevatorButton;
 import interactive.LightSwitch;
 
@@ -91,6 +92,15 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 				return lightSwitch;
 			}
 		}
+		for ( Elevator elevator : this.building.elevators )
+		{
+			if ( bounds.intersects( ( new Rectangle( ( int ) elevator.x, ( int ) elevator
+					.getCarHeight(), Constants.ELEVATOR_WIDTH, Constants.ELEVATOR_CAR_HEIGHT ) ) ) )
+			{
+				return elevator;
+			}
+
+		}
 
 		for ( ElevatorButton elevatorButton : this.building.elevatorButtons )
 		{
@@ -146,14 +156,6 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 		this.inUse = true;
 		otherPerson.velocityX = 0;
 		otherPerson.inUse = true;
-		if ( !this.interactedWith.contains( otherPerson ) )
-		{
-			this.interactedWith.add( otherPerson );
-		}
-		if ( !otherPerson.interactedWith.contains( this ) )
-		{
-			otherPerson.interactedWith.add( this );
-		}
 		this.animationStep[ 2 ] = 255;
 		otherPerson.animationStep[ 2 ] = 255;
 
@@ -164,23 +166,13 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 		}
 		else
 		{ // Seen for the first time
-			try
-			{
-				this.toBeSaid = "Hi, my name is " + this.name;
-				Thread.sleep( 500 );
-				otherPerson.toBeSaid = "Nice to meet you " + this.name;
-				Thread.sleep( 1000 );
-				this.toBeSaid = "";
-				otherPerson.animationStep[ 2 ] = 255;
-				otherPerson.toBeSaid = "My name is " + otherPerson.name;
-				Thread.sleep( 1500 );
-				otherPerson.toBeSaid = "";
+			this.interactedWith.add( otherPerson );
+			otherPerson.interactedWith.add( this );
 
-			}
-			catch ( InterruptedException e )
-			{
-				System.out.println( "Person was too impatient to wait." );
-			}
+			this.toBeSaid = "Hi, my name is " + this.name;
+			otherPerson.toBeSaid = "Nice to meet you " + this.name + ", my name is "
+					+ otherPerson.name;
+			otherPerson.animationStep[ 2 ] = 255;
 		}
 
 		this.inUse = false;

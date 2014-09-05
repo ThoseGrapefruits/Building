@@ -23,7 +23,7 @@ public class Elevator extends BuildingObject implements Interactive, Visible, Ru
 	/**
 	 * <pre>BuildingObject</pre> currently riding in the elevator.
 	 */
-	BuildingObject passenger;
+	public BuildingObject passenger;
 
 	/**
 	 * Destination floor
@@ -39,6 +39,11 @@ public class Elevator extends BuildingObject implements Interactive, Visible, Ru
 	 * Current height of elevator car
 	 */
 	double carHeight;
+
+	public double getCarHeight()
+	{
+		return carHeight;
+	}
 
 	/**
 	 * How open the doors of the elevator are.
@@ -78,7 +83,7 @@ public class Elevator extends BuildingObject implements Interactive, Visible, Ru
 	 */
 	public void call( ElevatorButton button )
 	{
-		this.building.elevatorButtons.get( this.destinationFloor ).currentFloor = false;
+		this.building.elevatorButtons.get( this.currentFloor ).elevatorOnCurrentFloor = false;
 		this.destinationFloor = button.floor;
 		System.out.println( "Elevator called to floor " + this.destinationFloor + "." );
 	}
@@ -90,7 +95,7 @@ public class Elevator extends BuildingObject implements Interactive, Visible, Ru
 		if ( destinationFloorHeight == ( int ) this.carHeight )
 		{
 			this.velocityY = 0;
-			this.building.elevatorButtons.get( this.destinationFloor ).currentFloor = true;
+			this.building.elevatorButtons.get( this.destinationFloor ).elevatorOnCurrentFloor = true;
 			this.open = true;
 			this.passenger = null;
 			this.currentFloor = this.destinationFloor;
@@ -99,14 +104,14 @@ public class Elevator extends BuildingObject implements Interactive, Visible, Ru
 				&& this.velocityY > -Constants.ELEVATOR_MAX_VELOCITY )
 		{
 			this.velocityY -= 0.01;
-			this.building.elevatorButtons.get( this.destinationFloor ).currentFloor = false;
+			this.building.elevatorButtons.get( this.destinationFloor ).elevatorOnCurrentFloor = false;
 			this.open = false;
 		}
 		else if ( ( int ) this.carHeight < destinationFloorHeight
 				&& this.velocityY < Constants.ELEVATOR_MAX_VELOCITY )
 		{
 			this.velocityY += 0.01;
-			this.building.elevatorButtons.get( this.destinationFloor ).currentFloor = false;
+			this.building.elevatorButtons.get( this.destinationFloor ).elevatorOnCurrentFloor = false;
 			this.open = false;
 		}
 		this.carHeight += this.velocityY;
@@ -136,18 +141,12 @@ public class Elevator extends BuildingObject implements Interactive, Visible, Ru
 		}
 	}
 
-	public void interact( int floor )
-	{
-		this.inUse = true;
-		this.destinationFloor = floor;
-		this.inUse = false;
-	}
-
 	@Override
 	public void interact( BuildingObject interacter )
 	{
 		this.inUse = true;
 		this.passenger = interacter;
+		this.building.elevatorButtons.get( this.currentFloor ).elevatorOnCurrentFloor = false;
 		this.destinationFloor = ( int ) ( Math.random() * this.floors.length );
 		this.inUse = false;
 	}

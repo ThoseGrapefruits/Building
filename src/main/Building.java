@@ -32,6 +32,7 @@ public class Building implements Visible, ActionListener
 {
 	boolean leftPressed = false;
 	boolean rightPressed = false;
+	boolean upPressed = false;
 	boolean spacePressed = false;
 	boolean shiftPressed = false;
 
@@ -53,6 +54,7 @@ public class Building implements Visible, ActionListener
 		 * }
 		 */
 
+		// Keyboard input for user-controlled person.
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(
 				new KeyEventDispatcher()
 				{
@@ -75,29 +77,37 @@ public class Building implements Visible, ActionListener
 										rightPressed = true;
 										// AudioPlayer.player.start( audioStream );
 									}
+									else if ( keyCode == KeyEvent.VK_UP )
+									{
+										upPressed = true;
+									}
 									else if ( keyCode == KeyEvent.VK_SPACE )
 									{
 										spacePressed = true;
+										interactMe();
 									}
 									else if ( keyCode == KeyEvent.VK_SHIFT )
 									{
 										shiftPressed = true;
-										interactMe();
 									}
 									break;
 
 								case KeyEvent.KEY_RELEASED:
-									if ( ke.getKeyCode() == KeyEvent.VK_LEFT )
+									if ( keyCode == KeyEvent.VK_LEFT )
 									{
 										leftPressed = false;
 										// AudioPlayer.player.stop( audioStream
 										// );
 									}
-									else if ( ke.getKeyCode() == KeyEvent.VK_RIGHT )
+									else if ( keyCode == KeyEvent.VK_RIGHT )
 									{
 										rightPressed = false;
 										// AudioPlayer.player.stop( audioStream
 										// );
+									}
+									else if ( keyCode == KeyEvent.VK_UP )
+									{
+										upPressed = false;
 									}
 									else if ( keyCode == KeyEvent.VK_SPACE )
 									{
@@ -130,6 +140,14 @@ public class Building implements Visible, ActionListener
 	public ArrayList < Person > people = new ArrayList < Person >();
 	public Me me;
 
+	/**
+	 * Adds associated lights and switches, with individual position control.
+	 * 
+	 * @param xLight is the x-coordinate of the <code>Light</code>.
+	 * @param yLight is the y-coordinate of the <code>Light</code>.
+	 * @param xSwitch is the x-coordinate of the <code>LightSwitch</code>.
+	 * @param ySwitch is the y-coordinate of the <code>LightSwitch</code>.
+	 */
 	void addLightAndSwitch( int xLight, int yLight, int xSwitch, int ySwitch )
 	{
 		Light newLight = new Light( this, xLight, yLight );
@@ -137,6 +155,11 @@ public class Building implements Visible, ActionListener
 		this.lightSwitches.add( new LightSwitch( this, xSwitch, ySwitch, newLight ) );
 	}
 
+	/**
+	 * Called when the user presses the Interact button. Finds the closest interactive
+	 * <code>BuildingObject</code> or <code>Person</code> and calls their <code>interact()</code>
+	 * function.
+	 */
 	void interactMe()
 	{
 		this.me.interactiveObjectWithinReach = this.me.getClosestInteractiveObject();
@@ -168,17 +191,35 @@ public class Building implements Visible, ActionListener
 
 	private int floorCount = 0;
 
+	/**
+	 * Returns the number of <code>Floor</code>s in the current <code>Building</code>.
+	 * 
+	 * @return <code>floorCount</code>
+	 */
 	public int getFloorCount()
 	{
 		return this.floorCount;
 	}
 
+	/**
+	 * Adds a floor to the building at the given coordinates.
+	 * 
+	 * @param x is the x-coordinate of the upper-left corner of the <code>Floor</code>'s bounds.
+	 * @param y is the y-coordinate of the upper-left corner of the <code>Floor</code>'s bounds.
+	 * @param width is the width of the <code>Floor</code>.
+	 */
 	void addFloor( int x, int y, int width )
 	{
 		this.floors.add( new Floor( this, x, y, width, floorCount ) );
 		this.floorCount++;
 	}
 
+	/**
+	 * Adds a person to the building at the given coordinates.
+	 * 
+	 * @param x is the x-coordinate of the upper-left corner of the person's bounds.
+	 * @param y is the y-coordinate of the upper-left corner of the person's bounds.
+	 */
 	void addPerson( int x, int y )
 	{
 		Person person = new Person( this, x, y );
@@ -186,12 +227,23 @@ public class Building implements Visible, ActionListener
 		new Thread( person ).start();
 	}
 
+	/**
+	 * Adds a person to the building.
+	 * 
+	 * This is used mostly if the <code>person</code> needs to be customized beforehand or if
+	 * a special subclass of <code>person</code> is being used instead.
+	 * @param person is the already-made 
+	 */
 	void addPerson( Person person )
 	{
 		this.people.add( person );
 		new Thread( person ).start();
 	}
 
+	/**
+	 * Calls all of the <code>paint()</code> functions of all the objects in the building, as
+	 * well as a base rectangle for the building itself.
+	 */
 	@Override
 	public void paint( Graphics2D g2d )
 	{
@@ -237,13 +289,15 @@ public class Building implements Visible, ActionListener
 	// AudioStream audioStream;
 
 	/**
-	 * Called each tick. Updates all positions based on the velocities of objects.
+	 * Called each tick. Calls the <code>move</code> function on each of the moveable objects.
+	 * 
+	 * Also updates velocity of user-controlled person.
 	 */
 	@Override
 	public void actionPerformed( ActionEvent e )
-	{ // Only need to update positions of the mobile objects.
+	{ // Only need to update positions of the mobile objects
 
-		// User controlled person "Me"
+		// Determine user-controlled person's next movement
 		if ( !this.me.getBounds().intersects(
 				new Rectangle( 0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT ) ) )
 		{
@@ -251,7 +305,7 @@ public class Building implements Visible, ActionListener
 			this.me.y = 200;
 		}
 
-		if ( this.spacePressed && this.me.isFloorBelow() )
+		if ( this.upPressed && this.me.isFloorBelow() )
 		{
 			this.me.velocityY = -5;
 		}
@@ -287,9 +341,8 @@ public class Building implements Visible, ActionListener
 				this.me.velocityX -= 0.1;
 			}
 		}
-		me.move( this );
 
-		// AI people
+		// Update AI people positions
 		for ( Person person : this.people )
 		{
 			person.move( this );
@@ -301,10 +354,29 @@ public class Building implements Visible, ActionListener
 			}
 		}
 
-		// Elevators
+		// Update elevator & elevator passenger positions
 		for ( Elevator elevator : elevators )
 		{
 			elevator.move( this );
+			if ( elevator.passenger != null )
+			{
+				elevator.passenger.velocityY = 0;
+				elevator.passenger.y = elevator.getCarHeight() + Constants.ELEVATOR_CAR_HEIGHT
+						- elevator.passenger.getHeight();
+				if ( elevator.passenger.x < elevator.x )
+				{
+					elevator.passenger.x = elevator.x;
+				}
+				else if ( elevator.passenger.x + elevator.passenger.getWidth() > elevator.x
+						+ elevator.getWidth() )
+				{
+					elevator.passenger.x = elevator.x + elevator.getWidth()
+							- elevator.passenger.getWidth();
+				}
+			}
 		}
+
+		// Update user-controlled person's position
+		me.move( this );
 	}
 }
