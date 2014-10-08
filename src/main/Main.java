@@ -28,29 +28,29 @@ public class Main
 		final Building building = new Building();
 
 		// Add people
-		building.me = new Me( building, 100, 450 );
+		building.addMe( new Me( building, 100, 450 ) );
 		building.addPerson( 500, 450 );
 
 		// Outer doors/walls
-		building.walls.add( new Wall( building, 750, 50, 390 ) );
-		building.walls.add( new Wall( building, 50, 50, 390 ) );
-		building.doors.add( new Door( building, 750, 440 ) );
-		building.doors.add( new Door( building, 50, 440 ) );
+		building.addWall( new Wall( building, 750, 50, 390 ) );
+		building.addWall( new Wall( building, 50, 50, 390 ) );
+		building.addDoor( new Door( building, 750, 440 ) );
+		building.addDoor( new Door( building, 50, 440 ) );
 
 		// Inner doors/walls
-		building.doors.add( new Door( building, 375, 440 ) );
-		building.walls.add( new Wall( building, 375, 440 - Constants.FLOOR_HEIGHT,
+		building.addDoor( new Door( building, 375, 440 ) );
+		building.addWall( new Wall( building, 375, 440 - Constants.FLOOR_HEIGHT,
 				Constants.FLOOR_DISTANCE - Constants.DOOR_HEIGHT - Constants.FLOOR_HEIGHT ) );
-		building.doors.add( new Door( building, 375, 440 - Constants.FLOOR_DISTANCE ) );
-		building.walls.add( new Wall( building, 375, 440 - Constants.FLOOR_DISTANCE
+		building.addDoor( new Door( building, 375, 440 - Constants.FLOOR_DISTANCE ) );
+		building.addWall( new Wall( building, 375, 440 - Constants.FLOOR_DISTANCE
 				- Constants.FLOOR_HEIGHT, Constants.FLOOR_DISTANCE - Constants.DOOR_HEIGHT
 				- Constants.FLOOR_HEIGHT ) );
-		building.doors.add( new Door( building, 375, 440 - 2 * Constants.FLOOR_DISTANCE ) );
-		building.walls.add( new Wall( building, 375, 440 - 2 * Constants.FLOOR_DISTANCE
+		building.addDoor( new Door( building, 375, 440 - 2 * Constants.FLOOR_DISTANCE ) );
+		building.addWall( new Wall( building, 375, 440 - 2 * Constants.FLOOR_DISTANCE
 				- Constants.FLOOR_HEIGHT, Constants.FLOOR_DISTANCE - Constants.DOOR_HEIGHT
 				- Constants.FLOOR_HEIGHT ) );
-		building.doors.add( new Door( building, 375, 440 - 3 * Constants.FLOOR_DISTANCE ) );
-		building.walls.add( new Wall( building, 375, 440 - 3 * Constants.FLOOR_DISTANCE
+		building.addDoor( new Door( building, 375, 440 - 3 * Constants.FLOOR_DISTANCE ) );
+		building.addWall( new Wall( building, 375, 440 - 3 * Constants.FLOOR_DISTANCE
 				- Constants.FLOOR_HEIGHT, Constants.FLOOR_DISTANCE - Constants.DOOR_HEIGHT
 				- Constants.FLOOR_HEIGHT ) );
 

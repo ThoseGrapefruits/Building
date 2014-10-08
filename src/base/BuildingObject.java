@@ -65,10 +65,20 @@ public abstract class BuildingObject
 	}
 
 	/**
+	 * Returns whether the current object intersects with a given set of bounds.
+	 * @param r is the given rectangle to check for intersection.
+	 * @return true if intersection is found, false otherwise.
+	 */
+	public boolean intersects( Rectangle r )
+	{
+		return this.getBounds().intersects( r );
+	}
+
+	/**
 	 * Array of animation counts to be used by the individual object's paint
 	 * function to keep track of the current frame.
 	 */
-	protected int[] animationStep = new int[ 3 ];
+	protected int[] animationStep = new int[ 16 ];
 
 	/**
 	 * Speed and direction of the current object in pixels per tick.

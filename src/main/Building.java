@@ -53,7 +53,14 @@ public class Building implements Visible, ActionListener
 		 * e.printStackTrace();
 		 * }
 		 */
+		
+		for ( int i = 0; i < Constants.RENDER_LAYERS; i++ )
+		{
+			this.render.add( new ArrayList < Visible >() );
+		}
 
+		System.out.println( this.render );
+		
 		// Keyboard input for user-controlled person.
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(
 				new KeyEventDispatcher()
@@ -125,6 +132,12 @@ public class Building implements Visible, ActionListener
 				} );
 	}
 
+	/**
+	 * <code>BuildingObject</code>s to be rendered.
+	 */
+	public ArrayList < ArrayList < Visible >> render = new ArrayList < ArrayList < Visible >>(
+			Constants.RENDER_LAYERS );
+
 	// Interactive Objects
 	public ArrayList < Light > lights = new ArrayList < Light >();
 	public ArrayList < LightSwitch > lightSwitches = new ArrayList < LightSwitch >();
@@ -150,9 +163,12 @@ public class Building implements Visible, ActionListener
 	 */
 	void addLightAndSwitch( int xLight, int yLight, int xSwitch, int ySwitch )
 	{
-		Light newLight = new Light( this, xLight, yLight );
-		this.lights.add( newLight );
-		this.lightSwitches.add( new LightSwitch( this, xSwitch, ySwitch, newLight ) );
+		Light l = new Light( this, xLight, yLight );
+		this.lights.add( l );
+		this.render.get( Constants.LIGHT_LAYER ).add( l );
+		LightSwitch ls = new LightSwitch( this, xSwitch, ySwitch, l);
+		this.lightSwitches.add( ls );
+		this.render.get( Constants.LIGHT_SWITCH_LAYER ).add( ls );
 	}
 
 	/**
@@ -176,17 +192,52 @@ public class Building implements Visible, ActionListener
 		}
 	}
 
-	void addDoor( int x, int floor )
+	void addMe( Me m )
 	{
-		this.doors.add( new Door( this, x, floor * Constants.FLOOR_DISTANCE ) );
+		this.me = m;
+		this.render.get( Constants.PERSON_LAYER ).add( m );
+	}
+	
+	void addWall( Wall w )
+	{
+		this.walls.add( w );
+	}
+	
+	void addDoor( Door d )
+	{
+		this.doors.add( d );
 	}
 
+	void addDoor( int x, int floor )
+	{
+		Door d = new Door( this, x, floor * Constants.FLOOR_DISTANCE );
+		this.doors.add( d );
+		this.render.get( Constants.DOOR_LAYER ).add( d );
+	}
+	
+	/**
+	 * Adds the given <code>Elevator</code> to the <code>Building</code>. 
+	 * @param e is the <code>Elevator</code> to be added.
+	 */
+	void addElevator( Elevator e )
+	{
+		this.elevators.add( e );
+		this.render.get( Constants.ELEVATOR_LAYER ).add( e );
+		new Thread( e ).start();
+	}
+	
+	/**
+	 * Adds an <code>Elevator</code> based on the given specifications to the <code>Building</code>.
+	 * @param x is the x coordinate of the new <code>Elevator</code>.
+	 * @param y is the y coordinate of the new <code>Elevator</code>.
+	 * @param floors are the floors that the elevator can reach.
+	 */
 	void addElevator( double x, double y, int[] floors )
 	{
-		Elevator newElevator = new Elevator( this, x, y, floors );
-		this.elevators.add( newElevator );
-		new Thread( newElevator ).start();
-
+		Elevator e = new Elevator( this, x, y, floors );
+		this.elevators.add( e );
+		this.render.get( Constants.ELEVATOR_LAYER ).add( e );
+		new Thread( e ).start();
 	}
 
 	private int floorCount = 0;
@@ -210,7 +261,9 @@ public class Building implements Visible, ActionListener
 	 */
 	void addFloor( int x, int y, int width )
 	{
-		this.floors.add( new Floor( this, x, y, width, floorCount ) );
+		Floor f = new Floor( this, x, y, width, floorCount );
+		this.floors.add( f );
+		this.render.get( Constants.FLOOR_LAYER ).add( f );
 		this.floorCount++;
 	}
 
@@ -222,9 +275,10 @@ public class Building implements Visible, ActionListener
 	 */
 	void addPerson( int x, int y )
 	{
-		Person person = new Person( this, x, y );
-		this.people.add( person );
-		new Thread( person ).start();
+		Person p = new Person( this, x, y );
+		this.people.add( p );
+		this.render.get( Constants.PERSON_LAYER ).add( p );
+		new Thread( p ).start();
 	}
 
 	/**
@@ -234,10 +288,11 @@ public class Building implements Visible, ActionListener
 	 * a special subclass of <code>person</code> is being used instead.
 	 * @param person is the already-made 
 	 */
-	void addPerson( Person person )
+	void addPerson( Person p )
 	{
-		this.people.add( person );
-		new Thread( person ).start();
+		this.people.add( p );
+		this.render.get( Constants.PERSON_LAYER ).add( p );
+		new Thread( p ).start();
 	}
 
 	/**
@@ -251,7 +306,8 @@ public class Building implements Visible, ActionListener
 
 		g2d.fillRect( 50, 50, Constants.WINDOW_WIDTH - 100, Constants.WINDOW_HEIGHT - 100 );
 
-		for ( LightSwitch lightSwitch : this.lightSwitches )
+		// Old type-based render ordering
+		/**for ( LightSwitch lightSwitch : this.lightSwitches )
 		{
 			lightSwitch.paint( g2d );
 		}
@@ -279,10 +335,19 @@ public class Building implements Visible, ActionListener
 		{
 			floor.paint( g2d );
 		}
-		this.me.paint( g2d );
 		for ( Person person : this.people )
 		{
 			person.paint( g2d );
+		}
+		this.me.paint( g2d );*/
+		
+		// Layer-based rendering
+		for (int i = 0; i < this.render.size(); i++)
+		{
+			for (Visible b : this.render.get( i ))
+			{
+				b.paint( g2d );
+			}
 		}
 	}
 
