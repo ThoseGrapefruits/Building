@@ -58,8 +58,6 @@ public class Building implements Visible, ActionListener
 		{
 			this.render.add( new ArrayList < Visible >() );
 		}
-
-		System.out.println( this.render );
 		
 		// Keyboard input for user-controlled person.
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(

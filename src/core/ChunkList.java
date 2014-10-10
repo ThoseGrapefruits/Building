@@ -2,9 +2,9 @@ package core;
 
 import java.util.ArrayList;
 
-import people.Blob;
+import people.Chunk;
 
-public class BlobList extends ArrayList < Blob >
+public class ChunkList extends ArrayList < Chunk >
 {
 
 	/**
@@ -12,9 +12,9 @@ public class BlobList extends ArrayList < Blob >
 	 */
 	private static final long serialVersionUID = 4753668060351034418L;
 
-	public void merge( BlobList other )
+	public void merge( ChunkList other )
 	{
-		for ( Blob b : other )
+		for ( Chunk b : other )
 		{
 			if ( !this.contains( b ) )
 			{
