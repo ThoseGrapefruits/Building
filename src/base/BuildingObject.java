@@ -176,4 +176,11 @@ public abstract class BuildingObject
 	{
 		return inUse;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "x: " + this.x + "y: " + this.y + " w: " + this.getWidth() + " h: " + this.getHeight()
+				+ " vX: " + this.velocityX + " vY: " + this.velocityY;
+	}
 }
