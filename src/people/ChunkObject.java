@@ -1,11 +1,14 @@
 package people;
 
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 
+import constants.Constants;
 import base.BuildingObject;
+import base.Visible;
 import main.Building;
 
-public class ChunkObject extends BuildingObject
+public class ChunkObject extends BuildingObject implements Visible, Runnable
 {
 	/**
 	 * List of <code>chunks</code> that make up the <code>ChunkObject</code>. 
@@ -22,37 +25,30 @@ public class ChunkObject extends BuildingObject
 	{
 		Chunk r = getRightmostChunk();
 		Chunk l = getLeftmostChunk();
-		int w = (int)(( r.x + r.getWidth() ) - l.x);
+		int w = ( int ) ( ( r.x + r.getWidth() ) - l.x );
 		this.width = w;
 		return w;
 	}
-	
+
 	@Override
 	public int getHeight()
 	{
 		Chunk t = getTopmostChunk();
 		Chunk b = getBottommostChunk();
-		int h = (int)(( t.y + t.getHeight() ) - b.y);
+		int h = ( int ) ( ( t.y + t.getHeight() ) - b.y );
 		this.height = h;
 		return h;
 	}
-	
+
 	/**
 	 * Adds the given chunk to the ChunkObject
 	 * @param c
 	 */
-	public void addChunk(Chunk c)
+	public void addChunk( Chunk c )
 	{
-		if (!chunks.contains( c ))
+		if ( !chunks.contains( c ) )
 		{
 			chunks.add( c );
-		}
-		for (Chunk linked : c.connected)
-		{
-			if (!chunks.contains( linked ))
-			{
-				chunks.add( linked );
-			}
 		}
 	}
 
@@ -106,5 +102,30 @@ public class ChunkObject extends BuildingObject
 			}
 		}
 		return bottommost;
+	}
+
+	@Override
+	public void run()
+	{
+		for (Chunk c : this.chunks)
+		{
+			c.run();
+		}
+		
+		try
+		{
+			Thread.sleep( Constants.TICK );
+		}
+		catch ( InterruptedException e )
+		{
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void paint( Graphics2D g2d )
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }
