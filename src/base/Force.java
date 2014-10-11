@@ -101,4 +101,10 @@ public class Force
 		this.magnitude = magnitude;
 		this.direction = direction;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return "Magnitude: " + this.getMagnitude() + "\nDirection: " + this.getDirection();
+	}
 }
