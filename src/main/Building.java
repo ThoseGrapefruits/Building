@@ -450,6 +450,11 @@ public class Building implements Visible, ActionListener
 			}
 		}
 
+		for (ChunkObject co : this.chunkObjects)
+		{
+			co.move( this );
+		}
+
 		// Update user-controlled person's position
 		me.move( this );
 	}
