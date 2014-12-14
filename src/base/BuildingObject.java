@@ -180,7 +180,7 @@ public abstract class BuildingObject
 	@Override
 	public String toString()
 	{
-		return "x: " + this.x + "y: " + this.y + " w: " + this.getWidth() + " h: " + this.getHeight()
-				+ " vX: " + this.velocityX + " vY: " + this.velocityY;
+		return this.getClass().toString() + "{x: " + this.x + "y: " + this.y + " w: " + this.getWidth() + " h: " + this.getHeight()
+				+ " vX: " + this.velocityX + " vY: " + this.velocityY + "}";
 	}
 }
