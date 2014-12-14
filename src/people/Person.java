@@ -138,7 +138,7 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 
 	int time = 0;
 
-	protected String name = "Anonymous" + ( 1 + ( int ) Math.random() * 100 );
+	protected String name = "Anonymous" + ( 1 + ( int ) Math.random() * 1000 );
 
 	public String getName()
 	{

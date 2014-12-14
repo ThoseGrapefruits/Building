@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import people.ChunkObject;
 import people.Me;
 import people.Person;
 import base.Interactive;
@@ -53,12 +54,12 @@ public class Building implements Visible, ActionListener
 		 * e.printStackTrace();
 		 * }
 		 */
-		
+
 		for ( int i = 0; i < Constants.RENDER_LAYERS; i++ )
 		{
 			this.render.add( new ArrayList < Visible >() );
 		}
-		
+
 		// Keyboard input for user-controlled person.
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(
 				new KeyEventDispatcher()
@@ -149,6 +150,7 @@ public class Building implements Visible, ActionListener
 
 	// People
 	public ArrayList < Person > people = new ArrayList < Person >();
+	public ArrayList < ChunkObject > chunkObjects = new ArrayList < ChunkObject >();
 	public Me me;
 
 	/**
@@ -164,9 +166,18 @@ public class Building implements Visible, ActionListener
 		Light l = new Light( this, xLight, yLight );
 		this.lights.add( l );
 		this.render.get( Constants.LIGHT_LAYER ).add( l );
-		LightSwitch ls = new LightSwitch( this, xSwitch, ySwitch, l);
+		LightSwitch ls = new LightSwitch( this, xSwitch, ySwitch, l );
 		this.lightSwitches.add( ls );
 		this.render.get( Constants.LIGHT_SWITCH_LAYER ).add( ls );
+	}
+
+	/**
+	 * Adds a new <code>ChunkObject</code> to the <code>Building</code>.
+	 */
+	void addChunkObject( ChunkObject co )
+	{
+		this.chunkObjects.add( co );
+		this.render.get( Constants.PERSON_LAYER ).add( co );
 	}
 
 	/**
@@ -195,12 +206,12 @@ public class Building implements Visible, ActionListener
 		this.me = m;
 		this.render.get( Constants.PERSON_LAYER ).add( m );
 	}
-	
+
 	void addWall( Wall w )
 	{
 		this.walls.add( w );
 	}
-	
+
 	void addDoor( Door d )
 	{
 		this.doors.add( d );
@@ -212,7 +223,7 @@ public class Building implements Visible, ActionListener
 		this.doors.add( d );
 		this.render.get( Constants.DOOR_LAYER ).add( d );
 	}
-	
+
 	/**
 	 * Adds the given <code>Elevator</code> to the <code>Building</code>. 
 	 * @param e is the <code>Elevator</code> to be added.
@@ -223,7 +234,7 @@ public class Building implements Visible, ActionListener
 		this.render.get( Constants.ELEVATOR_LAYER ).add( e );
 		new Thread( e ).start();
 	}
-	
+
 	/**
 	 * Adds an <code>Elevator</code> based on the given specifications to the <code>Building</code>.
 	 * @param x is the x coordinate of the new <code>Elevator</code>.
@@ -338,11 +349,11 @@ public class Building implements Visible, ActionListener
 			person.paint( g2d );
 		}
 		this.me.paint( g2d );*/
-		
+
 		// Layer-based rendering
-		for (int i = 0; i < this.render.size(); i++)
+		for ( int i = 0; i < this.render.size(); i++ )
 		{
-			for (Visible b : this.render.get( i ))
+			for ( Visible b : this.render.get( i ) )
 			{
 				b.paint( g2d );
 			}
