@@ -34,8 +34,7 @@ public class ChunkObject extends BuildingObject implements Visible, Runnable
 	public int getHeight()
 	{
 		Chunk t = getTopmostChunk();
-		Chunk b = getBottommostChunk();
-		int h = ( int ) ( ( t.y + t.getHeight() ) - b.y );
+		int h = ( int ) ( ( t.y + t.getHeight() ) - getBottommostChunk().y );
 		this.height = h;
 		return h;
 	}
@@ -107,17 +106,18 @@ public class ChunkObject extends BuildingObject implements Visible, Runnable
 	@Override
 	public void run()
 	{
-		for (Chunk c : this.chunks)
+		for ( Chunk c : this.chunks )
 		{
 			c.run();
 		}
-		
+
 		try
 		{
 			Thread.sleep( Constants.TICK );
 		}
 		catch ( InterruptedException e )
 		{
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -125,7 +125,9 @@ public class ChunkObject extends BuildingObject implements Visible, Runnable
 	@Override
 	public void paint( Graphics2D g2d )
 	{
-		// TODO Auto-generated method stub
-		
+		for ( Chunk c : this.chunks )
+		{
+			c.paint( g2d );
+		}
 	}
 }
