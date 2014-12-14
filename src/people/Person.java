@@ -1,28 +1,25 @@
 package people;
 
-import interactive.Door;
-import interactive.Elevator;
-import interactive.ElevatorButton;
-import interactive.LightSwitch;
-
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
-
-import main.Building;
 import base.BuildingObject;
 import base.Interactive;
 import base.Visible;
 import boundaries.Floor;
 import boundaries.Wall;
 import constants.Constants;
+import interactive.Door;
+import interactive.Elevator;
+import interactive.ElevatorButton;
+import interactive.LightSwitch;
+import main.Building;
+import base.Moveable;
 
-public class Person extends BuildingObject implements Interactive, Visible, Runnable
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class Person extends BuildingObject implements Interactive, Visible, Runnable, Moveable
 {
 	public Person( Building building, double x, double y )
 	{
@@ -286,6 +283,7 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 		}
 	}
 
+	@Override
 	public boolean canMoveX( Building b )
 	{
 		boolean canMoveX = true;
@@ -309,6 +307,7 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 		return canMoveX;
 	}
 
+	@Override
 	public boolean canMoveY( Building b )
 	{
 		boolean canMoveY = true;
@@ -324,6 +323,7 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 		return canMoveY;
 	}
 
+	@Override
 	public void move( Building b )
 	{
 		if ( this.canMoveX( b ) )
