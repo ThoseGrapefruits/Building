@@ -1,21 +1,25 @@
 package people;
 
-import java.awt.Graphics2D;
-import java.util.ArrayList;
-
-import constants.Constants;
 import base.BuildingObject;
 import base.Visible;
+import base.Moveable;
+import boundaries.Floor;
+import boundaries.Wall;
+import constants.Constants;
+import interactive.Door;
 import main.Building;
 
-public class ChunkObject extends BuildingObject implements Visible, Runnable
+import java.awt.*;
+import java.util.ArrayList;
+
+public class ChunkObject extends BuildingObject implements Visible, Runnable, Moveable
 {
 	/**
 	 * List of <code>chunks</code> that make up the <code>ChunkObject</code>. 
 	 */
-	ArrayList < Chunk > chunks = new ArrayList < Chunk >();
+	public ArrayList<Chunk> chunks = new ArrayList<Chunk>();
 
-	protected ChunkObject( Building building, double x, double y )
+	public ChunkObject( Building building, double x, double y )
 	{
 		super( building, x, y, 1, 1 );
 	}
@@ -128,6 +132,38 @@ public class ChunkObject extends BuildingObject implements Visible, Runnable
 		for ( Chunk c : this.chunks )
 		{
 			c.paint( g2d );
+		}
+	}
+
+	@Override
+	public String toString()
+	{
+		String output = super.toString() + "\n";
+		for ( Chunk c : this.chunks )
+		{
+			output.concat( c.toString() );
+		}
+		return output;
+	}
+
+	@Override
+	public boolean canMoveX( Building b )
+	{
+		return true;
+	}
+
+	@Override
+	public boolean canMoveY( Building b )
+	{
+		return true;
+	}
+
+	@Override
+	public void move( Building b )
+	{
+		for (Chunk c : this.chunks)
+		{
+			c.move( b );
 		}
 	}
 }
