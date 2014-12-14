@@ -1,19 +1,20 @@
 package main;
 
+import boundaries.Wall;
+import constants.Constants;
 import interactive.Door;
-
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
-
+import people.Chunk;
+import people.ChunkObject;
 import people.Me;
 import view.Surface;
 import view.View;
-import boundaries.Wall;
-import constants.Constants;
+
+import javax.swing.*;
+import java.util.ArrayList;
 
 /**
  * Main controller for the program.
- * 
+ *
  * @author Logan Moore
  *
  */
@@ -66,9 +67,29 @@ public class Main
 
 		// Elevators
 		building.addElevator( 200.0, 50.0, new int[]
-		{ 0, 1, 2, 3 } );
+				{ 0, 1, 2, 3 } );
 		building.addElevator( 500.0, 50.0, new int[]
-		{ 0, 1, 2, 3 } );
+				{ 0, 1, 2, 3 } );
+
+		// Chunks
+		ChunkObject c = new ChunkObject( building, 300, 450 );
+
+		ArrayList<Chunk> cs = new ArrayList<Chunk>();
+		cs.add( new Chunk( building, 300, 450, 5, 5, c, 10 ) );
+		cs.add( new Chunk( building, 320, 450, 5, 5, c, 10 ) );
+		cs.add( new Chunk( building, 280, 450, 5, 5, c, 10 ) );
+		cs.add( new Chunk( building, 300, 440, 5, 5, c, 10 ) );
+		cs.add( new Chunk( building, 300, 460, 5, 5, c, 10 ) );
+
+		for ( Chunk cur : cs )
+		{
+			c.addChunk( cur );
+			ArrayList<Chunk> a = new ArrayList<Chunk>(cs);
+			a.remove( cur );
+			cur.connect( a );
+		}
+		System.out.println( c );
+		building.addChunkObject( c );
 
 		// Create the visuals
 		SwingUtilities.invokeLater( new Runnable()
