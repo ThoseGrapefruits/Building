@@ -5,7 +5,6 @@ package base;
  * in degrees, accessible in both degrees and radians). 
  * 
  * @author Logan Moore
- *
  */
 public class Force
 {

@@ -3,10 +3,9 @@ package base;
 import java.awt.Graphics2D;
 
 /**
- * Superclass to be extended by all visible objects.
+ * Interface to be extended by all visible objects.
  * 
  * @author Logan Moore
- * 
  */
 public interface Visible
 {

@@ -4,6 +4,9 @@ import java.util.HashMap;
 
 import people.Chunk;
 
+/**
+ * Hashmap of Chunks, extended to be used as a shorthand.
+ */
 public class ChunkMap extends HashMap < Double, Chunk >
 {
 

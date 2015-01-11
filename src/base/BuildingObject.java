@@ -3,6 +3,7 @@ package base;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 import main.Building;
 
@@ -33,9 +34,15 @@ public abstract class BuildingObject
 	}
 
 	/**
+	 * Hitboxes for the given object. Initialized in the <code>Moveable</code> interface.
+	 */
+	public ArrayList<Rectangle> hitboxes;
+
+	/**
 	 * The building in which the current object exists.
 	 * 
-	 * This is used so that given objects can interact with the building itself easier, and have access to the lists of objects in the <pre>Building</pre>.
+	 * This is used so that given objects can interact with the building itself easier, and have
+	 * access to the lists of objects in the <pre>Building</pre>.
 	 */
 	protected transient Building building;
 
@@ -55,7 +62,8 @@ public abstract class BuildingObject
 	}
 
 	/**
-	 * Generates and returns the bounds of the current object using the <pre>x</pre>, </pre>y</pre>, <pre>width</pre>, and <pre>height</pre> of the object.
+	 * Generates and returns the bounds of the current object using the <pre>x</pre>, </pre>y</pre>,
+	 * <pre>width</pre>, and <pre>height</pre> of the object.
 	 * 
 	 * @return the bounds of an object, of type <pre>Rectangle</pre>.
 	 */
@@ -180,7 +188,8 @@ public abstract class BuildingObject
 	@Override
 	public String toString()
 	{
-		return this.getClass().toString() + "{x: " + this.x + "y: " + this.y + " w: " + this.getWidth() + " h: " + this.getHeight()
-				+ " vX: " + this.velocityX + " vY: " + this.velocityY + "}";
+		return this.getClass().toString() + "{x=" + this.x + ", y=" + this.y + ", w="
+				+ this.getWidth() + ", h=" + this.getHeight() + ", vX="
+				+ this.velocityX + ", vY="+ this.velocityY + "}";
 	}
 }
