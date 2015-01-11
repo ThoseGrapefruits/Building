@@ -50,6 +50,10 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 
 	public boolean wantsToInteract = false;
 
+	/**
+	 * Checks if any of the floors in the current building are below the given object.
+	 * @return
+	 */
 	public boolean isFloorBelow()
 	{
 		Rectangle bounds = new Rectangle( ( int ) this.x, ( int ) this.y + this.height + 1,
