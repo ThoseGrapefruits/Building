@@ -9,31 +9,27 @@ import people.Me;
 import view.Surface;
 import view.View;
 
-import javax.swing.*;
-import java.awt.Rectangle;
 import java.util.ArrayList;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 /**
  * Main controller for the program.
  *
  * @author Logan Moore
- *
  */
-public class Main
-{
+public class Main {
 	final Building building = new Building();
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main( String[] args )
-	{
+	public static void main( String[] args ) {
 		Main m = new Main();
 		m.building2();
 	}
 
-	public void building1()
-	{
+	public void building1() {
 		// Add people
 		building.addMe( new Me( building, 100, 450 ) );
 		building.addPerson( 500, 450 );
@@ -87,10 +83,9 @@ public class Main
 		cs.add( new Chunk( building, 300, 440, 5, 5, c, 10 ) );
 		cs.add( new Chunk( building, 300, 460, 5, 5, c, 10 ) );
 
-		for ( Chunk cur : cs )
-		{
+		for ( Chunk cur : cs ) {
 			c.addChunk( cur );
-			ArrayList<Chunk> a = new ArrayList<Chunk>(cs);
+			ArrayList<Chunk> a = new ArrayList<Chunk>( cs );
 			a.remove( cur );
 			cur.connect( a );
 		}
@@ -98,11 +93,9 @@ public class Main
 		building.addChunkObject( c );
 
 		// Create the visuals
-		SwingUtilities.invokeLater( new Runnable()
-		{
+		SwingUtilities.invokeLater( new Runnable() {
 			@Override
-			public void run()
-			{
+			public void run() {
 				Surface panel = new Surface( building );
 				View view = new View( panel );
 				view.setVisible( true );
@@ -113,8 +106,7 @@ public class Main
 		} );
 	}
 
-	public void building2()
-	{
+	public void building2() {
 		building.addMe( new Me( building, 100, 450 ) );
 		int cx = 100, cy = 100;
 		// Chunks
@@ -127,10 +119,9 @@ public class Main
 		cs.add( new Chunk( building, cx, cy + 20, 5, 5, c, 10 ) );
 		cs.add( new Chunk( building, cx, cy - 20, 5, 5, c, 10 ) );
 
-		for ( Chunk cur : cs )
-		{
+		for ( Chunk cur : cs ) {
 			c.addChunk( cur );
-			ArrayList<Chunk> a = new ArrayList<Chunk>(cs);
+			ArrayList<Chunk> a = new ArrayList<Chunk>( cs );
 			a.remove( cur );
 			cur.connect( a );
 		}
@@ -141,11 +132,9 @@ public class Main
 		building.addFloor( 50, 550, 800 );
 
 		// Create the visuals
-		SwingUtilities.invokeLater( new Runnable()
-		{
+		SwingUtilities.invokeLater( new Runnable() {
 			@Override
-			public void run()
-			{
+			public void run() {
 				Surface panel = new Surface( building );
 				View view = new View( panel );
 				view.setVisible( true );

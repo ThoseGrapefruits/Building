@@ -1,38 +1,32 @@
 package interactive;
 
-import java.awt.Graphics2D;
-
-import main.Building;
 import base.BuildingObject;
 import base.Interactive;
 import base.Visible;
 import constants.Constants;
+import main.Building;
 
-public class LightSwitch extends BuildingObject implements Interactive, Visible
-{
+import java.awt.Graphics2D;
+
+public class LightSwitch extends BuildingObject implements Interactive, Visible {
 	Light linkedLight;
 
-	public LightSwitch( Building building, double x, double y, Light light )
-	{
+	public LightSwitch( Building building, double x, double y, Light light ) {
 		super( building, x, y, Constants.LIGHT_SWITCH_WIDTH, Constants.LIGHT_SWITCH_HEIGHT );
-		this.linkedLight = light;
+		linkedLight = light;
 	}
 
-	void flip()
-	{
-		if ( this.linkedLight.isOn() )
-		{
-			this.linkedLight.turnOff();
+	void flip() {
+		if ( linkedLight.isOn() ) {
+			linkedLight.turnOff();
 		}
-		else
-		{
-			this.linkedLight.turnOn();
+		else {
+			linkedLight.turnOn();
 		}
 	}
 
 	@Override
-	public void paint( Graphics2D g2d )
-	{
+	public void paint( Graphics2D g2d ) {
 		// TODO Auto-generated method stub
 
 	}
@@ -41,23 +35,19 @@ public class LightSwitch extends BuildingObject implements Interactive, Visible
 	 * Flip the current light switch.
 	 */
 	@Override
-	public void interact( BuildingObject interacter )
-	{
+	public void interact( BuildingObject interacter ) {
 		// Wait for the light switch to stop being in use.
-		try
-		{
-			while ( this.inUse )
-			{
+		try {
+			while ( inUse ) {
 				Thread.sleep( 1 );
 			}
 		}
-		catch ( InterruptedException e )
-		{
+		catch ( InterruptedException e ) {
 			e.printStackTrace();
 		}
 
-		this.inUse = true;
-		this.flip();
-		this.inUse = false;
+		inUse = true;
+		flip();
+		inUse = false;
 	}
 }

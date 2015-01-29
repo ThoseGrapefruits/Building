@@ -1,40 +1,32 @@
 package people;
 
-import base.BuildingObject;
-import base.Force;
-import base.Interactive;
-import base.Visible;
-import base.ChunkMap;
-import base.Moveable;
+import base.*;
 import boundaries.Floor;
 import boundaries.Wall;
 import constants.Constants;
 import interactive.Door;
 import main.Building;
 
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class Chunk extends BuildingObject implements Interactive, Runnable, Visible, Moveable
-{
-	public static void main( String[] args )
-	{
-		getForceTest();
-	}
-
+public class Chunk extends BuildingObject implements Interactive, Runnable, Visible, Moveable {
 	/**
 	 * Other blobs connected to the current blob.
 	 */
 	public ChunkMap connected = new ChunkMap();
-
 	public ChunkObject parent;
-
 	/**
 	 * Mass of the given <code>Chunk</code>, in arbitrary units.
 	 */
 	public double mass = 1.0;
+	/**
+	 * Whether force has been applied to the current Blob already.
+	 */
+	boolean forceApplied = false;
 
 	/**
 	 * Creates a new chunk.
@@ -44,42 +36,45 @@ public class Chunk extends BuildingObject implements Interactive, Runnable, Visi
 	 * @param y
 	 * @param width
 	 * @param height
-	 * @param mass is the mass of the <code>Chunk</code>.
+	 * @param mass     is the mass of the <code>Chunk</code>.
 	 */
 	public Chunk( Building building, double x, double y, int width, int height, ChunkObject parent,
-			double mass )
-	{
+			double mass ) {
 		super( building, x, y, width, height );
 		this.mass = mass;
 		this.parent = parent;
 	}
 
-	public void connect( double distance, Chunk c )
-	{
-		this.connected.put( distance, c );
+	public static void main( String[] args ) {
+		getForceTest();
+	}
+
+	public static void getForceTest() {
+		Building b = new Building();
+		ChunkObject co = new ChunkObject( b, 10, 10 );
+		Chunk c1 = new Chunk( b, 10, 10, 10, 10, co, 1 );
+		Chunk c2 = new Chunk( b, 20, 20, 10, 10, co, 1 );
+		c1.connect( 10, c2 );
+		c2.applyForce( c2.getForce() );
+		System.out.println( "c2-post: " + c2 );
+	}
+
+	public void connect( double distance, Chunk c ) {
+		connected.put( distance, c );
 		c.connected.put( distance, this );
 	}
 
-	public void connect( Chunk c )
-	{
-		this.connect( Math.sqrt( c.x * c.x + c.y * c.y ), c );
+	public void connect( Chunk c ) {
+		connect( Math.sqrt( c.x * c.x + c.y * c.y ), c );
 	}
 
-	public void connect( ArrayList<Chunk> chunks )
-	{
-		for ( Chunk c : chunks )
-		{
-			this.connect( c );
+	public void connect( ArrayList<Chunk> chunks ) {
+		for ( Chunk c : chunks ) {
+			connect( c );
 		}
 	}
 
-	/**
-	 * Whether force has been applied to the current Blob already.
-	 */
-	boolean forceApplied = false;
-
-	public Force getForce()
-	{
+	public Force getForce() {
 		// Forces to be applied to the current object
 		double forceX = 0, forceY = 0;
 
@@ -94,10 +89,9 @@ public class Chunk extends BuildingObject implements Interactive, Runnable, Visi
 		// Direction of the force, in radians
 		double dir;
 
-		for ( Map.Entry<Double, Chunk> cursor : this.connected.entrySet() )
-		{
-			distX = ( this.x - cursor.getValue().x );
-			distY = ( this.y - cursor.getValue().y );
+		for ( Map.Entry<Double, Chunk> cursor : connected.entrySet() ) {
+			distX = ( x - cursor.getValue().x );
+			distY = ( y - cursor.getValue().y );
 			System.out.println( "distX: " + distX + "\tdistY: " + distY );
 
 			diff = Math.sqrt( ( distX * distX + distY * distY ) );
@@ -107,8 +101,7 @@ public class Chunk extends BuildingObject implements Interactive, Runnable, Visi
 
 			// NOTE: This math may look wrong, but it's because of pixel
 			// coordinates and my desire to have the normal quadrants.
-			if ( distX < 0 )
-			{
+			if ( distX < 0 ) {
 				if ( distY < 0 ) // 3rd quadrant
 				{
 					dir += Math.PI * 3 / 2;
@@ -130,88 +123,65 @@ public class Chunk extends BuildingObject implements Interactive, Runnable, Visi
 			forceY += Math.sin( dir ) * diff;
 			System.out.println( "forceX: " + forceX + "\tForceY: " + forceY );
 		}
-		return new Force( Math.sqrt( forceX * forceX + forceY * forceY ), Math.atan( forceY / forceX )
-				* 180 / Math.PI );
+		return new Force( Math.sqrt( forceX * forceX + forceY * forceY ),
+				Math.atan( forceY / forceX )
+						* 180 / Math.PI );
 	}
 
-	public static void getForceTest()
-	{
-		Building b = new Building();
-		ChunkObject co = new ChunkObject( b, 10, 10 );
-		Chunk c1 = new Chunk( b, 10, 10, 10, 10, co, 1 );
-		Chunk c2 = new Chunk( b, 20, 20, 10, 10, co, 1 );
-		c1.connect( 10, c2 );
-		c2.applyForce( c2.getForce() );
-		System.out.println( "c2-post: " + c2 );
-	}
+	public void applyForce( Force f ) {
+		if ( !forceApplied ) {
+			forceApplied = true;
 
-	public void applyForce( Force f )
-	{
-		if ( !this.forceApplied )
-		{
-			this.forceApplied = true;
+			velocityX += Math.cos( f.getDirection() ) * f.getMagnitude() / mass;
+			velocityY += Math.sin( f.getDirection() ) * f.getMagnitude() / mass;
 
-			this.velocityX += Math.cos( f.getDirection() ) * f.getMagnitude() / this.mass;
-			this.velocityY += Math.sin( f.getDirection() ) * f.getMagnitude() / this.mass;
-
-			for ( Map.Entry<Double, Chunk> cursor : this.connected.entrySet() )
-			{
+			for ( Map.Entry<Double, Chunk> cursor : connected.entrySet() ) {
 				cursor.getValue().applyForce( cursor.getValue().getForce() );
 			}
-			this.forceApplied = false;
+			forceApplied = false;
 		}
 	}
 
 	@Override
-	public void paint( Graphics2D g2d )
-	{
-		Ellipse2D.Double circle = new Ellipse2D.Double( this.x, this.y, this.width, this.height );
+	public void paint( Graphics2D g2d ) {
+		Ellipse2D.Double circle = new Ellipse2D.Double( x, y, width, height );
 		g2d.draw( circle );
-		for ( Map.Entry<Double, Chunk> cursor : this.connected.entrySet() )
-		{
+		for ( Map.Entry<Double, Chunk> cursor : connected.entrySet() ) {
 			Chunk c = cursor.getValue();
-			g2d.drawLine( ( int ) ( this.x + ( this.width / 2 ) ),
-					( int ) ( this.y + ( this.height / 2 ) ), ( int ) ( c.x + ( c.width / 2 ) ),
+			g2d.drawLine( ( int ) ( x + ( width / 2 ) ),
+					( int ) ( y + ( height / 2 ) ), ( int ) ( c.x + ( c.width / 2 ) ),
 					( int ) ( c.y + ( c.height / 2 ) ) );
 		}
 	}
 
 	@Override
-	public void run()
-	{
-		this.applyForce( this.getForce() );
+	public void run() {
+		applyForce( getForce() );
 	}
 
 	@Override
-	public void interact( BuildingObject interacter )
-	{
+	public void interact( BuildingObject interacter ) {
 		// TODO Auto-generated method stub
 	}
 
 	@Override
-	public String toString()
-	{
-		return "Chunk: " + super.toString() + "\n" + this.getForce();
+	public String toString() {
+		return "Chunk: " + super.toString() + "\n" + getForce();
 	}
 
 	@Override
-	public boolean canMoveX( Building b )
-	{
+	public boolean canMoveX( Building b ) {
 		boolean canMoveX = true;
-		Rectangle nextLocation = new Rectangle( ( int ) ( this.x + this.velocityX ),
-				( int ) ( this.y + this.velocityY ), this.width, this.height );
+		Rectangle nextLocation = new Rectangle( ( int ) ( x + velocityX ),
+				( int ) ( y + velocityY ), width, height );
 
-		for ( Wall wall : b.walls )
-		{
-			if ( nextLocation.intersects( wall.getBounds() ) )
-			{
+		for ( Wall wall : b.walls ) {
+			if ( nextLocation.intersects( wall.getBounds() ) ) {
 				canMoveX = false;
 			}
 		}
-		for ( Door door : b.doors )
-		{
-			if ( door.open == 0 && nextLocation.intersects( door.getBounds() ) )
-			{
+		for ( Door door : b.doors ) {
+			if ( door.open == 0 && nextLocation.intersects( door.getBounds() ) ) {
 				canMoveX = false;
 			}
 		}
@@ -219,15 +189,12 @@ public class Chunk extends BuildingObject implements Interactive, Runnable, Visi
 	}
 
 	@Override
-	public boolean canMoveY( Building b )
-	{
+	public boolean canMoveY( Building b ) {
 		boolean canMoveY = true;
-		Rectangle nextLocation = new Rectangle( ( int ) ( this.x + this.velocityX ),
-				( int ) ( this.y + this.velocityY ), this.width, this.height );
-		for ( Floor floor : b.floors )
-		{
-			if ( nextLocation.intersects( floor.getBounds() ) )
-			{
+		Rectangle nextLocation = new Rectangle( ( int ) ( x + velocityX ),
+				( int ) ( y + velocityY ), width, height );
+		for ( Floor floor : b.floors ) {
+			if ( nextLocation.intersects( floor.getBounds() ) ) {
 				canMoveY = false;
 			}
 		}
@@ -235,28 +202,22 @@ public class Chunk extends BuildingObject implements Interactive, Runnable, Visi
 	}
 
 	@Override
-	public void move( Building b )
-	{
-		if ( this.canMoveX( b ) )
-		{
-			this.x += this.velocityX;
+	public void move( Building b ) {
+		if ( canMoveX( b ) ) {
+			x += velocityX;
 		}
-		else
-		{
-			this.velocityX = 0;
+		else {
+			velocityX = 0;
 		}
 
-		if ( this.canMoveY( b ) )
-		{
-			if ( this.velocityY < Constants.TERMINAL_VELOCITY )
-			{
-				this.velocityY += 0.1;
+		if ( canMoveY( b ) ) {
+			if ( velocityY < Constants.TERMINAL_VELOCITY ) {
+				velocityY += 0.1;
 			}
-			this.y += this.velocityY;
+			y += velocityY;
 		}
-		else
-		{
-			this.velocityY = 0;
+		else {
+			velocityY = 0;
 		}
 	}
 }

@@ -1,14 +1,13 @@
 package base;
 
-import java.util.HashMap;
-
 import people.Chunk;
+
+import java.util.HashMap;
 
 /**
  * Hashmap of Chunks, extended to be used as a shorthand.
  */
-public class ChunkMap extends HashMap < Double, Chunk >
-{
+public class ChunkMap extends HashMap<Double, Chunk> {
 
 	/**
 	 * Generated Serial Version UID

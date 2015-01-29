@@ -1,16 +1,16 @@
 package base;
 
 import main.Building;
-import java.util.ArrayList;
+
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 /**
  * Interface to be extended by any non-physically-static <code>BuildingObject</code>s.
  *
  * @author Logan Moore
  */
-public interface Moveable
-{
+public interface Moveable {
 	/**
 	 * Hitboxes for the given object.
 	 */

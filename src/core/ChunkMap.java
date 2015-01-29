@@ -1,11 +1,10 @@
 package core;
 
-import java.util.HashMap;
-
 import people.Chunk;
 
-public class ChunkMap extends HashMap < Double, Chunk >
-{
+import java.util.HashMap;
+
+public class ChunkMap extends HashMap<Double, Chunk> {
 
 	/**
 	 * Generated Serial Version UID

@@ -1,74 +1,65 @@
 package people;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
-import main.Building;
 import base.Interactive;
 import base.Visible;
 import constants.Constants;
+import main.Building;
 
-public class Tai extends Person implements Interactive, Visible, Runnable
-{
-	public Tai( Building building, double x, double y )
-	{
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
+public class Tai extends Person implements Interactive, Visible, Runnable {
+	public Tai( Building building, double x, double y ) {
 		super( building, x, y );
 
-		try
-		{
-			this.head = ImageIO.read( getClass().getResource(
+		try {
+			head = ImageIO.read( getClass().getResource(
 					"/resources/images/person/tai/head.png" ) );
-			this.body = ImageIO.read( getClass().getResource(
+			body = ImageIO.read( getClass().getResource(
 					"/resources/images/person/standard/_body.png" ) );
 		}
-		catch ( IOException e )
-		{
+		catch ( IOException e ) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public void paint( Graphics2D g2d )
-	{
+	public void paint( Graphics2D g2d ) {
 		// Head
-		g2d.drawImage( this.head, null, ( int ) this.x, ( int ) this.y );
+		g2d.drawImage( head, null, ( int ) x, ( int ) y );
 		g2d.setColor( Color.BLACK );
-		if ( this.velocityX == 0 )
-		{ // Standing still
+		if ( velocityX == 0 ) { // Standing still
 			// Body
-			this.animationStep[ 1 ] = 0;
+			animationStep[ 1 ] = 0;
 			g2d.drawImage(
-					this.body.getSubimage( 0, 30, 10, 15 ).getScaledInstance(
+					body.getSubimage( 0, 30, 10, 15 ).getScaledInstance(
 							Constants.PERSON_WIDTH, Constants.PERSON_BODY_HEIGHT, 0 ),
-					( int ) this.x, ( int ) this.y + Constants.PERSON_HEAD_HEIGHT, null );
+					( int ) x, ( int ) y + Constants.PERSON_HEAD_HEIGHT, null );
 		}
-		else if ( this.velocityX > 0 )
-		{ // Moving to the right
+		else if ( velocityX > 0 ) { // Moving to the right
 			// Body
 			g2d.drawImage(
-					this.body.getSubimage(
-							10 * ( this.animationStep[ 1 ] - ( this.animationStep[ 1 ] % 6 ) ) / 6,
+					body.getSubimage(
+							10 * ( animationStep[ 1 ] - ( animationStep[ 1 ] % 6 ) ) / 6,
 							15, 10, 15 ).getScaledInstance( Constants.PERSON_WIDTH,
-							Constants.PERSON_BODY_HEIGHT, 0 ), ( int ) this.x, ( int ) this.y
+							Constants.PERSON_BODY_HEIGHT, 0 ), ( int ) x, ( int ) y
 							+ Constants.PERSON_HEAD_HEIGHT, null );
-			this.animationStep[ 1 ] = ( this.animationStep[ 1 ] + 1 ) % 36;
+			animationStep[ 1 ] = ( animationStep[ 1 ] + 1 ) % 36;
 		}
-		else
-		{ // Moving to the left
+		else { // Moving to the left
 			// Body
 			g2d.drawImage(
-					this.body.getSubimage(
-							10 * ( this.animationStep[ 1 ] - ( this.animationStep[ 1 ] % 6 ) ) / 6,
+					body.getSubimage(
+							10 * ( animationStep[ 1 ] - ( animationStep[ 1 ] % 6 ) ) / 6,
 							0, 10, 15 ).getScaledInstance( Constants.PERSON_WIDTH,
-							Constants.PERSON_BODY_HEIGHT, 0 ), ( int ) this.x, ( int ) this.y
+							Constants.PERSON_BODY_HEIGHT, 0 ), ( int ) x, ( int ) y
 							+ Constants.PERSON_HEAD_HEIGHT, null );
-			this.animationStep[ 1 ] = ( this.animationStep[ 1 ] + 1 ) % 36;
+			animationStep[ 1 ] = ( animationStep[ 1 ] + 1 ) % 36;
 		}
 
-		this.say( g2d );
-		this.drawBounds( g2d );
+		say( g2d );
+		drawBounds( g2d );
 	}
 }

@@ -1,35 +1,29 @@
 package view;
 
+import constants.Constants;
+
 import java.awt.BorderLayout;
 import java.awt.image.BufferStrategy;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import constants.Constants;
-
-public class View extends JFrame
-{
+public class View extends JFrame {
 	/**
 	 * Generated serial ID to make Eclipse happy.
 	 */
 	private static final long serialVersionUID = -8836966816243980019L;
-
+	public BufferStrategy strategy;
 	/**
 	 * Window on which everything is drawn.
 	 */
 	private JPanel contentPane;
-
 	private Surface surface;
-
-	public BufferStrategy strategy;
 
 	/**
 	 * Create the frame.
 	 */
-	public View( Surface newSurface )
-	{
+	public View( Surface newSurface ) {
 		this.surface = newSurface;
 		setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		setBounds( 100, 100, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT );
