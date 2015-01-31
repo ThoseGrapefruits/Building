@@ -33,12 +33,6 @@ public class ElevatorButton extends BuildingObject implements Interactive, Visib
 
 	/**
 	 * Creates a new button with a linked elevator and a floor index.
-	 *
-	 * @param building
-	 * @param x
-	 * @param y
-	 * @param linkedElevator
-	 * @param floor
 	 */
 	public ElevatorButton( Building building, double x, double y, Elevator linkedElevator,
 			int floor ) {
