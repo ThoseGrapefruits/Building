@@ -31,17 +31,17 @@ public class Building implements Visible, ActionListener {
 	public ArrayList<ArrayList<Visible>> render = new ArrayList<ArrayList<Visible>>(
 			Constants.RENDER_LAYERS );
 	// Interactive Objects
-	public ArrayList<Light> lights = new ArrayList<Light>();
-	public ArrayList<LightSwitch> lightSwitches = new ArrayList<LightSwitch>();
-	public ArrayList<Door> doors = new ArrayList<Door>();
-	public ArrayList<Elevator> elevators = new ArrayList<Elevator>();
-	public ArrayList<ElevatorButton> elevatorButtons = new ArrayList<ElevatorButton>();
+	public ArrayList<Light> lights = new ArrayList<>();
+	public ArrayList<LightSwitch> lightSwitches = new ArrayList<>();
+	public ArrayList<Door> doors = new ArrayList<>();
+	public ArrayList<Elevator> elevators = new ArrayList<>();
+	public ArrayList<ElevatorButton> elevatorButtons = new ArrayList<>();
 	// Boundaries
-	public ArrayList<Wall> walls = new ArrayList<Wall>();
-	public ArrayList<Floor> floors = new ArrayList<Floor>();
+	public ArrayList<Wall> walls = new ArrayList<>();
+	public ArrayList<Floor> floors = new ArrayList<>();
 	// People
-	public ArrayList<Person> people = new ArrayList<Person>();
-	public ArrayList<ChunkObject> chunkObjects = new ArrayList<ChunkObject>();
+	public ArrayList<Person> people = new ArrayList<>();
+	public ArrayList<ChunkObject> chunkObjects = new ArrayList<>();
 	public Me me;
 	boolean leftPressed = false;
 	boolean rightPressed = false;
@@ -310,7 +310,7 @@ public class Building implements Visible, ActionListener {
 		 me.paint( g2d );*/
 
 		// Layer-based rendering
-		for ( ArrayList<Visible> b : render) {
+		for ( ArrayList<Visible> b : render ) {
 			for ( Visible v : b ) {
 				v.paint( g2d );
 			}
@@ -331,8 +331,8 @@ public class Building implements Visible, ActionListener {
 		// Determine user-controlled person's next movement
 		if ( !me.getBounds().intersects(
 				new Rectangle( 0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT ) ) ) {
-			me.x = 400;
-			me.y = 200;
+			me.setX( 400 );
+			me.setY( 200 );
 		}
 
 		if ( upPressed && me.isFloorBelow() ) {
@@ -368,8 +368,8 @@ public class Building implements Visible, ActionListener {
 			person.move( this );
 			if ( !person.getBounds().intersects(
 					new Rectangle( 0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT ) ) ) {
-				person.x = 400;
-				person.y = 200;
+				person.setX( 400 );
+				person.setY( 200 );
 			}
 		}
 
@@ -378,15 +378,15 @@ public class Building implements Visible, ActionListener {
 			elevator.move( this );
 			if ( elevator.passenger != null ) {
 				elevator.passenger.velocityY = 0;
-				elevator.passenger.y = elevator.getCarHeight() + Constants.ELEVATOR_CAR_HEIGHT
-						- elevator.passenger.getHeight();
-				if ( elevator.passenger.x < elevator.x ) {
-					elevator.passenger.x = elevator.x;
+				elevator.passenger.setY( elevator.getCarHeight() + Constants.ELEVATOR_CAR_HEIGHT
+						- elevator.passenger.getHeight() );
+				if ( elevator.passenger.getX() < elevator.getX() ) {
+					elevator.passenger.setX( elevator.getX() );
 				}
-				else if ( elevator.passenger.x + elevator.passenger.getWidth() > elevator.x
-						+ elevator.getWidth() ) {
-					elevator.passenger.x = elevator.x + elevator.getWidth()
-							- elevator.passenger.getWidth();
+				else if ( elevator.passenger.getX() + elevator.passenger.getWidth()
+						> elevator.getX() + elevator.getWidth() ) {
+					elevator.passenger.setX(elevator.getX() + elevator.getWidth()
+							- elevator.passenger.getWidth());
 				}
 			}
 		}

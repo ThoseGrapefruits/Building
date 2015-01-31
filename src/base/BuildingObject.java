@@ -31,10 +31,34 @@ public abstract class BuildingObject {
 	 * Directions/signs follow the pixel coordinate conventions.
 	 */
 	public transient double velocityX = 0, velocityY = 0;
+
 	/**
-	 * Pixel coordinates of the object.
+	 * Pixel coordinate of the object along the y axis.
 	 */
-	public transient double x, y;
+	protected transient double y;
+
+	public double getY() {
+		return y;
+	}
+
+	public void setY( double y ) {
+		this.y = y;
+	}
+
+	/**
+	 * Pixel coordinate of the object along the x axis.
+	 */
+	protected transient double x;
+
+
+	public double getX() {
+		return x;
+	}
+
+	public void setX( double x ) {
+		this.x = x;
+	}
+
 	/**
 	 * The building in which the current object exists.
 	 * <p>

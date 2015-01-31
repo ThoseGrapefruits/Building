@@ -13,7 +13,7 @@ public class ChunkObject extends BuildingObject implements Visible, Runnable, Mo
 	/**
 	 * List of <code>chunks</code> that make up the <code>ChunkObject</code>.
 	 */
-	public ArrayList<Chunk> chunks = new ArrayList<Chunk>();
+	public ArrayList<Chunk> chunks = new ArrayList<>();
 
 	public ChunkObject( Building building, double x, double y ) {
 		super( building, x, y, 1, 1 );
@@ -23,7 +23,7 @@ public class ChunkObject extends BuildingObject implements Visible, Runnable, Mo
 	public int getWidth() {
 		Chunk r = getRightmostChunk();
 		Chunk l = getLeftmostChunk();
-		int w = ( int ) ( ( r.x + r.getWidth() ) - l.x );
+		int w = ( int ) ( ( r.getX() + r.getWidth() ) - l.getX() );
 		width = w;
 		return w;
 	}
@@ -31,10 +31,12 @@ public class ChunkObject extends BuildingObject implements Visible, Runnable, Mo
 	@Override
 	public int getHeight() {
 		Chunk t = getTopmostChunk();
-		int h = ( int ) ( ( t.y + t.getHeight() ) - getBottommostChunk().y );
+		int h = ( int ) ( ( t.getY() + t.getHeight() ) - getBottommostChunk().getY() );
 		height = h;
 		return h;
 	}
+
+
 
 	/**
 	 * Adds the given chunk to the ChunkObject
@@ -50,7 +52,7 @@ public class ChunkObject extends BuildingObject implements Visible, Runnable, Mo
 	private Chunk getRightmostChunk() {
 		Chunk rightmost = chunks.get( 0 );
 		for ( Chunk c : chunks ) {
-			if ( c.x > rightmost.x ) {
+			if ( c.getX() > rightmost.getX() ) {
 				rightmost = c;
 			}
 		}
@@ -60,7 +62,7 @@ public class ChunkObject extends BuildingObject implements Visible, Runnable, Mo
 	private Chunk getLeftmostChunk() {
 		Chunk leftmost = chunks.get( 0 );
 		for ( Chunk c : chunks ) {
-			if ( c.x < leftmost.x ) {
+			if ( c.getX() < leftmost.getX() ) {
 				leftmost = c;
 			}
 		}
@@ -70,7 +72,7 @@ public class ChunkObject extends BuildingObject implements Visible, Runnable, Mo
 	private Chunk getTopmostChunk() {
 		Chunk topmost = chunks.get( 0 );
 		for ( Chunk c : chunks ) {
-			if ( c.y > topmost.y ) {
+			if ( c.getY() > topmost.getY() ) {
 				topmost = c;
 			}
 		}
@@ -80,7 +82,7 @@ public class ChunkObject extends BuildingObject implements Visible, Runnable, Mo
 	private Chunk getBottommostChunk() {
 		Chunk bottommost = chunks.get( 0 );
 		for ( Chunk c : chunks ) {
-			if ( c.y < bottommost.y ) {
+			if ( c.getY() < bottommost.getY() ) {
 				bottommost = c;
 			}
 		}

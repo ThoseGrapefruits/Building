@@ -92,7 +92,7 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 			}
 		}
 		for ( Elevator elevator : building.elevators ) {
-			if ( bounds.intersects( ( new Rectangle( ( int ) elevator.x, ( int ) elevator
+			if ( bounds.intersects( ( new Rectangle( ( int ) elevator.getX(), ( int ) elevator
 					.getCarHeight(), Constants.ELEVATOR_WIDTH,
 					Constants.ELEVATOR_CAR_HEIGHT ) ) ) ) {
 				return elevator;

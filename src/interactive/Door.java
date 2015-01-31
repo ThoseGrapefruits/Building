@@ -32,7 +32,7 @@ public class Door extends BuildingObject implements Interactive, Visible {
 	public void interact( BuildingObject object ) {
 		inUse = true;
 		if ( open == CLOSED ) {
-			if ( object.x < x ) {
+			if ( object.getX() < x ) {
 				open = OPEN_RIGHT;
 				passable = true;
 			}

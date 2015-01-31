@@ -76,7 +76,7 @@ public class Main {
 		// Chunks
 		ChunkObject c = new ChunkObject( building, 300, 450 );
 
-		ArrayList<Chunk> cs = new ArrayList<Chunk>();
+		ArrayList<Chunk> cs = new ArrayList<>();
 		cs.add( new Chunk( building, 300, 450, 5, 5, c, 10 ) );
 		cs.add( new Chunk( building, 320, 450, 5, 5, c, 10 ) );
 		cs.add( new Chunk( building, 280, 450, 5, 5, c, 10 ) );
@@ -85,7 +85,7 @@ public class Main {
 
 		for ( Chunk cur : cs ) {
 			c.addChunk( cur );
-			ArrayList<Chunk> a = new ArrayList<Chunk>( cs );
+			ArrayList<Chunk> a = new ArrayList<>( cs );
 			a.remove( cur );
 			cur.connect( a );
 		}
@@ -112,7 +112,7 @@ public class Main {
 		// Chunks
 		ChunkObject c = new ChunkObject( building, cx, cy );
 
-		ArrayList<Chunk> cs = new ArrayList<Chunk>();
+		ArrayList<Chunk> cs = new ArrayList<>();
 		cs.add( new Chunk( building, cx, cy, 5, 5, c, 10 ) );
 		cs.add( new Chunk( building, cx + 20, cy, 5, 5, c, 10 ) );
 		cs.add( new Chunk( building, cx - 20, cy, 5, 5, c, 10 ) );
@@ -121,7 +121,7 @@ public class Main {
 
 		for ( Chunk cur : cs ) {
 			c.addChunk( cur );
-			ArrayList<Chunk> a = new ArrayList<Chunk>( cs );
+			ArrayList<Chunk> a = new ArrayList<>( cs );
 			a.remove( cur );
 			cur.connect( a );
 		}
