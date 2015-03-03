@@ -1,7 +1,7 @@
 package people;
 
 import base.BuildingObject;
-import base.Moveable;
+import base.Movable;
 import base.Visible;
 import constants.Constants;
 import main.Building;
@@ -9,7 +9,7 @@ import main.Building;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-public class ChunkObject extends BuildingObject implements Visible, Runnable, Moveable {
+public class ChunkObject extends BuildingObject implements Visible, Runnable, Movable {
 	/**
 	 * List of <code>chunks</code> that make up the <code>ChunkObject</code>.
 	 */

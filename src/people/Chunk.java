@@ -13,7 +13,7 @@ import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class Chunk extends BuildingObject implements Interactive, Runnable, Visible, Moveable {
+public class Chunk extends BuildingObject implements Interactive, Runnable, Visible, Movable {
 	/**
 	 * Other blobs connected to the current blob.
 	 */

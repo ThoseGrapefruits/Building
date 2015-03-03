@@ -2,7 +2,7 @@ package people;
 
 import base.BuildingObject;
 import base.Interactive;
-import base.Moveable;
+import base.Movable;
 import base.Visible;
 import boundaries.Floor;
 import boundaries.Wall;
@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
-public class Person extends BuildingObject implements Interactive, Visible, Runnable, Moveable {
+public class Person extends BuildingObject implements Interactive, Visible, Runnable, Movable {
 	public BuildingObject interactiveObjectWithinReach;
 	public double velocityX = 0, velocityY = 0;
 	public boolean wantsToInteract = false;
@@ -59,7 +59,7 @@ public class Person extends BuildingObject implements Interactive, Visible, Runn
 	/**
 	 * Checks if any of the floors in the current building are below the given object.
 	 *
-	 * @return
+	 * @return true if floor is found below the person, false if not.
 	 */
 	public boolean isFloorBelow() {
 		Rectangle bounds = new Rectangle( ( int ) x, ( int ) y + height + 1,

@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author Logan Moore
  */
-public interface Moveable {
+public interface Movable {
 	/**
 	 * Hitboxes for the given object.
 	 */
