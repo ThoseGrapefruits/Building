@@ -207,3 +207,13 @@
 	2. `Surface` ✓
 3. Build controller to get everything going. ✓
 4. Make everything look decent.
+
+<br><hr><br>
+
+##Controls
+|     Key      |    Action    |
+|--------------|--------------|
+| <kbd>↑</kbd> |     Jump     |
+| <kbd>←</kbd> |  Walk Left   |
+| <kbd>→</kbd> |  Walk Right  |
+| <kbd>space</kbd> | Interact |
