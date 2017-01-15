@@ -1,7 +1,23 @@
-#Office Simulator 2014
-> A virtual 2D building simulation and modelling program with random "people" who interact with various things in the building, such as elevators, lights, doors, etc.
+#Office Rumpus
+> A 2D office environment with people who interact with objects in the building (elevators, lights, doors, etc).
+
+The initial goal of this project was to build an environment with simulated elevators that would come when called and could take people between floors. The end result is that, with some other little things thrown in (doors, lights, etc.) but without a fully fleshed out elevator interaction.
+
+This was built on top of a `Graphics2D` window in `Swing`, and uses (I believe) nothing beyond that and Java builtins.
 
 <br><hr><br>
+
+##Controls
+|     Key      |    Action    |
+|--------------|--------------|
+| <kbd>↑</kbd> |     Jump     |
+| <kbd>←</kbd> |  Walk Left   |
+| <kbd>→</kbd> |  Walk Right  |
+| <kbd>space</kbd> | Interact |
+
+<br><hr><br>
+
+> __Everything below was for class credit, but is no longer important and is partially out of date.__ Will keep for historical purposes.
 
 ##Notes
 - I would have used OpenGL, but JOGL is weird and since the rendering will be 2D and very simple, I'm just using `java.awt.Graphics2D` to render.
@@ -25,11 +41,11 @@
 <br><hr><br>
 
 ##Visual Preview
-> This is a generalization of what I plan on having it look like
+> This was the visual goal of the project.
 
 <img src="https://docs.google.com/drawings/d/1zptTJuAx5-7astRzow8TUkD2LLrvAqHOmoRVIKBLf50/pub?w=827&amp;h=588">
 
-> This is how it actually looks, right now.
+> This is how it ended up looking.
 
 ![](http://i.imgur.com/Da2WD7l.png)
 
@@ -207,13 +223,3 @@
 	2. `Surface` ✓
 3. Build controller to get everything going. ✓
 4. Make everything look decent.
-
-<br><hr><br>
-
-##Controls
-|     Key      |    Action    |
-|--------------|--------------|
-| <kbd>↑</kbd> |     Jump     |
-| <kbd>←</kbd> |  Walk Left   |
-| <kbd>→</kbd> |  Walk Right  |
-| <kbd>space</kbd> | Interact |
