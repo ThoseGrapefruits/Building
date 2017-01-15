@@ -1,6 +1,6 @@
 package base;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 
 /**
  * Interface to be extended by all visible objects.
@@ -8,10 +8,11 @@ import java.awt.Graphics2D;
  * @author Logan Moore
  */
 public interface Visible {
-	/**
-	 * Draw the given object
-	 *
-	 * @param g is the graphics outlet to use.
-	 */
-	public abstract void paint( Graphics2D g2d );
+
+    /**
+     * Draw the given object
+     *
+     * @param g is the graphics outlet to use.
+     */
+    public abstract void paint(Graphics2D g2d);
 }

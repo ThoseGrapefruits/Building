@@ -1,5 +1,9 @@
 package main;
 
+import java.util.ArrayList;
+
+import javax.swing.*;
+
 import boundaries.Wall;
 import constants.Constants;
 import interactive.Door;
@@ -9,139 +13,140 @@ import people.Me;
 import view.Surface;
 import view.View;
 
-import java.util.ArrayList;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
-
 /**
  * Main controller for the program.
  *
  * @author Logan Moore
  */
 public class Main {
-	final Building building = new Building();
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main( String[] args ) {
-		Main m = new Main();
-		m.building1();
-	}
+    final Building building = new Building();
 
-	public void building1() {
-		// Add people
-		building.addMe( new Me( building, 100, 450 ) );
-		building.addPerson( 500, 450 );
+    /**
+     * Launch the application.
+     */
+    public static void main(String[] args) {
+        Main m = new Main();
+        m.building1();
+    }
 
-		// Outer doors/walls
-		building.addWall( new Wall( building, 750, 50, 390 ) );
-		building.addWall( new Wall( building, 50, 50, 390 ) );
-		building.addDoor( new Door( building, 750, 440 ) );
-		building.addDoor( new Door( building, 50, 440 ) );
+    public void building1() {
+        // Add people
+        building.addMe(new Me(building, 100, 450));
+        building.addPerson(500, 450);
 
-		// Inner doors/walls
-		building.addDoor( new Door( building, 375, 440 ) );
-		building.addWall( new Wall( building, 375, 440 - Constants.FLOOR_HEIGHT,
-				Constants.FLOOR_DISTANCE - Constants.DOOR_HEIGHT - Constants.FLOOR_HEIGHT ) );
-		building.addDoor( new Door( building, 375, 440 - Constants.FLOOR_DISTANCE ) );
-		building.addWall( new Wall( building, 375, 440 - Constants.FLOOR_DISTANCE
-				- Constants.FLOOR_HEIGHT, Constants.FLOOR_DISTANCE - Constants.DOOR_HEIGHT
-				- Constants.FLOOR_HEIGHT ) );
-		building.addDoor( new Door( building, 375, 440 - 2 * Constants.FLOOR_DISTANCE ) );
-		building.addWall( new Wall( building, 375, 440 - 2 * Constants.FLOOR_DISTANCE
-				- Constants.FLOOR_HEIGHT, Constants.FLOOR_DISTANCE - Constants.DOOR_HEIGHT
-				- Constants.FLOOR_HEIGHT ) );
-		building.addDoor( new Door( building, 375, 440 - 3 * Constants.FLOOR_DISTANCE ) );
-		building.addWall( new Wall( building, 375, 440 - 3 * Constants.FLOOR_DISTANCE
-				- Constants.FLOOR_HEIGHT, Constants.FLOOR_DISTANCE - Constants.DOOR_HEIGHT
-				- Constants.FLOOR_HEIGHT ) );
+        // Outer doors/walls
+        building.addWall(new Wall(building, 750, 50, 390));
+        building.addWall(new Wall(building, 50, 50, 390));
+        building.addDoor(new Door(building, 750, 440));
+        building.addDoor(new Door(building, 50, 440));
 
-		// Floors
-		building.addFloor( 50, 550, 800 );
-		building.addFloor( 50, 550 - Constants.FLOOR_DISTANCE, 700 );
-		building.addFloor( 50, 550 - Constants.FLOOR_DISTANCE * 2, 700 );
-		building.addFloor( 50, 550 - Constants.FLOOR_DISTANCE * 3, 700 );
-		building.addFloor( 50, 550 - Constants.FLOOR_DISTANCE * 4, 700 );
+        // Inner doors/walls
+        building.addDoor(new Door(building, 375, 440));
+        building.addWall(new Wall(building, 375, 440 - Constants.FLOOR_HEIGHT,
+                                  Constants.FLOOR_DISTANCE - Constants.DOOR_HEIGHT
+                                  - Constants.FLOOR_HEIGHT));
+        building.addDoor(new Door(building, 375, 440 - Constants.FLOOR_DISTANCE));
+        building.addWall(new Wall(building, 375, 440 - Constants.FLOOR_DISTANCE
+                                                 - Constants.FLOOR_HEIGHT,
+                                  Constants.FLOOR_DISTANCE - Constants.DOOR_HEIGHT
+                                  - Constants.FLOOR_HEIGHT));
+        building.addDoor(new Door(building, 375, 440 - 2 * Constants.FLOOR_DISTANCE));
+        building.addWall(new Wall(building, 375, 440 - 2 * Constants.FLOOR_DISTANCE
+                                                 - Constants.FLOOR_HEIGHT,
+                                  Constants.FLOOR_DISTANCE - Constants.DOOR_HEIGHT
+                                  - Constants.FLOOR_HEIGHT));
+        building.addDoor(new Door(building, 375, 440 - 3 * Constants.FLOOR_DISTANCE));
+        building.addWall(new Wall(building, 375, 440 - 3 * Constants.FLOOR_DISTANCE
+                                                 - Constants.FLOOR_HEIGHT,
+                                  Constants.FLOOR_DISTANCE - Constants.DOOR_HEIGHT
+                                  - Constants.FLOOR_HEIGHT));
 
-		// Lights
-		// building.addLightAndSwitch( 100, 420, 100, 450 );
+        // Floors
+        building.addFloor(50, 550, 800);
+        building.addFloor(50, 550 - Constants.FLOOR_DISTANCE, 700);
+        building.addFloor(50, 550 - Constants.FLOOR_DISTANCE * 2, 700);
+        building.addFloor(50, 550 - Constants.FLOOR_DISTANCE * 3, 700);
+        building.addFloor(50, 550 - Constants.FLOOR_DISTANCE * 4, 700);
 
-		// Elevators
-		building.addElevator( 200.0, 50.0, new int[]
-				{ 0, 1, 2, 3 } );
-		building.addElevator( 500.0, 50.0, new int[]
-				{ 0, 1, 2, 3 } );
+        // Lights
+        // building.addLightAndSwitch( 100, 420, 100, 450 );
 
-		// Chunks
-		ChunkObject c = new ChunkObject( building, 300, 450 );
+        // Elevators
+        building.addElevator(200.0, 50.0, new int[]
+                {0, 1, 2, 3});
+        building.addElevator(500.0, 50.0, new int[]
+                {0, 1, 2, 3});
 
-		ArrayList<Chunk> cs = new ArrayList<>();
-		cs.add( new Chunk( building, 300, 450, 5, 5, c, 10 ) );
-		cs.add( new Chunk( building, 320, 450, 5, 5, c, 10 ) );
-		cs.add( new Chunk( building, 280, 450, 5, 5, c, 10 ) );
-		cs.add( new Chunk( building, 300, 440, 5, 5, c, 10 ) );
-		cs.add( new Chunk( building, 300, 460, 5, 5, c, 10 ) );
+        // Chunks
+        ChunkObject c = new ChunkObject(building, 300, 450);
 
-		for ( Chunk cur : cs ) {
-			c.addChunk( cur );
-			ArrayList<Chunk> a = new ArrayList<>( cs );
-			a.remove( cur );
-			cur.connect( a );
-		}
-		System.out.println( c );
-		building.addChunkObject( c );
+        ArrayList<Chunk> cs = new ArrayList<>();
+        cs.add(new Chunk(building, 300, 450, 5, 5, c, 10));
+        cs.add(new Chunk(building, 320, 450, 5, 5, c, 10));
+        cs.add(new Chunk(building, 280, 450, 5, 5, c, 10));
+        cs.add(new Chunk(building, 300, 440, 5, 5, c, 10));
+        cs.add(new Chunk(building, 300, 460, 5, 5, c, 10));
 
-		// Create the visuals
-		SwingUtilities.invokeLater( new Runnable() {
-			@Override
-			public void run() {
-				Surface panel = new Surface( building );
-				View view = new View( panel );
-				view.setVisible( true );
-				Timer timer = new Timer( Constants.TICK, panel );
-				timer.setInitialDelay( 0 );
-				timer.start();
-			}
-		} );
-	}
+        for (Chunk cur : cs) {
+            c.addChunk(cur);
+            ArrayList<Chunk> a = new ArrayList<>(cs);
+            a.remove(cur);
+            cur.connect(a);
+        }
+        System.out.println(c);
+        building.addChunkObject(c);
 
-	public void building2() {
-		building.addMe( new Me( building, 100, 450 ) );
-		int cx = 100, cy = 100;
-		// Chunks
-		ChunkObject c = new ChunkObject( building, cx, cy );
+        // Create the visuals
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                Surface panel = new Surface(building);
+                View view = new View(panel);
+                view.setVisible(true);
+                Timer timer = new Timer(Constants.TICK, panel);
+                timer.setInitialDelay(0);
+                timer.start();
+            }
+        });
+    }
 
-		ArrayList<Chunk> cs = new ArrayList<>();
-		cs.add( new Chunk( building, cx, cy, 5, 5, c, 10 ) );
-		cs.add( new Chunk( building, cx + 20, cy, 5, 5, c, 10 ) );
-		cs.add( new Chunk( building, cx - 20, cy, 5, 5, c, 10 ) );
-		cs.add( new Chunk( building, cx, cy + 20, 5, 5, c, 10 ) );
-		cs.add( new Chunk( building, cx, cy - 20, 5, 5, c, 10 ) );
+    public void building2() {
+        building.addMe(new Me(building, 100, 450));
+        int cx = 100, cy = 100;
+        // Chunks
+        ChunkObject c = new ChunkObject(building, cx, cy);
 
-		for ( Chunk cur : cs ) {
-			c.addChunk( cur );
-			ArrayList<Chunk> a = new ArrayList<>( cs );
-			a.remove( cur );
-			cur.connect( a );
-		}
-		System.out.println( c );
-		building.addChunkObject( c );
+        ArrayList<Chunk> cs = new ArrayList<>();
+        cs.add(new Chunk(building, cx, cy, 5, 5, c, 10));
+        cs.add(new Chunk(building, cx + 20, cy, 5, 5, c, 10));
+        cs.add(new Chunk(building, cx - 20, cy, 5, 5, c, 10));
+        cs.add(new Chunk(building, cx, cy + 20, 5, 5, c, 10));
+        cs.add(new Chunk(building, cx, cy - 20, 5, 5, c, 10));
 
-		// Floor
-		building.addFloor( 50, 550, 800 );
+        for (Chunk cur : cs) {
+            c.addChunk(cur);
+            ArrayList<Chunk> a = new ArrayList<>(cs);
+            a.remove(cur);
+            cur.connect(a);
+        }
+        System.out.println(c);
+        building.addChunkObject(c);
 
-		// Create the visuals
-		SwingUtilities.invokeLater( new Runnable() {
-			@Override
-			public void run() {
-				Surface panel = new Surface( building );
-				View view = new View( panel );
-				view.setVisible( true );
-				Timer timer = new Timer( Constants.TICK, panel );
-				timer.setInitialDelay( 0 );
-				timer.start();
-			}
-		} );
-	}
+        // Floor
+        building.addFloor(50, 550, 800);
+
+        // Create the visuals
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                Surface panel = new Surface(building);
+                View view = new View(panel);
+                view.setVisible(true);
+                Timer timer = new Timer(Constants.TICK, panel);
+                timer.setInitialDelay(0);
+                timer.start();
+            }
+        });
+    }
 }

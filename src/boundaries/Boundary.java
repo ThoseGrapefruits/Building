@@ -10,9 +10,10 @@ import main.Building;
  * @author Logan Moore
  */
 public abstract class Boundary extends BuildingObject implements Visible {
-	protected boolean passable = false;
 
-	Boundary( Building building, double x, double y, int width, int height ) {
-		super( building, x, y, width, height );
-	}
+    protected boolean passable = false;
+
+    Boundary(Building building, double x, double y, int width, int height) {
+        super(building, x, y, width, height);
+    }
 }
